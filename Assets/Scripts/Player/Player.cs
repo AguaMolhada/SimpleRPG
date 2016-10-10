@@ -1,20 +1,55 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Player : PlayerStats {
+
+    public Text playerNameTxt;
+    public Text hpText;
+    public Text expText;
+    public Text LvlText;
+
+    public Image PlayerImage;
+    public Image HpBar;
+    public Image ExpBar;
+
+
+
 
 
 
 	// Use this for initialization
 	void Start () {
+
+        switch (pclass)
+        {
+            case PlayerClass.warrior:
+                setStats(200,5);
+                break;
+            case PlayerClass.mage:
+                setStats(100,2);
+                break;
+            case PlayerClass.archer:
+                setStats(100,4);
+                break;
+            default:
+                break;
+        }
         base.Start();
-        Debug.Log(hp);
-        TakeDamage(10);
-        Debug.Log(hp);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        UpdateGUIPlayer();
+
 	}
+
+    void UpdateGUIPlayer()
+    {
+        LvlText.text = "Level:" + level;
+        hpText.text = hp + "/" + maxhp;
+        HpBar.fillAmount = hp / maxhp;
+        expText.text = Ultility.GetPercent(tnl, exp) + "%";
+        ExpBar.fillAmount = Ultility.GetPercent(tnl, exp)/100;
+    }
 }
