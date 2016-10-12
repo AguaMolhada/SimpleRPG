@@ -4,34 +4,55 @@
 		"title": "test item ",
 		"buyvalue": 999,
 		"sellvalue": 999,
-		"typeitem":"test"
+		"typeitem":"test",
+		"attribute": "none"
 	},
 	{
 		"id": 1,
-		"title": "lether Helmet",
+		"title": "Lether Helmet",
 		"buyvalue": 10,
 		"sellvalue": 5,
-		"typeitem":"helmet"
+		"typeitem":"helmet",
+		"attribute": 3
 	},
 	{
 		"id": 2,
-		"title": "lether Armor",
+		"title": "Lether Armor",
 		"buyvalue": 15,
 		"sellvalue": 9,
-		"typeitem":"armor"
+		"typeitem":"armor",
+		"attribute": 5
 	},
 	{
 		"id": 3,
-		"title": "iron Helmet",
+		"title": "Iron Helmet",
 		"buyvalue": 20,
 		"sellvalue": 12,
-		"typeitem": "helmet"
+		"typeitem": "helmet",
+		"attribute": 8
 	},
 	{
 		"id": 4,
-		"title": "iron Armor",
+		"title": "Iron Armor",
 		"buyvalue": 35,
 		"sellvalue": 29,
-		"typeitem":"armor"
+		"typeitem":"armor",
+		"attribute": 12
+	},
+	{
+		"id": 5,
+		"title": "Gold Helmet",
+		"buyvalue": 60,
+		"sellvalue": 25,
+		"typeitem":"helmet",
+		"attribute": 13
+	},
+	{
+		"id": 6,
+		"title": "Gold Armor",
+		"buyvalue": 90,
+		"sellvalue": 40,
+		"typeitem":"armor",
+		"attribute": 16
 	}
 ]

@@ -58,8 +58,19 @@ public class GameController : MonoBehaviour {
 
     public void Run()
     {
-        exploreLog.text += "\n\r You have left the battle!";
-        enemy = null;
+        var chance = Random.Range((int)(0+((player.luck*1.2)/10)), 100);
+        if (chance >= 30)
+        {
+            exploreLog.text += "\n\r You have left the battle!";
+            enemy = null;
+        }
+        else
+        {
+            exploreLog.text += " \n\r You failed to escape :O";
+            var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
+            player.TakeDamage(dmgRecieve);
+            exploreLog.text += "\n\r You recieved "+ dmgRecieve + " dmg";
+        }
     }
 
     public void HealPlayer()

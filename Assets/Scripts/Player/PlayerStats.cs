@@ -24,6 +24,7 @@ public class PlayerStats : MonoBehaviour {
     private int _strenghtLvl;
     private int _inteligenceLvl;
     private int _constitutionLvl;
+    private int _luckyLvl;
 
     private int _defenseLvl;
     private int _damageBase;
@@ -45,6 +46,7 @@ public class PlayerStats : MonoBehaviour {
     public int str { get { return _strenghtLvl; } }
     public int inte { get { return _inteligenceLvl; } }
     public int con { get { return _constitutionLvl; } }
+    public int luck { get { return _luckyLvl; } }
     public int def { get { return _defenseLvl; } }
     public int dmg { get { return _damageLvl; } }
     public int gold { get { return _gold; } }
@@ -148,6 +150,10 @@ public class PlayerStats : MonoBehaviour {
         {
             _constitutionLvl++;
             _Maxhealth = (int)(_healthBase + (5 * con));
+        }
+        if (s == "luck")
+        {
+            _luckyLvl++;
         }
     }
 
