@@ -1,0 +1,37 @@
+[
+	{
+		"id": 0,
+		"title": "test item ",
+		"buyvalue": 999,
+		"sellvalue": 999,
+		"typeitem":"test"
+	},
+	{
+		"id": 1,
+		"title": "lether Helmet",
+		"buyvalue": 10,
+		"sellvalue": 5,
+		"typeitem":"helmet"
+	},
+	{
+		"id": 2,
+		"title": "lether Armor",
+		"buyvalue": 15,
+		"sellvalue": 9,
+		"typeitem":"armor"
+	},
+	{
+		"id": 3,
+		"title": "iron Helmet",
+		"buyvalue": 20,
+		"sellvalue": 12,
+		"typeitem": "helmet"
+	},
+	{
+		"id": 4,
+		"title": "iron Armor",
+		"buyvalue": 35,
+		"sellvalue": 29,
+		"typeitem":"armor"
+	}
+]

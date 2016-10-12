@@ -6,13 +6,13 @@ public class GameController : MonoBehaviour {
 
     #region Private Vars
     private Player player;
-
     private Enemy enemy;
 
     #endregion
 
     #region Public Vars
     public Text exploreLog;
+
 
 
     #endregion
@@ -61,5 +61,14 @@ public class GameController : MonoBehaviour {
         exploreLog.text += "\n\r You have left the battle!";
         enemy = null;
     }
+
+    public void HealPlayer()
+    {
+        if(enemy == null)
+        {
+            player.Heal(50);
+        }
+    }
+
 
 }

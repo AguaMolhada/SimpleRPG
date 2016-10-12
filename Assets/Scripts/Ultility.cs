@@ -124,4 +124,24 @@ public static class Ultility {
         return nameEnd[a];
     }
     #endregion
+
+    #region City Name Generator
+    public static string CityNameGenerator()
+    {
+        int pattern = Random.Range(0, 100);
+        if (pattern >= 0 && pattern < 20) { return StartName() + CityNameEnd(); }
+        else if (pattern >= 20 && pattern < 40) { return NameVowel() + NameLink() + CityNameEnd(); }
+        else if (pattern >= 40 && pattern < 60) { return StartName() + NameVowel() + NameLink() + CityNameEnd(); }
+        else if (pattern >= 60 && pattern < 80) { return NameVowel() + NameLink() + NameVowel() + NameLink() + CityNameEnd(); }
+        else if (pattern >= 80 && pattern < 100) { return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + CityNameEnd(); }
+        return null;
+    }
+    static string CityNameEnd()
+    {
+        int a;
+        string[] nameEnd = new string[] { "ville", "polis", " City", " Village", "town", "port", "boro", "burg", "burgh", "carden", "field","ness"};
+        a = Random.Range(0, nameEnd.Length);
+        return nameEnd[a];
+    }
+    #endregion
 }
