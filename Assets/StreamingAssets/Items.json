@@ -5,7 +5,10 @@
 		"buyvalue": 999,
 		"sellvalue": 999,
 		"typeitem":"test",
-		"attribute": "none"
+		"attribute": "none",
+		"stackable": true,
+		"sprname": "E_Metal05",
+		"usable": true
 	},
 	{
 		"id": 1,
@@ -13,7 +16,11 @@
 		"buyvalue": 10,
 		"sellvalue": 5,
 		"typeitem":"helmet",
-		"attribute": 3
+		"attribute": 3,
+		"stackable": false,
+		"sprname": "C_Elm01",
+		"usable": false
+
 	},
 	{
 		"id": 2,
@@ -21,7 +28,10 @@
 		"buyvalue": 15,
 		"sellvalue": 9,
 		"typeitem":"armor",
-		"attribute": 5
+		"attribute": 5,
+		"stackable": false,
+		"sprname": "A_Armour01",
+		"usable": false
 	},
 	{
 		"id": 3,
@@ -29,7 +39,10 @@
 		"buyvalue": 20,
 		"sellvalue": 12,
 		"typeitem": "helmet",
-		"attribute": 8
+		"attribute": 8,
+		"stackable": false,
+		"sprname": "C_Elm03",
+		"usable": false
 	},
 	{
 		"id": 4,
@@ -37,7 +50,10 @@
 		"buyvalue": 35,
 		"sellvalue": 29,
 		"typeitem":"armor",
-		"attribute": 12
+		"attribute": 12,
+		"stackable": false,
+		"sprname": "A_Armour02",
+		"usable": false
 	},
 	{
 		"id": 5,
@@ -45,7 +61,10 @@
 		"buyvalue": 60,
 		"sellvalue": 25,
 		"typeitem":"helmet",
-		"attribute": 13
+		"attribute": 13,
+		"stackable": false,
+		"sprname": "C_Elm04",
+		"usable": false
 	},
 	{
 		"id": 6,
@@ -53,6 +72,42 @@
 		"buyvalue": 90,
 		"sellvalue": 40,
 		"typeitem":"armor",
-		"attribute": 16
+		"attribute": 16,
+		"stackable": false,
+		"sprname": "A_Armour03",
+		"usable": false
+	},
+	{
+		"id": 7,
+		"title": "Health Potion",
+		"buyvalue": 25,
+		"sellvalue": 0,
+		"typeitem": "consumable",
+		"attribute": 20,
+		"stackable": true,
+		"sprname": "P_Red02",
+		"usable": true
+	},
+	{
+		"id": 8,
+		"title": "Great Health Potion",
+		"buyvalue": 60,
+		"sellvalue": 0,
+		"typeitem": "consumable",
+		"attribute": 50,
+		"stackable": true,
+		"sprname": "P_Red03",
+		"usable": true
+	},
+	{
+		"id": 9,
+		"title": "Ultra Health Potion",
+		"buyvalue": 100,
+		"sellvalue": 0,
+		"typeitem": "consumable",
+		"attribute": 100,
+		"stackable": true,
+		"sprname": "P_Red01",
+		"usable": true
 	}
 ]
