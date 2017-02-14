@@ -30,7 +30,7 @@ public class Enemy : ScriptableObject {
         {
             var xp = (int)(Random.Range(2, 8) * (lvl / 1.25));
             player.AddExperience(xp);
-            Debug.Log(eName + " Morreu, " + player.playerName + "Ganhou " + xp +" experience" );
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += eName + " Morreu, " + player.playerName + " Ganhou " + xp +" experience" ;
             Destroy(this);
         }
     }

@@ -12,8 +12,7 @@ public class GameController : MonoBehaviour {
 
     #region Public Vars
     public Text exploreLog;
-
-
+    public Text cityName;
 
     #endregion
 
@@ -26,14 +25,18 @@ public class GameController : MonoBehaviour {
 
     public void ExploreWorld()
     {
-        if (enemy == null)
+        if (enemy == null && player.attributesLeft == 0)
         {
             enemy = new Enemy(player.level, (int)(50 + (player.con * 1.42)), player) as Enemy;
+            cityName.text = Ultility.CityNameGenerator();
             exploreLog.text = "";
-            exploreLog.text += "\n\r You have found a Enemy name: " + enemy.eName + "hp: " + enemy.hp + "/" + enemy.hpMax;
+            exploreLog.text += "\n\r You have found a Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
         }
-        else
+        else if(player.attributesLeft != 0)
         {
+            exploreLog.text += "\n\r Tou cannot explorer need to assign your attributes. attribute left: "+player.attributesLeft;
+        }
+        else {
             exploreLog.text += "\n\r You cannot explore because there is an enemy in front of you";
         }
     }
@@ -43,12 +46,12 @@ public class GameController : MonoBehaviour {
         if (enemy != null)
         {
             exploreLog.text = "";
-            enemy.RecieveDmg(player.dmg);
+            enemy.RecieveDmg(player.Attack());
             var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
             player.TakeDamage(dmgRecieve);
             exploreLog.text += "\n\r You have deal " + player.dmg + " dmg to the enemy";
-            exploreLog.text += "\n\r You have recieved " + dmgRecieve + "dmg";
-            exploreLog.text += "\n\r Enemy name: " + enemy.eName + "hp: " + enemy.hp + "/" + enemy.hpMax;
+            exploreLog.text += "\n\r You have recieved " + dmgRecieve + " dmg";
+            exploreLog.text += "\n\r Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
         }
         else
         {

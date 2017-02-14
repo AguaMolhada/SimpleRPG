@@ -16,21 +16,18 @@ public class Player : PlayerStats {
 
 
 
-
-
 	// Use this for initialization
 	void Start () {
-
         switch (pclass)
         {
             case PlayerClass.warrior:
-                setStats(200,5);
+                setStats(200,1);
                 break;
             case PlayerClass.mage:
-                setStats(100,2);
+                setStats(100,0.4f);
                 break;
             case PlayerClass.archer:
-                setStats(100,4);
+                setStats(100,0.8f);
                 break;
             default:
                 break;

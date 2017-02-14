@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -27,7 +28,7 @@ public class PlayerStats : MonoBehaviour {
     private int _luckyLvl;
 
     private int _defenseLvl;
-    private int _damageBase;
+    private float _damageBase;
     private int _damageLvl;
     #endregion
 
@@ -50,6 +51,17 @@ public class PlayerStats : MonoBehaviour {
     public int def { get { return _defenseLvl; } }
     public int dmg { get { return _damageLvl; } }
     public int gold { get { return _gold; } }
+    public int attributesLeft { get { return _atributesLeft; } }
+
+    public Text strTxt;
+    public Text conTxt;
+    public Text dexTxt;
+    public Text tnlTxt;
+    public Text inteTxt;
+    public Text xpTxt;
+    public Text luckTxt;
+    public Text attleftTxt;
+
     #endregion
 
     public enum PlayerClass
@@ -62,8 +74,22 @@ public class PlayerStats : MonoBehaviour {
     public PlayerClass pclass;
 
     public void Start()
-    {        
+    {
+        _atributesLeft = _level * 5;
         checkAtributes();
+        GUIStatsUpdate();
+    }
+
+    void GUIStatsUpdate()
+    {
+        attleftTxt.text = "Atributes left: " + _atributesLeft.ToString();
+        strTxt.text = "Str: " + _strenghtLvl.ToString();
+        conTxt.text = "Con: "+ _constitutionLvl.ToString();
+        dexTxt.text = "Dex: " + _dexterityLvl.ToString();
+        tnlTxt.text = "TnL: " + (_toNextLevel-_experience).ToString();
+        inteTxt.text = "Int: " + _inteligenceLvl.ToString();
+        xpTxt.text = "XP: " + _experience.ToString();
+        luckTxt.text = "Luck: " + _luckyLvl.ToString();
     }
 
     void checkAtributes()
@@ -80,9 +106,9 @@ public class PlayerStats : MonoBehaviour {
         Debug.Log("Analize Terminada");
     }
 
-    public void setStats(int hpbase, int dmgBase)
+    public void setStats(int hpbase, float dmgBase)
     {
-        _damageLvl = dmgBase;
+        _damageLvl = str;
         _damageBase = dmgBase;
         _healthBase = hpbase;
         _Maxhealth = (int)(_healthBase + (5 * con));
@@ -95,6 +121,11 @@ public class PlayerStats : MonoBehaviour {
     {
         _health += ammount;
         _health = Mathf.Clamp(_health, 0, _Maxhealth);
+    }
+
+    public int Attack()
+    {
+        return Random.Range((int)_damageBase, _damageLvl);
     }
 
     public void TakeDamage(int ammout)
@@ -113,49 +144,60 @@ public class PlayerStats : MonoBehaviour {
             _health = _Maxhealth;
             Debug.Log("Level UP");
         }
+        GUIStatsUpdate();
     }
 
     public void AddGold(int ammout)
     {
         _gold += ammout;
+        GUIStatsUpdate();
     }
 
     public void addStats(string s)
     {
-        if(s == "dex")
+        if (attributesLeft > 0)
         {
-            _dexterityLvl++;
-            if (pclass == PlayerClass.archer)
+            if (s == "dex")
             {
-                _damageLvl = (int)(_damageBase * (_dexterityLvl * 1.35f));
+                _dexterityLvl++;
+                if (pclass == PlayerClass.archer)
+                {
+                    _damageLvl = (int)(_damageBase * (_dexterityLvl * 1.35f));
+                }
             }
-        }
-        if(s == "str")
-        {
-            _strenghtLvl++;
-            if(pclass == PlayerClass.warrior)
+            if (s == "str")
             {
-                _damageLvl = (int)(_damageBase * (_strenghtLvl * 1.15f));
+                _strenghtLvl++;
+                if (pclass == PlayerClass.warrior)
+                {
+                    _damageLvl = (int)(_damageBase * (_strenghtLvl * 1.15f));
+                }
             }
-        }
-        if(s == "inte")
-        {
-            _inteligenceLvl++;
-            if(pclass == PlayerClass.mage)
+            if (s == "inte")
             {
-                _damageLvl = (int)(_damageBase * (_inteligenceLvl * 1.28f));
+                _inteligenceLvl++;
+                if (pclass == PlayerClass.mage)
+                {
+                    _damageLvl = (int)(_damageBase * (_inteligenceLvl * 1.28f));
+                }
             }
-        }
-        if(s == "con")
-        {
-            _constitutionLvl++;
-            _Maxhealth = (int)(_healthBase + (5 * con));
-        }
-        if (s == "luck")
-        {
-            _luckyLvl++;
+            if (s == "con")
+            {
+                _constitutionLvl++;
+                _Maxhealth = (int)(_healthBase + (5 * con));
+            }
+            if (s == "luck")
+            {
+                _luckyLvl++;
+            }
+            _atributesLeft--;
+            _atributesUsed++;
+            GUIStatsUpdate();
         }
     }
 
-
+    public void SetActiveMenu(GameObject x)
+    {
+        x.SetActive(!x.activeSelf);
+    }
 }
