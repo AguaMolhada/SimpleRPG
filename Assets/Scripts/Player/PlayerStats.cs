@@ -27,9 +27,12 @@ public class PlayerStats : MonoBehaviour {
     private int _constitutionLvl;
     private int _luckyLvl;
 
-    private int _defenseLvl;
+    private double _defense;
     private float _damageBase;
-    private int _damageLvl;
+    private int _minDamage;
+    private int _maxDamage;
+    private int _chanceRun;
+    private double _chanceCrit;
     #endregion
 
     private int _gold;
@@ -43,15 +46,18 @@ public class PlayerStats : MonoBehaviour {
     public int level { get { return _level; } }
     public int exp { get { return _experience; } }
     public int tnl { get { return _toNextLevel; } }
+
     public int dex { get { return _dexterityLvl; } }
     public int str { get { return _strenghtLvl; } }
     public int inte { get { return _inteligenceLvl; } }
     public int con { get { return _constitutionLvl; } }
     public int luck { get { return _luckyLvl; } }
-    public int def { get { return _defenseLvl; } }
-    public int dmg { get { return _damageLvl; } }
+    public double def { get { return _defense; } }
+
+    public int chanceRun { get { return _chanceRun; } }
     public int gold { get { return _gold; } }
     public int attributesLeft { get { return _atributesLeft; } }
+
 
     public Text strTxt;
     public Text conTxt;
@@ -61,6 +67,9 @@ public class PlayerStats : MonoBehaviour {
     public Text xpTxt;
     public Text luckTxt;
     public Text attleftTxt;
+    public Text dmgInfoTxt;
+    public Text critInfoTxt;
+    public Text defInfoTxt;
 
     #endregion
 
@@ -90,6 +99,9 @@ public class PlayerStats : MonoBehaviour {
         inteTxt.text = "Int: " + _inteligenceLvl.ToString();
         xpTxt.text = "XP: " + _experience.ToString();
         luckTxt.text = "Luck: " + _luckyLvl.ToString();
+        defInfoTxt.text = "Def: " + _defense.ToString("F") + "%";
+        dmgInfoTxt.text = "Dmg: " + _minDamage.ToString() + "-" + _maxDamage.ToString();
+        critInfoTxt.text = "Crit:" + _chanceCrit.ToString("F") + "%";
     }
 
     void checkAtributes()
@@ -108,7 +120,7 @@ public class PlayerStats : MonoBehaviour {
 
     public void setStats(int hpbase, float dmgBase)
     {
-        _damageLvl = str;
+        _minDamage = str;
         _damageBase = dmgBase;
         _healthBase = hpbase;
         _Maxhealth = (int)(_healthBase + (5 * con));
@@ -125,12 +137,12 @@ public class PlayerStats : MonoBehaviour {
 
     public int Attack()
     {
-        return Random.Range((int)_damageBase, _damageLvl);
+        return Random.Range((int)_minDamage, _maxDamage);
     }
 
     public void TakeDamage(int ammout)
     {
-        _health -= (int)(ammout - Ultility.GetPercent(ammout, def));
+        _health -= (int)(ammout - Ultility.GetPercent(ammout, (float)def));
     }
 
     public void AddExperience(int ammout)
@@ -157,39 +169,100 @@ public class PlayerStats : MonoBehaviour {
     {
         if (attributesLeft > 0)
         {
-            if (s == "dex")
+#warning Need to implement Lucky Stat
+            #region class Archer
+            if (pclass == PlayerClass.archer)
             {
-                _dexterityLvl++;
-                if (pclass == PlayerClass.archer)
+                if (s == "dex")
                 {
-                    _damageLvl = (int)(_damageBase * (_dexterityLvl * 1.35f));
+                    _dexterityLvl++;
+                    _minDamage = (int)(_damageBase * (_dexterityLvl * .75f));
+                    _maxDamage = (int)(_damageBase * (_dexterityLvl * 1.35f));
+                    _chanceCrit = (_dexterityLvl * 1.82f)/10;
+                }
+                if (s == "str")
+                {
+                    _strenghtLvl++;
+                    _defense = (_strenghtLvl * .15f)/10;
+                }
+                if (s == "inte")
+                {
+                    _inteligenceLvl++;
+                    _chanceRun = (int)(_inteligenceLvl * 1.35f);
+                }
+                if (s == "con")
+                {
+                    _constitutionLvl++;
+                    _Maxhealth = (int)(_healthBase + (3.25f * con));
+                }
+                if (s == "luck")
+                {
+                    _luckyLvl++;
                 }
             }
-            if (s == "str")
+            #endregion
+            #region class Warrior
+            if (pclass == PlayerClass.warrior)
             {
-                _strenghtLvl++;
-                if (pclass == PlayerClass.warrior)
+                if (s == "dex")
                 {
-                    _damageLvl = (int)(_damageBase * (_strenghtLvl * 1.15f));
+                    _dexterityLvl++;
+                    _chanceCrit = (_dexterityLvl * 1.05f)/10;
+                }
+                if (s == "str")
+                {
+                    _strenghtLvl++;
+                    _minDamage = (int)(_damageBase * (_strenghtLvl * .65f));
+                    _maxDamage = (int)(_damageBase * (_strenghtLvl * 1.15f));
+                    _defense = (_strenghtLvl * .85f)/10;
+                }
+                if (s == "inte")
+                {
+                    _inteligenceLvl++;
+                    _chanceRun = (int)(_inteligenceLvl * .85f);
+                }
+                if (s == "con")
+                {
+                    _constitutionLvl++;
+                    _Maxhealth = (int)(_healthBase + (7.25f * con));
+                }
+                if (s == "luck")
+                {
+                    _luckyLvl++;
                 }
             }
-            if (s == "inte")
+            #endregion
+            #region class Mage
+            if (pclass == PlayerClass.mage)
             {
-                _inteligenceLvl++;
-                if (pclass == PlayerClass.mage)
+                if (s == "dex")
                 {
-                    _damageLvl = (int)(_damageBase * (_inteligenceLvl * 1.28f));
+                    _dexterityLvl++;
+                    _chanceCrit = (_dexterityLvl * 1.25f)/10;
+                }
+                if (s == "str")
+                {
+                    _strenghtLvl++;
+                    _defense = (_strenghtLvl * .45f)/10;
+                }
+                if (s == "inte")
+                {
+                    _inteligenceLvl++;
+                    _minDamage = (int)(_damageBase * (_inteligenceLvl * .64f));
+                    _maxDamage = (int)(_damageBase * (_inteligenceLvl * 1.28f));
+
+                }
+                if (s == "con")
+                {
+                    _constitutionLvl++;
+                    _Maxhealth = (int)(_healthBase + (5 * con));
+                }
+                if (s == "luck")
+                {
+                    _luckyLvl++;
                 }
             }
-            if (s == "con")
-            {
-                _constitutionLvl++;
-                _Maxhealth = (int)(_healthBase + (5 * con));
-            }
-            if (s == "luck")
-            {
-                _luckyLvl++;
-            }
+            #endregion
             _atributesLeft--;
             _atributesUsed++;
             GUIStatsUpdate();

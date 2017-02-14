@@ -45,11 +45,12 @@ public class GameController : MonoBehaviour {
     {
         if (enemy != null)
         {
+            int dmg = player.Attack();
             exploreLog.text = "";
-            enemy.RecieveDmg(player.Attack());
+            enemy.RecieveDmg(dmg);
             var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
             player.TakeDamage(dmgRecieve);
-            exploreLog.text += "\n\r You have deal " + player.dmg + " dmg to the enemy";
+            exploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
             exploreLog.text += "\n\r You have recieved " + dmgRecieve + " dmg";
             exploreLog.text += "\n\r Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
         }
@@ -61,7 +62,7 @@ public class GameController : MonoBehaviour {
 
     public void Run()
     {
-        var chance = Random.Range((int)(0+((player.luck*1.2)/10)), 100);
+        var chance = Random.Range((int)(0+(player.chanceRun/10)), 100);
         if (chance >= 30)
         {
             exploreLog.text += "\n\r You have left the battle!";
