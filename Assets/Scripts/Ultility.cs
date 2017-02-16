@@ -54,9 +54,9 @@ public static class Ultility {
     static string StartName()
     {
         int a, b;
-        string[,] startName = new string[3, 19] {{"b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","z"},
-                                                 {"b","c","ch","d","f","g","k","p","ph","s","t","v","z","r","l","","","",""},
-                                                 {"ch","st","th","ct","ph","qu","squ","sh","","","","","","","","","","",""}};
+        string[,] startName = new string[3, 19] {{"B","C","D","F","G","H","J","K","L","M","N","P","R","S","T","V","W","X","Z"},
+                                                 {"B","C","Ch","D","F","G","K","P","Ph","S","T","V","Z","R","L","","","",""},
+                                                 {"Ch","St","Th","Ct","Ph","Qu","Squ","Sh","","","","","","","","","","",""}};
         a = Random.Range(0, startName.GetLength(0));
         for (int i = 0; i < 1; i++)
         {

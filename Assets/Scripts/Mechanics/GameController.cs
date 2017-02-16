@@ -50,9 +50,12 @@ public class GameController : MonoBehaviour {
             enemy.RecieveDmg(dmg);
             var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
             player.TakeDamage(dmgRecieve);
-            exploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
-            exploreLog.text += "\n\r You have recieved " + dmgRecieve + " dmg";
-            exploreLog.text += "\n\r Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
+            if (enemy)
+            {
+                exploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
+                exploreLog.text += "\n\r Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
+            }
+            exploreLog.text += "\n\r You recieved " + dmgRecieve + " dmg";
         }
         else
         {

@@ -8,12 +8,11 @@ public class Player : PlayerStats {
     public Text hpText;
     public Text expText;
     public Text LvlText;
+    public Text classText;
 
     public Image PlayerImage;
     public Image HpBar;
     public Image ExpBar;
-
-
 
 
 	// Use this for initialization
@@ -43,10 +42,11 @@ public class Player : PlayerStats {
 
     void UpdateGUIPlayer()
     {
-        LvlText.text = "Level:" + level;
+        LvlText.text = "Level: " + level;
         hpText.text = hp + "/" + maxhp;
         HpBar.fillAmount = hp / maxhp;
         expText.text = Ultility.GetPercent(tnl, exp) + "%";
         ExpBar.fillAmount = Ultility.GetPercent(tnl, exp)/100;
+        classText.text = "Class: " + this.pclass.ToString();
     }
 }
