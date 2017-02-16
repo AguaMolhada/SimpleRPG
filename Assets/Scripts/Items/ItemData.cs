@@ -12,10 +12,12 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Transform originalParent;
     private Vector2 itemOffset;
     private PlayerInventory inv;
+    private PlayerEquipment equip;
 
     void Start()
     {
         inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+        equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
     }
 
     void Update()
@@ -64,6 +66,22 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 GameObject.Find("GameController").GetComponent<GameController>().exploreLog.text += "\n\r You have used 1 " + item.Title + " ! and healed " + item.Attribute + "hp.";
                 inv.RemoveItem(item.ID);
             }
+
+            if (this.item.typeItem.ToString() != "consumable")
+            {
+                Debug.Log(equip.CheckIsAlreadyEquiped(this.item));
+                if (!equip.CheckIsAlreadyEquiped(this.item))
+                {
+                    equip.EquipItem(this.item.ID);
+                    inv.RemoveItem(this.item.ID);
+                }
+                else
+                {
+                    equip.DeEquipItem(this.item.ID);
+                    inv.AddItem(this.item.ID);
+                }
+            }
+
         }
 
     }

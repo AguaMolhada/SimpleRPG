@@ -55,8 +55,24 @@ public class PlayerInventory : MonoBehaviour
                 {
                     ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
 
+                    if(data.ammount -1 == 0)
+                    {
+                        inventoryItems[i] = new Item();
+                    }
                     data.ammount -= 1;
                     data.transform.GetChild(0).GetComponent<Text>().text = data.ammount.ToString();
+                }
+            }
+        }
+        else if(CheckIfItemIsInInventory(itemToRemove))
+        {
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (inventoryItems[i].ID == itemToRemove.ID)
+                {
+                    ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                    inventoryItems[i] = new Item();
+                    data.ammount = 0;
                 }
             }
         }
@@ -75,6 +91,7 @@ public class PlayerInventory : MonoBehaviour
 
                     data.ammount += 1;
                     data.transform.GetChild(0).GetComponent<Text>().text = data.ammount.ToString();
+                    break;
                 }
             }
         }
@@ -88,8 +105,11 @@ public class PlayerInventory : MonoBehaviour
                     GameObject itemObj = Instantiate(inventoryItem);
                     itemObj.GetComponent<ItemData>().item = itemToAdd;
                     itemObj.GetComponent<ItemData>().slot = i;
-                    itemObj.transform.SetParent(slots[i].transform);
-                    itemObj.transform.position = Vector3.zero;
+                    if (itemObj.transform.parent == null)
+                    {
+                        itemObj.transform.SetParent(slots[i].transform);
+                        itemObj.transform.localPosition = Vector3.zero;
+                    }
                     itemObj.GetComponent<Image>().sprite = itemToAdd.ISprite;
                     itemObj.name = itemToAdd.Title;
                     itemObj.transform.GetChild(0).GetComponent<Text>().text = "";

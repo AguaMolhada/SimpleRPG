@@ -8,17 +8,32 @@ public class Slot : MonoBehaviour , IDropHandler {
     public enum SlotType
     {
         inventory,
-        equip,
+        equipment,
     }
 
+    public enum EquipmentType
+    {
+        none,
+        helmet,
+        armor,
+        boots,
+        weapon,
+        shield,
+        necklace,
+        ring,
+    }
+
+    public EquipmentType equipType;
     public SlotType slotType;
     public int slotID;
 
     private PlayerInventory inv;
+    private PlayerEquipment equip;
 
     void Start()
     {
         inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+        equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
     }
 
     public void OnDrop(PointerEventData eventData)
