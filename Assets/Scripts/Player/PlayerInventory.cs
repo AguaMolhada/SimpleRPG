@@ -33,15 +33,11 @@ public class PlayerInventory : MonoBehaviour
             slots[i].GetComponent<Slot>().slotID = i;
         }
 
-        AddItem(0);
-        AddItem(0);
-        AddItem(0);
-        AddItem(0);
         AddItem(3);
         AddItem(4);
         AddItem(7); AddItem(7); AddItem(7); AddItem(7); AddItem(7); AddItem(7);
         AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8);
-        AddItem(9); AddItem(9); AddItem(9);
+        AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9);
     }
 
     public void RemoveItem(int id)

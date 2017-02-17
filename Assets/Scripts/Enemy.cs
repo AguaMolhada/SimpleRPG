@@ -28,7 +28,7 @@ public class Enemy : ScriptableObject {
         hp -= ammout;
         if(hp <= 0)
         {
-            var xp = (int)(Random.Range(2, 8) * (lvl / 1.25));
+            var xp = (int)(Random.Range(5, 15) * (lvl / 1.25));
             player.AddExperience(xp);
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += eName + " Morreu, " + player.playerName + " Ganhou " + xp +" experience" ;
             Destroy(this);

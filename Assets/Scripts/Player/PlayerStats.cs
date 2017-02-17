@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class PlayerStats : MonoBehaviour {
 
@@ -8,7 +9,6 @@ public class PlayerStats : MonoBehaviour {
     
     #region Life
     private int _health;
-    private int _healthBase;
     private int _Maxhealth;
     #endregion
 
@@ -17,6 +17,7 @@ public class PlayerStats : MonoBehaviour {
     private int _atributesLeft;
     private int _atributesUsed;
     private int _experience;
+    private int _experienceTotal;
     private int _toNextLevel;
     #endregion
 
@@ -27,8 +28,14 @@ public class PlayerStats : MonoBehaviour {
     private int _constitutionLvl;
     private int _luckyLvl;
 
-    private double _defense;
+    #region baseStats
+    private int _healthBase;
+    private double _defenseBase;
     private float _damageBase;
+
+    #endregion
+
+    private double _defense;
     private int _minDamage;
     private int _maxDamage;
     private int _chanceRun;
@@ -44,6 +51,7 @@ public class PlayerStats : MonoBehaviour {
     public float hp { get { return _health; } }
     public int maxhp { get { return _Maxhealth; } }
     public int level { get { return _level; } }
+    public int expTotal { get { return _experienceTotal; } }
     public int exp { get { return _experience; } }
     public int tnl { get { return _toNextLevel; } }
 
@@ -57,7 +65,6 @@ public class PlayerStats : MonoBehaviour {
     public int chanceRun { get { return _chanceRun; } }
     public int gold { get { return _gold; } }
     public int attributesLeft { get { return _atributesLeft; } }
-
 
     public Text strTxt;
     public Text conTxt;
@@ -89,7 +96,7 @@ public class PlayerStats : MonoBehaviour {
         GUIStatsUpdate();
     }
 
-    void GUIStatsUpdate()
+    protected void GUIStatsUpdate()
     {
         attleftTxt.text = "Atributes left: " + _atributesLeft.ToString();
         strTxt.text = "Str: " + _strenghtLvl.ToString();
@@ -118,10 +125,10 @@ public class PlayerStats : MonoBehaviour {
         Debug.Log("Analize Terminada");
     }
 
-    public void setStats(int hpbase, float dmgBase)
+    public void setStats(int hpbase, float dmgBase, float defBase)
     {
-        _minDamage = str;
         _damageBase = dmgBase;
+        _defenseBase = defBase / 100;
         _healthBase = hpbase;
         _Maxhealth = (int)(_healthBase + (5 * con));
         _health = _Maxhealth;
@@ -137,26 +144,51 @@ public class PlayerStats : MonoBehaviour {
 
     public int Attack()
     {
-        return Random.Range((int)_minDamage, _maxDamage);
+        return UnityEngine.Random.Range((int)_minDamage, _maxDamage);
+    }
+
+    public void AddEquipmentStats(float x, string type)
+    {
+
     }
 
     public void TakeDamage(int ammout)
     {
         _health -= (int)(ammout - Ultility.GetPercent(ammout, (float)def));
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += "You recieved " + (int)(ammout - Ultility.GetPercent(ammout, (float)def))+ " Damage";
+        if (_health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += "You`re Dead! You lost " + (int)Ultility.GetPercent(_gold, 10) + " Gold and " + (int)Ultility.GetPercent(_experience, 7) + " experience points";
+        _gold -= (int)Ultility.GetPercent(_gold, 10);
+        _health = _healthBase;
+        _experience = _experience - (int)Ultility.GetPercent(_experience, 7);
     }
 
     public void AddExperience(int ammout)
     {
         _experience += ammout;
-
+        _experienceTotal += ammout;
         if(_experience >= _toNextLevel)
         {
-            _experience -= _toNextLevel;
-            _toNextLevel = (int)(_toNextLevel * 1.15f);
-            _health = _Maxhealth;
-            Debug.Log("Level UP");
+            LevelUp();
         }
         GUIStatsUpdate();
+    }
+
+    void LevelUp()
+    {
+        _experience -= _toNextLevel;
+        _toNextLevel = (int)(_toNextLevel * 1.15f);
+        _health = _Maxhealth;
+        _atributesLeft += 5;
+        Debug.Log("Level UP");
+        checkAtributes();
     }
 
     public void AddGold(int ammout)
@@ -183,7 +215,7 @@ public class PlayerStats : MonoBehaviour {
                 if (s == "str")
                 {
                     _strenghtLvl++;
-                    _defense = (_strenghtLvl * .15f)/10;
+                    _defense = _defenseBase + (_strenghtLvl * .15f)/10;
                 }
                 if (s == "inte")
                 {
@@ -214,7 +246,7 @@ public class PlayerStats : MonoBehaviour {
                     _strenghtLvl++;
                     _minDamage = (int)(_damageBase * (_strenghtLvl * .65f));
                     _maxDamage = (int)(_damageBase * (_strenghtLvl * 1.15f));
-                    _defense = (_strenghtLvl * .85f)/10;
+                    _defense = _defenseBase + (_strenghtLvl * .85f)/10;
                 }
                 if (s == "inte")
                 {
@@ -243,7 +275,7 @@ public class PlayerStats : MonoBehaviour {
                 if (s == "str")
                 {
                     _strenghtLvl++;
-                    _defense = (_strenghtLvl * .45f)/10;
+                    _defense = _defenseBase + (_strenghtLvl * .45f)/10;
                 }
                 if (s == "inte")
                 {

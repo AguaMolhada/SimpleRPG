@@ -55,7 +55,6 @@ public class GameController : MonoBehaviour {
                 exploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
                 exploreLog.text += "\n\r Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
             }
-            exploreLog.text += "\n\r You recieved " + dmgRecieve + " dmg";
         }
         else
         {

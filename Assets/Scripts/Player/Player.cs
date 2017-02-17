@@ -20,13 +20,13 @@ public class Player : PlayerStats {
         switch (pclass)
         {
             case PlayerClass.warrior:
-                setStats(200,1);
+                setStats(200,1,3);
                 break;
             case PlayerClass.mage:
-                setStats(100,0.4f);
+                setStats(100,0.4f,1);
                 break;
             case PlayerClass.archer:
-                setStats(100,0.8f);
+                setStats(100,0.8f,2.3f);
                 break;
             default:
                 break;
@@ -37,7 +37,7 @@ public class Player : PlayerStats {
 	// Update is called once per frame
 	void Update () {
         UpdateGUIPlayer();
-
+        GUIStatsUpdate();
 	}
 
     void UpdateGUIPlayer()
@@ -45,8 +45,8 @@ public class Player : PlayerStats {
         LvlText.text = "Level: " + level;
         hpText.text = hp + "/" + maxhp;
         HpBar.fillAmount = hp / maxhp;
-        expText.text = Ultility.GetPercent(tnl, exp) + "%";
-        ExpBar.fillAmount = Ultility.GetPercent(tnl, exp)/100;
+        expText.text = System.Math.Round(Ultility.PercentValue(tnl, exp),2) + "%";
+        ExpBar.fillAmount = Ultility.PercentValue(tnl, exp)/100;
         classText.text = "Class: " + this.pclass.ToString();
     }
 }

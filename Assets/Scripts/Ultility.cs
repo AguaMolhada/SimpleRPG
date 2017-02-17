@@ -37,6 +37,11 @@ public static class Ultility {
         return (percent / 100) * total;
     }
 
+    public static float PercentValue(float total,float percent)
+    {
+        return (percent / total) * 100;
+    }
+
     #region Name Generator
     public static string nameGenerator()
     {
