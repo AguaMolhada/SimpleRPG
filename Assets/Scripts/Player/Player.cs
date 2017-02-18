@@ -9,6 +9,7 @@ public class Player : PlayerStats {
     public Text expText;
     public Text LvlText;
     public Text classText;
+    public Text goldText;
 
     public Image PlayerImage;
     public Image HpBar;
@@ -47,6 +48,6 @@ public class Player : PlayerStats {
         HpBar.fillAmount = hp / maxhp;
         expText.text = System.Math.Round(Ultility.PercentValue(tnl, exp),2) + "%";
         ExpBar.fillAmount = Ultility.PercentValue(tnl, exp)/100;
-        classText.text = "Class: " + this.pclass.ToString();
     }
+
 }

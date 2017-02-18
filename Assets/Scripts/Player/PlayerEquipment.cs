@@ -28,11 +28,7 @@ public class PlayerEquipment : MonoBehaviour {
         for (int i = 0; i < slots.Count; i++)
         {
             equipmentItems.Add(new Item());
-          //  slots.Add(Instantiate(equipmentSlot));
-      //      slots[i].transform.SetParent(equipmentPanel.transform);
-     //       slots[i].GetComponent<Slot>().slotID = i;
         }
-
     }
 
     public void EquipItem(int id)

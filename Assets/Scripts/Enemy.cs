@@ -15,7 +15,7 @@ public class Enemy : ScriptableObject {
     public Enemy(int l,int h, Player p)
     {
         eName = Ultility.nameGenerator();
-        lvl = l;
+        lvl = (int)(Random.Range(1, l));
         hp = h;
         hpMax = h;
         player = p;
@@ -28,11 +28,17 @@ public class Enemy : ScriptableObject {
         hp -= ammout;
         if(hp <= 0)
         {
-            var xp = (int)(Random.Range(5, 15) * (lvl / 1.25));
-            player.AddExperience(xp);
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += eName + " Morreu, " + player.playerName + " Ganhou " + xp +" experience" ;
-            Destroy(this);
+            Die();
         }
     }
 
+    void Die()
+    {
+        var xp = (int)(Random.Range(5, 15) * (lvl / 1.25));
+        var gold = (int)(Random.Range(3, 10) * (lvl / 1.25));
+        player.AddExperience(xp);
+        player.AddGold(gold);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += eName + " Morreu, " + player.playerName + " Ganhou " + xp + " experience";
+        Destroy(this);
+    }
 }
