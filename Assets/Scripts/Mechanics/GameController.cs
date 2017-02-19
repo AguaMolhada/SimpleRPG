@@ -79,13 +79,5 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void HealPlayer()
-    {
-        if(enemy == null)
-        {
-            player.Heal(50);
-        }
-    }
-
 
 }

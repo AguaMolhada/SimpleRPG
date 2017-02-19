@@ -109,5 +109,16 @@
 		"stackable": true,
 		"sprname": "P_Red01",
 		"usable": true
+	},
+		{
+		"id": 10,
+		"title": "Iron Sword",
+		"buyvalue": 250,
+		"sellvalue": 95,
+		"typeitem": "weapon",
+		"attribute": 15,
+		"stackable": false,
+		"sprname": "W_Sword004",
+		"usable": false
 	}
 ]

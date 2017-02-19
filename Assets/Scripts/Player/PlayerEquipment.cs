@@ -8,6 +8,7 @@ public class PlayerEquipment : MonoBehaviour {
     #region Private Vars
     GameObject equipmentPanel;
     PlayerInventory inv;
+    Player player;
 
     [SerializeField]
     ItemDatabase database;
@@ -23,6 +24,7 @@ public class PlayerEquipment : MonoBehaviour {
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
         equipmentPanel = GameObject.Find("Equipment Panel");
         for (int i = 0; i < slots.Count; i++)
@@ -54,6 +56,7 @@ public class PlayerEquipment : MonoBehaviour {
                         itemObj.transform.GetChild(0).GetComponent<Text>().text = "";
                         Debug.Log(itemObj.transform.position);
                         Debug.Log(itemObj.GetComponent<RectTransform>().transform.position);
+                        player.SetEquiStats(equipmentItems[j].Attribute, equipmentItems[j].typeItem.ToString());
                         break;
                     }
                 }
@@ -68,6 +71,7 @@ public class PlayerEquipment : MonoBehaviour {
         {
             if(equipmentItems[i].typeItem == itemToDeEquip.typeItem)
             {
+                player.SetEquiStats(-equipmentItems[i].Attribute, equipmentItems[i].typeItem.ToString());
                 equipmentItems.RemoveAt(i);
                 for (int j = 0; j < slots.Count; j++)
                 {
@@ -106,4 +110,5 @@ public class PlayerEquipment : MonoBehaviour {
         }
         return false;
     }
+
 }

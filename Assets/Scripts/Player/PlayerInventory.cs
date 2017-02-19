@@ -38,6 +38,7 @@ public class PlayerInventory : MonoBehaviour
         AddItem(7); AddItem(7); AddItem(7); AddItem(7); AddItem(7); AddItem(7);
         AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8); AddItem(8);
         AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9); AddItem(9);
+        AddItem(10);
     }
 
     public void RemoveItem(int id)

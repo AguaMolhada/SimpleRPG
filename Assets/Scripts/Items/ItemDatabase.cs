@@ -51,7 +51,7 @@ public class Item
     public string Title { get; set; }
     public int BuyValue { get; set; }
     public int SellValue { get; set; }
-    public enum TItem { test,oneweapon,twohanded,shield,armor,helmet,consumable }
+    public enum TItem { test,weapon,shield,armor,helmet,consumable }
     public TItem typeItem { get; set; }
     public int Attribute { get; set; } // atribute a ser modificado pelo item defesa/atk/tanto heal das potion
     public bool Stackable { get; set; }

@@ -8,41 +8,45 @@ public class PlayerStats : MonoBehaviour {
     #region Private Vars
     
     #region Life
-    private int _health;
-    private int _Maxhealth;
+    protected int _health;
+    protected int _Maxhealth;
     #endregion
 
     #region Level
-    private int _level;
-    private int _atributesLeft;
-    private int _atributesUsed;
-    private int _experience;
-    private int _experienceTotal;
-    private int _toNextLevel;
+    protected int _level;
+    protected int _atributesLeft;
+    protected int _atributesUsed;
+    protected int _experience;
+    protected int _experienceTotal;
+    protected int _toNextLevel;
     #endregion
 
     #region Stats
-    private int _dexterityLvl;
-    private int _strenghtLvl;
-    private int _inteligenceLvl;
-    private int _constitutionLvl;
-    private int _luckyLvl;
+    protected int _dexterityLvl;
+    protected int _strenghtLvl;
+    protected int _inteligenceLvl;
+    protected int _constitutionLvl;
+    protected int _luckyLvl;
 
     #region baseStats
-    private int _healthBase;
-    private double _defenseBase;
-    private float _damageBase;
-
+    protected int _healthBase;
+    protected double _defenseBase;
+    protected float _damageBase;
     #endregion
 
-    private double _defense;
-    private int _minDamage;
-    private int _maxDamage;
-    private int _chanceRun;
-    private double _chanceCrit;
+    #region equipStats
+    protected double _defenseEquip;
+    protected int _damageEquip;
     #endregion
 
-    private int _gold;
+    protected double _defense;
+    protected int _minDamage;
+    protected int _maxDamage;
+    protected int _chanceRun;
+    protected double _chanceCrit;
+    #endregion
+
+    protected int _gold;
 
     #endregion
 
@@ -60,7 +64,7 @@ public class PlayerStats : MonoBehaviour {
     public int inte { get { return _inteligenceLvl; } }
     public int con { get { return _constitutionLvl; } }
     public int luck { get { return _luckyLvl; } }
-    public double def { get { return _defense; } }
+    public double def { get { return _defense+(_defenseEquip/100); } }
 
     public int chanceRun { get { return _chanceRun; } }
     public int gold { get { return _gold; } }
@@ -106,12 +110,12 @@ public class PlayerStats : MonoBehaviour {
         inteTxt.text = "Int: " + _inteligenceLvl.ToString();
         xpTxt.text = "XP: " + _experience.ToString();
         luckTxt.text = "Luck: " + _luckyLvl.ToString();
-        defInfoTxt.text = "Def: " + _defense.ToString("F") + "%";
-        dmgInfoTxt.text = "Dmg: " + _minDamage.ToString() + "-" + _maxDamage.ToString();
+        defInfoTxt.text = "Def: " + def.ToString("F") + "%";
+        dmgInfoTxt.text = "Dmg: " + (_minDamage+_damageEquip).ToString() + "-" + (_maxDamage+_damageEquip).ToString();
         critInfoTxt.text = "Crit:" + _chanceCrit.ToString("F") + "%";
     }
 
-    void checkAtributes()
+    protected void checkAtributes()
     {
         Debug.Log("Iniciando Analize");
         if (_atributesLeft + _atributesUsed > _level * 5)
@@ -125,7 +129,7 @@ public class PlayerStats : MonoBehaviour {
         Debug.Log("Analize Terminada");
     }
 
-    public void setStats(int hpbase, float dmgBase, float defBase)
+    public void setStats(int hpbase, float dmgBase, float defBase, int exp)
     {
         _damageBase = dmgBase;
         _defenseBase = defBase / 100;
@@ -134,40 +138,28 @@ public class PlayerStats : MonoBehaviour {
         _health = _Maxhealth;
         _level = 1;
         _toNextLevel = 100;
+        AddExperience(exp);
     }
 
-    public void Heal(int ammount)
+    public void SetEquiStats(int ammount, string type)
     {
-        _health += ammount;
-        _health = Mathf.Clamp(_health, 0, _Maxhealth);
+        if(type == "armor")
+        {
+            _defenseEquip += ammount;
+        }
+        if(type == "helmet")
+        {
+            _defenseEquip += ammount;
+        }
+        if(type == "weapon")
+        {
+            _damageEquip += ammount;
+        }
     }
 
     public int Attack()
     {
-        return UnityEngine.Random.Range((int)_minDamage, _maxDamage);
-    }
-
-    public void AddEquipmentStats(float x, string type)
-    {
-
-    }
-
-    public void TakeDamage(int ammout)
-    {
-        _health -= (int)(ammout - Ultility.GetPercent(ammout, (float)def));
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += "You recieved " + (int)(ammout - Ultility.GetPercent(ammout, (float)def))+ " Damage";
-        if (_health <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += "You`re Dead! You lost " + (int)Ultility.GetPercent(_gold, 10) + " Gold and " + (int)Ultility.GetPercent(_experience, 7) + " experience points";
-        _gold -= (int)Ultility.GetPercent(_gold, 10);
-        _health = _healthBase;
-        _experience = _experience - (int)Ultility.GetPercent(_experience, 7);
+        return UnityEngine.Random.Range((int)(_minDamage+_damageEquip), (int)(_maxDamage+_damageEquip));
     }
 
     public void AddExperience(int ammout)
@@ -183,6 +175,7 @@ public class PlayerStats : MonoBehaviour {
 
     void LevelUp()
     {
+        _level++;
         _experience -= _toNextLevel;
         _toNextLevel = (int)(_toNextLevel * 1.15f);
         _health = _Maxhealth;
@@ -301,8 +294,5 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
-    public void SetActiveMenu(GameObject x)
-    {
-        x.SetActive(!x.activeSelf);
-    }
+
 }
