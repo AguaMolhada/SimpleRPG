@@ -8,9 +8,11 @@
 * Item Database
 * Usable Items
 * Inventory
+* Equipment (equip and change stats)
 
 ### Things to be done:
-* Monster drops 1
-* Equipment (working) 2
-* More Items 3
-* Save/Load 4
+* Monster drops
+* More Items
+* Save/Load
+* Item Database (put all itens in database)
+* Shop System (buy and sell)
