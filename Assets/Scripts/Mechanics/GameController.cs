@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour {
     #region Public Vars
     public Text exploreLog;
     public Text cityName;
+    public Image enemyHp;
+    public Text enemyName;
 
     #endregion
 

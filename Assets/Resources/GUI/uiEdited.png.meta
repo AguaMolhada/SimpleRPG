@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3cc62cceaa53ad5488cf8e3aef1c039d
-timeCreated: 1487430328
+timeCreated: 1487675521
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -617,24 +617,11 @@ TextureImporter:
         serializedVersion: 2
         x: 254
         y: 456
-        width: 34
+        width: 69
         height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: uiEdited_33
-      rect:
-        serializedVersion: 2
-        x: 289
-        y: 456
-        width: 34
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 34, y: 0, z: 34, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
@@ -1317,11 +1304,11 @@ TextureImporter:
       name: uiEdited_96
       rect:
         serializedVersion: 2
-        x: 810
-        y: 140
+        x: 767
+        y: 7
         width: 20
         height: 28
-      alignment: 0
+      alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
