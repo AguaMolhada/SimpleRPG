@@ -5,7 +5,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 
     #region Private Vars
-    private Player player;
+    private static Player player;
     private Enemy enemy;
 
     #endregion
@@ -13,7 +13,10 @@ public class GameController : MonoBehaviour {
     #region Public Vars
     public Text exploreLog;
     public Text cityName;
+    public GameObject enemyPanel;
+    public GameObject adventureBtn;
     public Image enemyHp;
+    public Text enemyHpTxt;
     public Text enemyName;
 
     #endregion
@@ -25,12 +28,25 @@ public class GameController : MonoBehaviour {
         }
 	}
 
+    private void Update()
+    {
+        if (enemy)
+        {
+            enemyHpTxt.text = enemy.hp.ToString() + "/" + enemy.hpMax.ToString();
+            enemyName.text = enemy.eName;
+            enemyHp.fillAmount = (float)((float)enemy.hp / (float)enemy.hpMax);
+        }
+    }
+
     public void ExploreWorld()
     {
         if (enemy == null && player.attributesLeft == 0)
         {
-            enemy = new Enemy(player.level, (int)(50 + (player.con * 1.42)), player) as Enemy;
+            enemy = ScriptableObject.CreateInstance("Enemy") as Enemy ;
+            enemy.Init(player.level, (int)(50 + (player.con * 1.42)), player);
             cityName.text = Ultility.CityNameGenerator();
+            this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
+            this.gameObject.GetComponent<GUIController>().SetActiveMenu(adventureBtn);
             exploreLog.text = "";
             exploreLog.text += "\n\r You have found a Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
         }
@@ -48,18 +64,21 @@ public class GameController : MonoBehaviour {
         if (enemy != null)
         {
             int dmg = player.Attack();
-            exploreLog.text = "";
-            enemy.RecieveDmg(dmg);
-            var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
-            player.TakeDamage(dmgRecieve);
             if (enemy)
             {
                 exploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
-                exploreLog.text += "\n\r Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
+            }
+            exploreLog.text = "";
+            enemy.RecieveDmg(dmg);
+            var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
+            if (enemy.hp > 0)
+            {
+                player.TakeDamage(dmgRecieve);
             }
         }
         else
         {
+            
             exploreLog.text += "\n\r You need to find an Enemy to battle";
         }
     }
@@ -70,6 +89,8 @@ public class GameController : MonoBehaviour {
         if (chance >= 30)
         {
             exploreLog.text += "\n\r You have left the battle!";
+            this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
+            this.gameObject.GetComponent<GUIController>().SetActiveMenu(adventureBtn);
             enemy = null;
         }
         else
@@ -81,5 +102,20 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public void LoadingThings()
+    {
+        enemy = ScriptableObject.CreateInstance("Enemy") as Enemy;
+        this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
+        this.gameObject.GetComponent<GUIController>().SetActiveMenu(adventureBtn);
+    }
+
+    public static Player getPlayer()
+    {
+        return player;
+    }
+    public static Enemy getEnemy()
+    {
+        return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().enemy;
+    }
 
 }
