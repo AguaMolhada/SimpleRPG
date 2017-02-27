@@ -27,6 +27,7 @@ public class PlayerStats : MonoBehaviour {
     protected int _inteligenceLvl;
     protected int _constitutionLvl;
     protected int _luckyLvl;
+    #endregion
 
     #region baseStats
     protected int _healthBase;
@@ -48,7 +49,6 @@ public class PlayerStats : MonoBehaviour {
 
     protected int _gold;
 
-    #endregion
 
     #region Public Vars
     public string playerName;
@@ -73,6 +73,7 @@ public class PlayerStats : MonoBehaviour {
     public int gold { get { return _gold; } }
     public int attributesLeft { get { return _atributesLeft; } }
 
+    #region TextsGUI
     public Text strTxt;
     public Text conTxt;
     public Text dexTxt;
@@ -84,6 +85,7 @@ public class PlayerStats : MonoBehaviour {
     public Text dmgInfoTxt;
     public Text critInfoTxt;
     public Text defInfoTxt;
+    #endregion
 
     #endregion
 
@@ -129,15 +131,18 @@ public class PlayerStats : MonoBehaviour {
     }
 
     /// <summary>
-    /// 
+    /// Used to load the character
     /// </summary>
-    /// <param name="exp"></param>
-    /// <param name="attr"></param>
-    /// <param name="s"></param>
-    /// <param name="d"></param>
-    /// <param name="c"></param>
-    /// <param name="i"></param>
-    public void SetStats(int h,PlayerClass clas,int exp, int attr, int s,int d,int c,int i)
+    /// <param name="h"> for setting health </param>
+    /// <param name="clas"> for setting character class </param>
+    /// <param name="exp"> for setting level </param>
+    /// <param name="attr"> for setting attributes left </param>
+    /// <param name="s"> for setting str </param>
+    /// <param name="d"> for setting dex </param>
+    /// <param name="c"> for setting con </param>
+    /// <param name="i"> for setting int </param>
+    /// <param name="g"> for setting gold</param>
+    public void SetStats(int h,PlayerClass clas,int exp, int attr, int s,int d,int c,int i,int g)
     {
         AddExperience(exp);
         pclass = clas;
@@ -148,6 +153,7 @@ public class PlayerStats : MonoBehaviour {
         _constitutionLvl = c;
         _inteligenceLvl = i;
         _health = h;
+        _gold = g;
         UpdateStats();
     }
 
@@ -201,8 +207,7 @@ public class PlayerStats : MonoBehaviour {
     {
         _gold += ammout;
     }
-
-
+    
     public void addStats(string s)
     {
         if (attributesLeft > 0)

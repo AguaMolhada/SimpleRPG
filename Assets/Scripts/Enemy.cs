@@ -59,7 +59,7 @@ public class Enemy : ScriptableObject {
         if(hp <= 0)
         {
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().enemyPanel);
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().adventureBtn);
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().optionsPanel);
             Die();
         }
     }

@@ -30,6 +30,11 @@ public class ItemDatabase : MonoBehaviour
         return null;
     }
 
+    public int ItemsCount()
+    {
+        return database.Count;
+    }
+
     void ConstructItemDatabase()
     {
         for (int i = 0; i < itemData.Count; i++)

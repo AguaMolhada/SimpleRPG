@@ -72,6 +72,7 @@ public class Player : PlayerStats {
         defInfoTxt.text = "Def: " + def.ToString("F") + "%";
         dmgInfoTxt.text = "Dmg: " + dmgMin.ToString() + "-" + dmgMax.ToString();
         critInfoTxt.text = "Crit:" + crit.ToString("F") + "%";
+        goldText.text = gold.ToString();
 
     }
 

@@ -14,7 +14,8 @@ public class GameController : MonoBehaviour {
     public Text exploreLog;
     public Text cityName;
     public GameObject enemyPanel;
-    public GameObject adventureBtn;
+    public GameObject optionsPanel;
+    public GameObject storePanel;
     public Image enemyHp;
     public Text enemyHpTxt;
     public Text enemyName;
@@ -46,7 +47,7 @@ public class GameController : MonoBehaviour {
             enemy.Init(player.level, (int)(50 + (player.con * 1.42)), player);
             cityName.text = Ultility.CityNameGenerator();
             this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-            this.gameObject.GetComponent<GUIController>().SetActiveMenu(adventureBtn);
+            this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
             exploreLog.text = "";
             exploreLog.text += "\n\r You have found a Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
         }
@@ -57,6 +58,12 @@ public class GameController : MonoBehaviour {
         else {
             exploreLog.text += "\n\r You cannot explore because there is an enemy in front of you";
         }
+    }
+
+    public void OpenStore()
+    {
+        this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
+        this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
     }
 
     public void Attack()
@@ -90,7 +97,7 @@ public class GameController : MonoBehaviour {
         {
             exploreLog.text += "\n\r You have left the battle!";
             this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-            this.gameObject.GetComponent<GUIController>().SetActiveMenu(adventureBtn);
+            this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
             enemy = null;
         }
         else
@@ -106,7 +113,7 @@ public class GameController : MonoBehaviour {
     {
         enemy = ScriptableObject.CreateInstance("Enemy") as Enemy;
         this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-        this.gameObject.GetComponent<GUIController>().SetActiveMenu(adventureBtn);
+        this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
     }
 
     public static Player getPlayer()
