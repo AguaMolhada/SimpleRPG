@@ -1,88 +1,87 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using System;
 
-public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler {
+namespace Assets.Scripts.Items
+{
+    public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler {
 
-    public Item item;
-    public int ammount;
-    public int slot;
+        public Item Item;
+        public int Ammount;
+        public int Slot;
 
-    private Transform originalParent;
-    private Vector2 itemOffset;
-    private PlayerInventory inv;
-    private PlayerEquipment equip;
+        private Vector2 _itemOffset;
+        private PlayerInventory _inv;
+        private PlayerEquipment _equip;
 
-    void Start()
-    {
-        inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
-        equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-    }
-
-    void Update()
-    {
-        if(ammount == 0)
+        private void Start()
         {
-            Destroy(this.gameObject);
+            _inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+            _equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
         }
-    }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if(item != null)
+        private void Update()
         {
-            itemOffset = eventData.position - new Vector2(this.transform.position.x, this.transform.position.y);
-            originalParent = this.transform.parent;
-            this.transform.SetParent(this.transform.parent.parent);
-            this.transform.position = eventData.position - itemOffset;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
+            if(Ammount == 0)
+            {
+                Destroy(gameObject);
+            }
         }
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (item != null)
+        public void OnBeginDrag(PointerEventData eventData)
         {
-            this.transform.position = eventData.position - itemOffset;
+            if(Item != null)
+            {
+                _itemOffset = eventData.position - new Vector2(transform.position.x, transform.position.y);
+                transform.SetParent(transform.parent.parent);
+                transform.position = eventData.position - _itemOffset;
+                GetComponent<CanvasGroup>().blocksRaycasts = false;
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (Item != null)
+            {
+                transform.position = eventData.position - _itemOffset;
  
+            }
         }
-    }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        this.transform.SetParent(inv.slots[slot].transform);
-        this.transform.position = inv.slots[slot].transform.position;
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        public void OnEndDrag(PointerEventData eventData)
         {
-            if (this.item.Usable && ammount > 0)
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Heal(item.Attribute);
-                GameObject.Find("GameController").GetComponent<GameController>().exploreLog.text += "\n\r You have used 1 " + item.Title + " ! and healed " + item.Attribute + "hp.";
-                inv.RemoveItem(item.ID);
-            }
+            transform.SetParent(_inv.Slots[Slot].transform);
+            transform.position = _inv.Slots[Slot].transform.position;
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
 
-            if (this.item.typeItem.ToString() != "consumable")
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right)
             {
-                Debug.Log(equip.CheckIsAlreadyEquiped(this.item));
-                if (!equip.CheckIsAlreadyEquiped(this.item))
+                if (Item.Usable && Ammount > 0)
                 {
-                    equip.EquipItem(this.item.ID);
-                    inv.RemoveItem(this.item.ID);
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().Heal(Item.Attribute);
+                    GameObject.Find("GameController").GetComponent<GameController>().ExploreLog.text += "\n\r You have used 1 " + Item.Title + " ! and healed " + Item.Attribute + "hp.";
+                    _inv.RemoveItem(Item.Id);
                 }
-                else
+
+                if (Item.TypeItem.ToString() != "consumable")
                 {
-                    equip.DeEquipItem(this.item.ID);
-                    inv.AddItem(this.item.ID);
+                    Debug.Log(_equip.CheckIsAlreadyEquiped(Item));
+                    if (!_equip.CheckIsAlreadyEquiped(Item))
+                    {
+                        _equip.EquipItem(Item.Id);
+                        _inv.RemoveItem(Item.Id);
+                    }
+                    else
+                    {
+                        _equip.DeEquipItem(Item.Id);
+                        _inv.AddItem(Item.Id);
+                    }
                 }
+
             }
 
         }
-
     }
 }

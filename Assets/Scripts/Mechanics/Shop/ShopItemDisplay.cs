@@ -18,15 +18,15 @@ public class ShopItemDisplay : MonoBehaviour {
     {
         database = GameObject.Find("Main Camera").GetComponent<ItemDatabase>();
         player = GameObject.FindGameObjectWithTag("Player");
-        Item temp = database.FetchItemByID(ID);
+        Item temp = database.FetchItemById(ID);
 
         itemCost.text = temp.BuyValue.ToString();
-        itemSpr.sprite = temp.ISprite;
+        itemSpr.sprite = temp.Sprite;
     }
 
     private void Update()
     {
-        if(player.GetComponent<Player>().gold >= int.Parse(itemCost.text))
+        if(player.GetComponent<Player>().Gold >= int.Parse(itemCost.text))
         {
             itemCost.color = Color.blue;
         }
@@ -38,7 +38,7 @@ public class ShopItemDisplay : MonoBehaviour {
 
     public void BuyThis()
     {
-        if(player.GetComponent<Player>().gold >= int.Parse(itemCost.text))
+        if(player.GetComponent<Player>().Gold >= int.Parse(itemCost.text))
         {
             player.GetComponent<Player>().AddGold(-int.Parse(itemCost.text));
             player.GetComponent<PlayerInventory>().AddItem(ID);

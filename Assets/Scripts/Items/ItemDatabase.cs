@@ -4,44 +4,38 @@ using System.Collections;
 using System.Collections.Generic;
 using LitJson;
 using System.IO;
+using System.Linq;
 
 public class ItemDatabase : MonoBehaviour
 {
 
-    private List<Item> database = new List<Item>();
-    private JsonData itemData;
+    private readonly List<Item> _database = new List<Item>();
+    private JsonData _itemData;
 
     void Start()
     {
-        itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
+        _itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
         Debug.Log(Application.dataPath + "/StreamingAssets/Items.json");
         ConstructItemDatabase();
     }
 
-    public Item FetchItemByID(int id)
+    public Item FetchItemById(int id)
     {
-        for (int i = 0; i < database.Count; i++)
-        {
-            if(database[i].ID == id)
-            {
-                return database[i];
-            }
-        }
-        return null;
+        return _database.FirstOrDefault(t => t.Id == id);
     }
 
     public int ItemsCount()
     {
-        return database.Count;
+        return _database.Count;
     }
 
-    void ConstructItemDatabase()
+    private void ConstructItemDatabase()
     {
-        for (int i = 0; i < itemData.Count; i++)
+        for (var i = 0; i < _itemData.Count; i++)
         {
-            database.Add(new Item((int)itemData[i]["id"], itemData[i]["title"].ToString(), (int)itemData[i]["buyvalue"], (int)itemData[i]["sellvalue"],
-                (Item.TItem)Enum.Parse(typeof(Item.TItem), itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
-                itemData[i]["attribute"], bool.Parse(itemData[i]["stackable"].ToString()), itemData[i]["sprname"].ToString(), bool.Parse(itemData[i]["usable"].ToString())
+            _database.Add(new Item((int)_itemData[i]["id"], _itemData[i]["title"].ToString(), (int)_itemData[i]["buyvalue"], (int)_itemData[i]["sellvalue"],
+                (Item.TItem)Enum.Parse(typeof(Item.TItem), _itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
+                _itemData[i]["attribute"], bool.Parse(_itemData[i]["stackable"].ToString()), _itemData[i]["sprname"].ToString(), bool.Parse(_itemData[i]["usable"].ToString())
                 ));
         }
 
@@ -52,27 +46,27 @@ public class ItemDatabase : MonoBehaviour
 [System.Serializable]
 public class Item
 {
-    public int ID { get; set; }
+    public int Id { get; set; }
     public string Title { get; set; }
     public int BuyValue { get; set; }
     public int SellValue { get; set; }
-    public enum TItem { test,weapon,shield,armor,helmet,consumable }
-    public TItem typeItem { get; set; }
+    public enum TItem { Test = 0,Weapon = 1,Shield = 2,Armor = 3,Helmet = 4,Consumable = 5}
+    public TItem TypeItem { get; set; }
     public int Attribute { get; set; } // atribute a ser modificado pelo item defesa/atk/tanto heal das potion
     public bool Stackable { get; set; }
-    public Sprite ISprite { get; set; }
+    public Sprite Sprite { get; set; }
     public bool Usable { get; set; }
 
     public Item(int id, string title, int bvalue,int svalue, TItem t,JsonData attr,bool stackable,string sprName, bool usable)
     {
-        this.ID = id;
+        this.Id = id;
         this.Title = title;
         this.BuyValue = bvalue;
         this.SellValue = svalue;
-        this.typeItem = t;
+        this.TypeItem = t;
         this.Stackable = stackable;
         this.Usable = usable;
-        if (t != TItem.test)
+        if (t != TItem.Test)
         {
             this.Attribute = (int)attr;
         }
@@ -80,12 +74,12 @@ public class Item
         {
             this.Attribute = 0;
         }
-        this.ISprite = Resources.Load<Sprite>("Sprites/"+ sprName);
+        this.Sprite = Resources.Load<Sprite>("Sprites/"+ sprName);
     }
 
     public Item()
     {
-        this.ID = -1;
+        this.Id = -1;
     }
 
 }

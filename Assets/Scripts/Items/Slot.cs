@@ -2,65 +2,66 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using System;
+using Assets.Scripts.Items;
 
 public class Slot : MonoBehaviour , IDropHandler {
 
     public enum SlotType
     {
-        inventory,
-        equipment,
+        Inventory,
+        Equipment,
     }
 
     public enum EquipmentType
     {
-        none,
-        helmet,
-        armor,
-        boots,
-        weapon,
-        shield,
-        necklace,
-        ring,
+        None,
+        Helmet,
+        Armor,
+        Boots,
+        Weapon,
+        Shield,
+        Necklace,
+        Ring,
     }
 
-    public EquipmentType equipType;
-    public SlotType slotType;
-    public int slotID;
+    public EquipmentType EquipType;
+    public SlotType SlotT;
+    public int SlotId;
 
-    private PlayerInventory inv;
-    private PlayerEquipment equip;
+    private PlayerInventory _inv;
+    private PlayerEquipment _equip;
 
-    void Start()
+    private void Start()
     {
-        inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
-        equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
+        _inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+        _equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (slotType == SlotType.inventory)
+        if (SlotT == SlotType.Inventory)
         {
-            ItemData droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
-            Debug.Log(inv.inventoryItems[slotID].ID);
-            if (inv.inventoryItems[slotID].ID == -1)
+            var droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
+            Debug.Log(_inv.InventoryItems[SlotId].Id);
+            if (_inv.InventoryItems[SlotId].Id == -1)
             {
-                inv.inventoryItems[droppedItem.slot] = new Item();
-                inv.inventoryItems[slotID] = droppedItem.item;
-                droppedItem.slot = slotID;
+                _inv.InventoryItems[droppedItem.Slot] = new Item();
+                _inv.InventoryItems[SlotId] = droppedItem.Item;
+                droppedItem.Slot = SlotId;
             }
             else
             {
-                Transform item = this.transform.GetChild(0);
-                item.GetComponent<ItemData>().slot = droppedItem.slot;
-                item.transform.SetParent(inv.slots[droppedItem.slot].transform);
-                item.transform.position = inv.slots[droppedItem.slot].transform.position;
+                var item = transform.GetChild(0);
+                item.GetComponent<ItemData>().Slot = droppedItem.Slot;
+                item.transform.SetParent(_inv.Slots[droppedItem.Slot].transform);
+                item.transform.position = _inv.Slots[droppedItem.Slot].transform.position;
 
-                droppedItem.slot = slotID;
-                droppedItem.transform.SetParent(this.transform);
-                droppedItem.transform.position = this.transform.position;
+                droppedItem.Slot = SlotId;
+                droppedItem.transform.SetParent(transform);
+                droppedItem.transform.position = transform.position;
 
-                inv.inventoryItems[droppedItem.slot] = item.GetComponent<ItemData>().item;
-                inv.inventoryItems[slotID] = droppedItem.item;
+                _inv.InventoryItems[droppedItem.Slot] = item.GetComponent<ItemData>().Item;
+                _inv.InventoryItems[SlotId] = droppedItem.Item;
             }
         }
     }

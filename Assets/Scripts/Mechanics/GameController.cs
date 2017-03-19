@@ -5,124 +5,141 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 
     #region Private Vars
-    private static Player player;
-    private Enemy enemy;
-
+    private static Player _player;
+    private Enemy _enemy;
+    private MapGenerator _mapG;
     #endregion
 
     #region Public Vars
-    public Text exploreLog;
-    public Text cityName;
-    public GameObject enemyPanel;
-    public GameObject optionsPanel;
-    public GameObject storePanel;
-    public Image enemyHp;
-    public Text enemyHpTxt;
-    public Text enemyName;
+    public Text ExploreLog;
+    public Text CityName;
+    public GameObject EnemyPanel;
+    public GameObject OptionsPanel;
+    public GameObject StorePanel;
+    public GameObject MapPanel;
+    public GameObject MapObj;
+    public Image EnemyHp;
+    public Text EnemyHpTxt;
+    public Text EnemyName;
 
     #endregion
 
-    void Start () {
-	    if(player == null)
+    private void Start () {
+	    if(_player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         }
+        Explore(15,15,10,2);
 	}
 
     private void Update()
     {
-        if (enemy)
+        if (!_enemy)
         {
-            enemyHpTxt.text = enemy.hp.ToString() + "/" + enemy.hpMax.ToString();
-            enemyName.text = enemy.eName;
-            enemyHp.fillAmount = (float)((float)enemy.hp / (float)enemy.hpMax);
+            return;
+        }
+        EnemyHpTxt.text = _enemy.Hp.ToString() + "/" + _enemy.HpMax.ToString();
+        EnemyName.text = _enemy.EName;
+        EnemyHp.fillAmount = (float)((float)_enemy.Hp / (float)_enemy.HpMax);
+    }
+
+    public void Explore(int wid, int hei,int e, int s)
+    {
+        CityName.text = Ultility.CityNameGenerator();
+        _mapG = new MapGenerator(wid,hei,e,s);
+        foreach (var c in _mapG.Map)
+        {
+            var mapobj = Instantiate(MapObj, transform.position, Quaternion.identity);
+            mapobj.GetComponent<Image>().color = c.CelularColor;
         }
     }
 
+
+
     public void ExploreWorld()
     {
-        if (enemy == null && player.attributesLeft == 0)
+        if (_enemy == null && _player.AttributesLeft == 0)
         {
-            enemy = ScriptableObject.CreateInstance("Enemy") as Enemy ;
-            enemy.Init(player.level, (int)(50 + (player.con * 1.42)), player);
-            cityName.text = Ultility.CityNameGenerator();
-            this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-            this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
-            exploreLog.text = "";
-            exploreLog.text += "\n\r You have found a Enemy name: " + enemy.eName + " | hp: " + enemy.hp + "/" + enemy.hpMax;
+            _enemy = ScriptableObject.CreateInstance("Enemy") as Enemy ;
+            _enemy.Init(_player.Level, (int)(50 + (_player.Con * 1.42)), _player);
+            CityName.text = Ultility.CityNameGenerator();
+            gameObject.GetComponent<GUIController>().SetActiveMenu(EnemyPanel);
+            gameObject.GetComponent<GUIController>().SetActiveMenu(OptionsPanel);
+            ExploreLog.text = "";
+            ExploreLog.text += "\n\r You have found a Enemy name: " + _enemy.EName + " | hp: " + _enemy.Hp + "/" + _enemy.HpMax;
         }
-        else if(player.attributesLeft != 0)
+        else if(_player.AttributesLeft != 0)
         {
-            exploreLog.text += "\n\r Tou cannot explorer need to assign your attributes. attribute left: "+player.attributesLeft;
+            ExploreLog.text += "\n\r Tou cannot explorer need to assign your attributes. attribute left: "+_player.AttributesLeft;
         }
         else {
-            exploreLog.text += "\n\r You cannot explore because there is an enemy in front of you";
+            ExploreLog.text += "\n\r You cannot explore because there is an enemy in front of you";
         }
     }
 
     public void OpenStore()
     {
-        this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-        this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
+        gameObject.GetComponent<GUIController>().SetActiveMenu(EnemyPanel);
+        gameObject.GetComponent<GUIController>().SetActiveMenu(OptionsPanel);
     }
 
     public void Attack()
     {
-        if (enemy != null)
+        if (_enemy != null)
         {
-            int dmg = player.Attack();
-            if (enemy)
+            var dmg = _player.Attack();
+            if (_enemy)
             {
-                exploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
+                ExploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
             }
-            exploreLog.text = "";
-            enemy.RecieveDmg(dmg);
-            var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
-            if (enemy.hp > 0)
+            ExploreLog.text = "";
+            _enemy.RecieveDmg(dmg);
+            var dmgRecieve = Random.Range(_enemy.Dmg[0], _enemy.Dmg[1]);
+            if (_enemy.Hp > 0)
             {
-                player.TakeDamage(dmgRecieve);
+                _player.TakeDamage(dmgRecieve);
             }
         }
         else
         {
             
-            exploreLog.text += "\n\r You need to find an Enemy to battle";
+            ExploreLog.text += "\n\r You need to find an Enemy to battle";
         }
     }
 
     public void Run()
     {
-        var chance = Random.Range((int)(0+(player.chanceRun/10)), 100);
+        var chance = Random.Range(0+(_player.ChanceRun/10), 100);
         if (chance >= 30)
         {
-            exploreLog.text += "\n\r You have left the battle!";
-            this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-            this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
-            enemy = null;
+            ExploreLog.text += "\n\r You have left the battle!";
+            gameObject.GetComponent<GUIController>().SetActiveMenu(EnemyPanel);
+            gameObject.GetComponent<GUIController>().SetActiveMenu(OptionsPanel);
+            _enemy = null;
         }
         else
         {
-            exploreLog.text += " \n\r You failed to escape :O";
-            var dmgRecieve = Random.Range(enemy.dmg[0], enemy.dmg[1]);
-            player.TakeDamage(dmgRecieve);
-            exploreLog.text += "\n\r You recieved "+ dmgRecieve + " dmg";
+            ExploreLog.text += " \n\r You failed to escape :O";
+            var dmgRecieve = Random.Range(_enemy.Dmg[0], _enemy.Dmg[1]);
+            _player.TakeDamage(dmgRecieve);
+            ExploreLog.text += "\n\r You recieved "+ dmgRecieve + " dmg";
         }
     }
 
     public void LoadingThings()
     {
-        enemy = ScriptableObject.CreateInstance("Enemy") as Enemy;
-        this.gameObject.GetComponent<GUIController>().SetActiveMenu(enemyPanel);
-        this.gameObject.GetComponent<GUIController>().SetActiveMenu(optionsPanel);
+        _enemy = ScriptableObject.CreateInstance("Enemy") as Enemy;
+        gameObject.GetComponent<GUIController>().SetActiveMenu(EnemyPanel);
+        gameObject.GetComponent<GUIController>().SetActiveMenu(OptionsPanel);
     }
 
-    public static Player getPlayer()
+    public static Player GetPlayer()
     {
-        return player;
+        return _player;
     }
-    public static Enemy getEnemy()
+    public static Enemy GetEnemy()
     {
-        return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().enemy;
+        return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>()._enemy;
     }
 
 }

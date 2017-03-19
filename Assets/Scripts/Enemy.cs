@@ -4,29 +4,24 @@ using System.Collections;
 
 public class Enemy : ScriptableObject {
 
-    private string _eName;
-    private int _lvl;
-    private int _hp;
-    private int _hpMax;
-    public int[] dmg = new int[2];
+    public int[] Dmg = new int[2];
 
-    public string eName { get { return _eName; } }
-    public int lvl { get { return _lvl; } }
-    public int hp { get { return _hp; } }
-    public int hpMax { get { return _hpMax; } }
-
-
-    private Player player;
+    public string EName { get; private set; }
+    public int Lvl { get; private set; }
+    public int Hp { get; private set; }
+    public int HpMax { get; private set; }
+    
+    private Player _player;
 
     public void Init(int l,int h, Player p)
     {
-        _eName = Ultility.nameGenerator();
-        _lvl = (int)(Random.Range(1, l));
-        _hp = h;
-        _hpMax = hp;
-        player = p;
-        dmg[0] = (int)(5 + 2*(lvl / 4));
-        dmg[1] = (int)(10 + 2*(lvl / 2));
+        EName = Ultility.nameGenerator();
+        Lvl = (int)(Random.Range(1, l));
+        Hp = h;
+        HpMax = Hp;
+        _player = p;
+        Dmg[0] = (int)(5 + 2*(Lvl / 4));
+        Dmg[1] = (int)(10 + 2*(Lvl / 2));
     }
 
     /// <summary>
@@ -40,37 +35,35 @@ public class Enemy : ScriptableObject {
     /// <param name="dmax">int damage max</param>
     public void SetStats(string n,int h, int hmax,int lvl,int dmin,int dmax)
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        _eName = n;
-        _hp = h;
-        _hpMax = hmax;
-        _lvl = lvl;
-        dmg[0] = dmin;
-        dmg[1] = dmax;
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        EName = n;
+        Hp = h;
+        HpMax = hmax;
+        this.Lvl = lvl;
+        Dmg[0] = dmin;
+        Dmg[1] = dmax;
     }
 
     public void RecieveDmg(int ammout)
     {
-        _hp -= ammout;
-        if(hp > 0)
+        Hp -= ammout;
+        if(Hp > 0)
         {
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += "\n\r You have deal " + ammout + " dmg to the " + eName;
-        }
-        if(hp <= 0)
-        {
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().enemyPanel);
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().optionsPanel);
-            Die();
-        }
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().ExploreLog.text += "\n\r You have deal " + ammout + " dmg to the " + EName;
+            return;
+        } 
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().EnemyPanel);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GUIController>().SetActiveMenu(GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().OptionsPanel);
+        Die();
     }
 
-    void Die()
+    private void Die()
     {
-        var xp = (int)(Random.Range(5, 15) * (lvl / 1.25));
-        var gold = (int)(Random.Range(3, 10) * (lvl / 1.25));
-        player.AddExperience(xp);
-        player.AddGold(gold);
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().exploreLog.text += eName + " Morreu, " + player.playerName + " Ganhou " + xp + " experience";
+        var xp = (int)(Random.Range(5, 15) * (Lvl / 1.25));
+        var gold = (int)(Random.Range(3, 10) * (Lvl / 1.25));
+        _player.AddExperience(xp);
+        _player.AddGold(gold);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().ExploreLog.text += EName + " Morreu, " + _player.PlayerName + " Ganhou " + xp + " experience";
         Destroy(this);
     }
 }

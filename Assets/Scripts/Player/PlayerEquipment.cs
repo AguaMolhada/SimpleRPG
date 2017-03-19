@@ -2,61 +2,62 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Items;
 
 public class PlayerEquipment : MonoBehaviour {
 
     #region Private Vars
-    GameObject equipmentPanel;
-    PlayerInventory inv;
-    Player player;
+    GameObject _equipmentPanel;
+    PlayerInventory _inv;
+    Player _player;
 
     [SerializeField]
-    ItemDatabase database;
+    ItemDatabase _database;
     #endregion
 
     #region Public Vars
-    public GameObject equipmentSlot;
-    public GameObject equipmentItem;
+    public GameObject EquipmentItem;
 
-    public List<Item> equipmentItems = new List<Item>();
-    public List<GameObject> slots;
+    public List<Item> EquipmentItems = new List<Item>();
+    public List<GameObject> Slots;
     #endregion
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
-        equipmentPanel = GameObject.Find("Equipment Panel");
-        for (int i = 0; i < slots.Count; i++)
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+        _equipmentPanel = GameObject.Find("Equipment Panel");
+        for (var i = 0; i < Slots.Count; i++)
         {
-            equipmentItems.Add(new Item());
+            EquipmentItems.Add(new Item());
         }
     }
 
     public void EquipItem(int id)
     {
-        Item itemToEquip = database.FetchItemByID(id);
+        var itemToEquip = _database.FetchItemById(id);
 
-        for (int i = 0; i < slots.Count; i++)
+        for (var i = 0; i < Slots.Count; i++)
         {
-            if(slots[i].GetComponent<Slot>().equipType.ToString() == itemToEquip.typeItem.ToString())
+            if(Slots[i].GetComponent<Slot>().EquipType.ToString() == itemToEquip.TypeItem.ToString())
             {
-                for (int j = 0; j < equipmentItems.Count; j++)
+                for (var j = 0; j < EquipmentItems.Count; j++)
                 {
-                    if (equipmentItems[j].ID == -1)
+                    if (EquipmentItems[j].Id == -1)
                     {
-                        equipmentItems[j] = itemToEquip;
-                        GameObject itemObj = Instantiate(equipmentItem);
-                        itemObj.GetComponent<ItemData>().item = itemToEquip;
-                        itemObj.GetComponent<ItemData>().slot = i;
-                        itemObj.transform.SetParent(slots[i].transform);
+                        EquipmentItems[j] = itemToEquip;
+                        var itemObj = Instantiate(EquipmentItem);
+                        itemObj.GetComponent<ItemData>().Item = itemToEquip;
+                        itemObj.GetComponent<ItemData>().Slot = i;
+                        itemObj.transform.SetParent(Slots[i].transform);
                         itemObj.transform.localPosition = Vector3.zero;
-                        itemObj.GetComponent<Image>().sprite = itemToEquip.ISprite;
+                        itemObj.GetComponent<Image>().sprite = itemToEquip.Sprite;
                         itemObj.name = itemToEquip.Title;
                         itemObj.transform.GetChild(0).GetComponent<Text>().text = "";
                         Debug.Log(itemObj.transform.position);
                         Debug.Log(itemObj.GetComponent<RectTransform>().transform.position);
-                        player.SetEquiStats(equipmentItems[j].Attribute, equipmentItems[j].typeItem.ToString());
+                        _player.SetEquiStats(EquipmentItems[j].Attribute, EquipmentItems[j].TypeItem.ToString());
                         break;
                     }
                 }
@@ -66,20 +67,20 @@ public class PlayerEquipment : MonoBehaviour {
 
     public void DeEquipItem(int id)
     {
-        Item itemToDeEquip = database.FetchItemByID(id);
-        for (int i = 0; i < equipmentItems.Count; i++)
+        var itemToDeEquip = _database.FetchItemById(id);
+        for (var i = 0; i < EquipmentItems.Count; i++)
         {
-            if(equipmentItems[i].typeItem == itemToDeEquip.typeItem)
+            if(EquipmentItems[i].TypeItem == itemToDeEquip.TypeItem)
             {
-                player.SetEquiStats(-equipmentItems[i].Attribute, equipmentItems[i].typeItem.ToString());
-                equipmentItems.RemoveAt(i);
-                for (int j = 0; j < slots.Count; j++)
+                _player.SetEquiStats(-EquipmentItems[i].Attribute, EquipmentItems[i].TypeItem.ToString());
+                EquipmentItems.RemoveAt(i);
+                foreach (var t in Slots)
                 {
-                    if(slots[j].GetComponent<Slot>().equipType.ToString() == itemToDeEquip.typeItem.ToString())
+                    if(t.GetComponent<Slot>().EquipType.ToString() == itemToDeEquip.TypeItem.ToString())
                     {
-                        ItemData data = slots[j].transform.GetChild(0).GetComponent<ItemData>();
-                        data.ammount = 0;
-                        equipmentItems[i] = new Item();
+                        var data = t.transform.GetChild(0).GetComponent<ItemData>();
+                        data.Ammount = 0;
+                        EquipmentItems[i] = new Item();
                         break;
                     }
                 }
@@ -89,26 +90,7 @@ public class PlayerEquipment : MonoBehaviour {
     
     public bool CheckIsAlreadyEquiped(Item item)
     {
-        for (int i = 0; i < equipmentItems.Count; i++)
-        {
-            if(equipmentItems[i].typeItem == item.typeItem)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    bool CheckIfItemIsInInventory(Item item)
-    {
-        for (int i = 0; i < equipmentItems.Count; i++)
-        {
-            if (equipmentItems[i].ID == item.ID)
-            {
-                return true;
-            }
-        }
-        return false;
+        return EquipmentItems.Any(t => t.TypeItem == item.TypeItem);
     }
 
 }

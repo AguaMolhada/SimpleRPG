@@ -4,6 +4,11 @@ using System.Collections;
 
 public static class Ultility {
 
+    public static Vector3 DivVector3(Vector3 first, Vector3 second)
+    {
+        return new Vector3((first.x/second.x),(first.y/second.y),(first.z/second.z));
+    }
+
     public static T[] ShuffleArray<T>(T[] array, string seed)
     {
         System.Random rnd = new System.Random(seed.GetHashCode());
