@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour {
 
@@ -16,52 +15,60 @@ public class MapGenerator : MonoBehaviour {
 
     public void GenerateMap(int nEnemy, int nShop)
     {
-        var e = 0;
-        var s = 0;
-        var i = 0;
-
-        for (int j = 0; j < Map.GetLength(0); j++)
+        for (var j = 0; j < Map.GetLength(0); j++)
         {
-            for (int k = 0; k < Map.GetLength(1); k++)
+            for (var k = 0; k < Map.GetLength(1); k++)
             {
                 Map[j,k] = new Celula();
             }
         }
 
-        foreach (var c in Map)
+        Map[Map.GetLength(0)/2,Map.GetLength(1)/2] = new Celula(3) {CelularColor = Color.blue};
+        GenerateEnemy(nEnemy);
+        GenerateShop(nShop);
+        Ultility.Shuffle(Map);
+    }
+
+
+    public void GenerateEnemy(int nEnemy)
+    {
+        var i = 0;
+        foreach (var ce in Map)
         {
-            i = Random.Range(0, 4);
-            c.TypeC = (Celula.TypeCelula) i;
-            if (e > nEnemy)
+            if (ce.TypeC == Celula.TypeCelula.Empty)
             {
-                c.TypeC = Celula.TypeCelula.Empty;
+                ce.CelularColor = Color.red;
+                ce.TypeC = Celula.TypeCelula.Enemy;
+                i++;
             }
-            if (s > nShop)
+            if (i == nEnemy)
             {
-                c.TypeC = Celula.TypeCelula.Empty;
+                return;
             }
-            switch (c.TypeC)
+        }
+    }
+
+    public void GenerateShop(int nShop)
+    {
+        var i = 0;
+        foreach (var ce in Map)
+        {
+            if (ce.TypeC == Celula.TypeCelula.Empty)
             {
-                case Celula.TypeCelula.Enemy:
-                    c.CelularColor = Color.red;
-                    e++;
-                    break;
-                case Celula.TypeCelula.Shop:
-                    c.CelularColor = Color.yellow;
-                    s++;
-                    break;
-                case Celula.TypeCelula.Empty:
-                    c.CelularColor = Color.cyan;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                ce.CelularColor = Color.yellow;
+                ce.TypeC = Celula.TypeCelula.Shop;
+                i++;
+            }
+            if (i == nShop)
+            {
+                return;
             }
         }
     }
 
 }
 
-[System.Serializable]
+[Serializable]
 public class Celula
 {
     public Enemy Enemy;
@@ -71,7 +78,9 @@ public class Celula
     {
         Empty = 0,
         Enemy = 1,
-        Shop = 2
+        Shop = 2,
+        Player = 3,
+        Used = 4
     }
 
     public TypeCelula TypeC;
@@ -83,7 +92,7 @@ public class Celula
 
     public Celula()
     {
-        this.CelularColor = Color.white;
-        this.TypeC = TypeCelula.Empty;
+        CelularColor = Color.white;
+        TypeC = TypeCelula.Empty;
     }
 }

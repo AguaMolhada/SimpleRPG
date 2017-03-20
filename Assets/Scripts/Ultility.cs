@@ -1,6 +1,7 @@
 using System.Text;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class Ultility {
 
@@ -13,7 +14,7 @@ public static class Ultility {
     {
         System.Random rnd = new System.Random(seed.GetHashCode());
 
-        for (int i = 0; i < array.Length-1; i++)
+        for (var i = 0; i < array.Length-1; i++)
         {
             int randomIndex = rnd.Next(i, array.Length);
             T tempItem = array[randomIndex];
@@ -21,6 +22,26 @@ public static class Ultility {
             array[i] = tempItem;
         }
         return array;
+    }
+
+    public static void Shuffle<T>(T[,] array)
+    {
+        System.Random rnd = new System.Random();
+        int lengthRow = array.GetLength(1);
+
+        for (var i = array.Length - 1; i > 0; i--)
+        {
+            int i0 = i / lengthRow;
+            int i1 = i % lengthRow;
+
+            int j = rnd.Next(i + 1);
+            int j0 = j / lengthRow;
+            int j1 = j % lengthRow;
+
+            T temp = array[i0, i1];
+            array[i0, i1] = array[j0, j1];
+            array[j0, j1] = temp;
+        }
     }
 
     public static string GetRandomString(System.Random rnd, int length)

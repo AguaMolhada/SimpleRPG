@@ -1,17 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
 public class Player : PlayerStats {
 
-    public Text playerNameTxt;
-    public Text hpText;
-    public Text expText;
+    public Text PlayerNameTxt;
+    public Text HpText;
+    public Text ExpText;
     public Text LvlText;
-    public Text goldText;
+    public Text GoldText;
 
-    public Image[] classImg;
-    public Image[] classImgs;
+    public Image[] ClassImg;
+    public Image[] ClassImgs;
     public Image PlayerImage;
     public Image HpBar;
     public Image ExpBar;
@@ -21,29 +22,29 @@ public class Player : PlayerStats {
         switch (Pclass)
         {
             case PlayerClass.Warrior:
-                for (var i = 0; i < classImgs.Length+1; i++)
+                for (var i = 0; i < ClassImgs.Length+1; i++)
                 {
-                    classImg[i].sprite = classImgs[0].sprite;
+                    ClassImg[i].sprite = ClassImgs[0].sprite;
                 }
 
                 Initialize(200,1,3,0);
                 break;
             case PlayerClass.Mage:
-                for (var i = 0; i < classImgs.Length+1; i++)
+                for (var i = 0; i < ClassImgs.Length+1; i++)
                 {
-                    classImg[i].sprite = classImgs[1].sprite;
+                    ClassImg[i].sprite = ClassImgs[1].sprite;
                 }
                 Initialize(100,0.4f,1,0);
                 break;
             case PlayerClass.Archer:
-                for (var i = 0; i < classImgs.Length+1; i++)
+                for (var i = 0; i < ClassImgs.Length+1; i++)
                 {
-                    classImg[i].sprite = classImgs[2].sprite;
+                    ClassImg[i].sprite = ClassImgs[2].sprite;
                 }
                 Initialize(100,0.8f,2.3f,0);
                 break;
             default:
-                break;
+                throw new ArgumentOutOfRangeException();
         }
         base.Start();
 	}
@@ -56,9 +57,9 @@ public class Player : PlayerStats {
     {
         
         LvlText.text = "Level: " + Level;
-        hpText.text = Hp + "/" + Maxhp;
+        HpText.text = Hp + "/" + Maxhp;
         HpBar.fillAmount = (float)Hp / (float)Maxhp;
-        expText.text = System.Math.Round(Ultility.PercentValue(Tnl, Exp),2) + "%";
+        ExpText.text = System.Math.Round(Ultility.PercentValue(Tnl, Exp),2) + "%";
         ExpBar.fillAmount = Ultility.PercentValue(Tnl, Exp)/100;
 
         AttleftTxt.text = "Atributes left: " + AttributesLeft.ToString();
@@ -72,7 +73,7 @@ public class Player : PlayerStats {
         DefInfoTxt.text = "Def: " + Def.ToString("F") + "%";
         DmgInfoTxt.text = "Dmg: " + DmgMin.ToString() + "-" + DmgMax.ToString();
         CritInfoTxt.text = "Crit:" + Crit.ToString("F") + "%";
-        goldText.text = Gold.ToString();
+        GoldText.text = Gold.ToString();
 
     }
 
