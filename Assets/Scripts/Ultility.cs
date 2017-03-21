@@ -24,7 +24,7 @@ public static class Ultility {
         return array;
     }
 
-    public static void Shuffle<T>(T[,] array)
+    public static T[,] ShuffleArray<T>(T[,] array)
     {
         System.Random rnd = new System.Random();
         int lengthRow = array.GetLength(1);
@@ -42,6 +42,7 @@ public static class Ultility {
             array[i0, i1] = array[j0, j1];
             array[j0, j1] = temp;
         }
+        return array;
     }
 
     public static string GetRandomString(System.Random rnd, int length)

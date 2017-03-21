@@ -49,7 +49,9 @@ public class GameController : MonoBehaviour {
     {
         CityName.text = Ultility.CityNameGenerator();
         _mapG = new MapGenerator(wid,hei,e,s);
+        MapPlayerPos = GetPlayerPos();
         InstanciateMap();
+
     }
 
     private void InstanciateMap()
@@ -199,9 +201,25 @@ public class GameController : MonoBehaviour {
     {
         return _player;
     }
+
     public static Enemy GetEnemy()
     {
         return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>()._enemy;
+    }
+
+    public Vector2 GetPlayerPos()
+    {
+        for (var i = 0; i < _mapG.Map.GetLength(0); i++)
+        {
+            for (var j = 0; j < _mapG.Map.GetLength(1); j++)
+            {
+                if (_mapG.Map[i, j].TypeC == Celula.TypeCelula.Player)
+                {
+                    return new Vector2(i,j);
+                }
+            }
+        }
+        return Vector2.zero;
     }
 
 }

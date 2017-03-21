@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3cc62cceaa53ad5488cf8e3aef1c039d
-timeCreated: 1487675521
+timeCreated: 1490091808
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -37,7 +37,7 @@ TextureImporter:
     21300060: uiEdited_30
     21300062: uiEdited_31
     21300064: uiEdited_32
-    21300066: uiEdited_33
+    21300066: Right
     21300068: uiEdited_34
     21300070: uiEdited_35
     21300072: uiEdited_36
@@ -105,14 +105,14 @@ TextureImporter:
     21300196: uiEdited_98
     21300198: uiEdited_99
     21300200: uiEdited_100
-    21300202: uiEdited_101
+    21300202: Up
     21300204: uiEdited_102
     21300206: uiEdited_103
     21300208: uiEdited_104
     21300210: uiEdited_105
     21300212: uiEdited_106
-    21300214: uiEdited_107
-    21300216: uiEdited_108
+    21300214: Down
+    21300216: Left
     21300218: uiEdited_109
     21300220: uiEdited_110
     21300222: uiEdited_111
@@ -1646,6 +1646,58 @@ TextureImporter:
         y: 23
         width: 40
         height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Right
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 24
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Up
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 38
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Down
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 10
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Left
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 24
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

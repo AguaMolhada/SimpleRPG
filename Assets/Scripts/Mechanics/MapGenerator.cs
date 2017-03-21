@@ -26,7 +26,7 @@ public class MapGenerator : MonoBehaviour {
         Map[Map.GetLength(0)/2,Map.GetLength(1)/2] = new Celula(3) {CelularColor = Color.blue};
         GenerateEnemy(nEnemy);
         GenerateShop(nShop);
-        Ultility.Shuffle(Map);
+        Map = Ultility.ShuffleArray(Map);
     }
 
 
