@@ -9,7 +9,8 @@
 * Usable Items
 * Inventory
 * Equipment (equip and change stats)
-* Save/Load 
+### Things Broken
+* Save/Load (i f this :( )
 
 ### Things to be done:
 * Monster drops
@@ -17,3 +18,6 @@
 * Item Database (put all itens in database)
 * Shop System (buy and sell)
 * Balance all the things
+* Cool Names (low % to get)
+* 3D Map
+* Chest mechanics
