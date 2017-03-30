@@ -3,7 +3,7 @@ Reworking the core gameplay now will have a 3D enviroment to explore the world a
 (obs.: i need to upload all the changes but idk why i didn't o.o )
 somethings are not working :(
 
-### New Things i think they are working:
+### New Things that i think they are working:
 * Map Generator
 * Mesh Genrator
 * 3D enviroment
