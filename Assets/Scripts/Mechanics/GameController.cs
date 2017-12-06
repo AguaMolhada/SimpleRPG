@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour {
     #region Private Vars
     private static Player _player;
     private Enemy _enemy;
-    private MapGenerator _mapG;
     #endregion
 
     #region Public Vars
@@ -35,7 +34,7 @@ public class GameController : MonoBehaviour {
 
     private void Update()
     {
-        if (!_mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy)
+        if (!MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy)
         {
             _enemy = null;
             return;
@@ -48,7 +47,7 @@ public class GameController : MonoBehaviour {
     private void Explore(int wid, int hei,int e, int s)
     {
         CityName.text = Ultility.CityNameGenerator();
-        _mapG = new MapGenerator(wid,hei,e,s);
+        MapGenerator.Instance.MapGeneratorInit(wid,hei,e,s);
         MapPlayerPos = GetPlayerPos();
         InstanciateMap();
 
@@ -56,7 +55,7 @@ public class GameController : MonoBehaviour {
 
     private void InstanciateMap()
     {
-        foreach (var c in _mapG.Map)
+        foreach (var c in MapGenerator.Instance.Map)
         {
             var mapobj = Instantiate(MapObj, transform.position, Quaternion.identity);
             mapobj.GetComponent<Image>().color = c.CelularColor;
@@ -69,60 +68,72 @@ public class GameController : MonoBehaviour {
     {
         if (_player.AttributesLeft == 0)
         {
+            var playerObje = GameObject.Find("PlayerOBJ");
             foreach (Transform child in MapPanel.transform)
             {
                 Destroy(child.gameObject);
             }
 
-            _mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC = Celula.TypeCelula.Used;
-            _mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].CelularColor = Color.black;
+            MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC = Celula.TypeCelula.Used;
+            MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].CelularColor = Color.black;
 
             switch (x)
             {
                 case 1:
                     MapPlayerPos += Vector2.up;
+                    if (MapPlayerPos.y >= MapGenerator.Instance.Map.GetLength(1))
+                    {
+                        MapPlayerPos.y = MapGenerator.Instance.Map.GetLength(1) - 1;
+                        break;
+                    }
+                    playerObje.transform.position += Vector3.forward * MapGenerator.Instance.ScaleFactor;
                     break;
                 case 2:
                     MapPlayerPos += Vector2.left;
+                    if (MapPlayerPos.x < 0)
+                    {
+                        MapPlayerPos.x = 0;
+                        break;
+                    }
+                    playerObje.transform.position += Vector3.left * MapGenerator.Instance.ScaleFactor;
                     break;
                 case 3:
                     MapPlayerPos += Vector2.down;
+                    if (MapPlayerPos.y < 0)
+                    {
+                        MapPlayerPos.y = 0;
+                        break;
+                    }
+                    playerObje.transform.position += Vector3.back * MapGenerator.Instance.ScaleFactor;
                     break;
                 case 4:
                     MapPlayerPos += Vector2.right;
+                    if (MapPlayerPos.x >= MapGenerator.Instance.Map.GetLength(0))
+                    {
+                        MapPlayerPos.x = MapGenerator.Instance.Map.GetLength(0) - 1;
+                        break;
+                    }
+                    playerObje.transform.position += Vector3.right * MapGenerator.Instance.ScaleFactor;
                     break;
             }
-            if (MapPlayerPos.x < 0)
-            {
-                MapPlayerPos.x = 0;
-            }
-            else if (MapPlayerPos.y < 0)
-            {
-                MapPlayerPos.y = 0;
-            }
-            else if (MapPlayerPos.x >= _mapG.Map.GetLength(0))
-            {
-                MapPlayerPos.x = _mapG.Map.GetLength(0) - 1;
-            }
-            else if (MapPlayerPos.y >= _mapG.Map.GetLength(1))
-            {
-                MapPlayerPos.y = _mapG.Map.GetLength(1) - 1;
-            }
 
-            if (_mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC == Celula.TypeCelula.Enemy)
+
+
+
+            if (MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC == Celula.TypeCelula.Enemy)
             {
                 GenerateEnemy();
-                _mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy = new Enemy();
-                _mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Init(_player.Level, (int)(50 + (_player.Con * 1.42)), _player);
-                _enemy = _mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].Enemy;
+                MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy = new Enemy();
+                MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Init(_player.Level, (int)(50 + (_player.Con * 1.42)), _player);
+                _enemy = MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].Enemy;
                 ActivateGui(EnemyPanel);
             }
-            if (_mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC == Celula.TypeCelula.Shop)
+            if (MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC == Celula.TypeCelula.Shop)
             {
                 ActivateGui(StorePanel);
             }
-            _mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC = Celula.TypeCelula.Player;
-            _mapG.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].CelularColor = Color.blue;
+            MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].TypeC = Celula.TypeCelula.Player;
+            MapGenerator.Instance.Map[(int) MapPlayerPos.x, (int) MapPlayerPos.y].CelularColor = Color.blue;
             InstanciateMap();
         }
     }
@@ -149,17 +160,17 @@ public class GameController : MonoBehaviour {
 
     public void Attack()
     {
-        if (_mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy != null)
+        if (MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy != null)
         {
             var dmg = _player.Attack();
-            if (_mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy)
+            if (MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy)
             {
                 ExploreLog.text += "\n\r You have deal " + dmg + " dmg to the enemy";
             }
             ExploreLog.text = "";
-            _mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.RecieveDmg(dmg);
-            var dmgRecieve = Random.Range(_mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Dmg[0], _mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Dmg[1]);
-            if (_mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Hp > 0)
+            MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.RecieveDmg(dmg);
+            var dmgRecieve = Random.Range(MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Dmg[0], MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Dmg[1]);
+            if (MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy.Hp > 0)
             {
                 _player.TakeDamage(dmgRecieve);
             }
@@ -179,7 +190,7 @@ public class GameController : MonoBehaviour {
             ExploreLog.text += "\n\r You have left the battle!";
             gameObject.GetComponent<GUIController>().SetActiveMenu(EnemyPanel);
             gameObject.GetComponent<GUIController>().SetActiveMenu(OptionsPanel);
-            _mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy = null;
+            MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy = null;
         }
         else
         {
@@ -192,7 +203,7 @@ public class GameController : MonoBehaviour {
 
     public void LoadingThings()
     {
-        _mapG.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy = ScriptableObject.CreateInstance("Enemy") as Enemy;
+        MapGenerator.Instance.Map[(int)MapPlayerPos.x, (int)MapPlayerPos.y].Enemy = ScriptableObject.CreateInstance("Enemy") as Enemy;
         gameObject.GetComponent<GUIController>().SetActiveMenu(EnemyPanel);
         gameObject.GetComponent<GUIController>().SetActiveMenu(OptionsPanel);
     }
@@ -209,11 +220,11 @@ public class GameController : MonoBehaviour {
 
     public Vector2 GetPlayerPos()
     {
-        for (var i = 0; i < _mapG.Map.GetLength(0); i++)
+        for (var i = 0; i < MapGenerator.Instance.Map.GetLength(0); i++)
         {
-            for (var j = 0; j < _mapG.Map.GetLength(1); j++)
+            for (var j = 0; j < MapGenerator.Instance.Map.GetLength(1); j++)
             {
-                if (_mapG.Map[i, j].TypeC == Celula.TypeCelula.Player)
+                if (MapGenerator.Instance.Map[i, j].TypeC == Celula.TypeCelula.Player)
                 {
                     return new Vector2(i,j);
                 }
