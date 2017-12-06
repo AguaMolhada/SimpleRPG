@@ -30,3 +30,7 @@ somethings are not working :(
 * Cool Names (low % to get)
 * 3D Map
 * Chest mechanics
+
+Major of 3D Models made by Mike Judge
+Twitter: @mikelovesrobots
+https://github.com/mikelovesrobots/mmmm
