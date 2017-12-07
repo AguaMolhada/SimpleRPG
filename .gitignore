@@ -79,3 +79,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.vs/SimpleRPG/v15/Server/sqlite3/db.lock
+.vs/SimpleRPG/v15/Server/sqlite3/storage.ide
+.vs/SimpleRPG/v15/Server/sqlite3/storage.ide-shm
+.vs/SimpleRPG/v15/Server/sqlite3/storage.ide-wal
