@@ -14,6 +14,7 @@ public class PlayerStats : ScriptableObject
     public int PlayerDex;
     public int PlayerLuck;
     public int PlayerVit;
+    public int PlayerAgi;
 }
 public enum PlayerClass
 {

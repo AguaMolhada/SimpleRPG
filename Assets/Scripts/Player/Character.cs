@@ -12,10 +12,6 @@ using UnityEngine;
 public class Character : ScriptableObject
 {
     /// <summary>
-    /// Player Character Name.
-    /// </summary>
-    public string CharacterName = "Default";
-    /// <summary>
     /// Player Game object.
     /// </summary>
     public GameObject CharacterObj;

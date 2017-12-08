@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c280705106ca51d4887690feb685547a, type: 3}
-  m_Name: Player
+  m_Name: Beardo
   m_EditorClassIdentifier: 
-  CharacterName: Default
+  CharacterObj: {fileID: 197014, guid: 0a8b3a84977ab4617a0d5b6b836d560c, type: 2}
   CharacterStats: {fileID: 11400000, guid: d12675115c1113e429c2037e6ea34ce2, type: 2}
