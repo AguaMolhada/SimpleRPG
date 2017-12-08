@@ -37,6 +37,8 @@ public class World : MonoBehaviour
     private void Start()
     {
         _boardHolder = new GameObject("WorldHolder");
+        var temp = GameObject.Find("3D Character Holder").GetComponent<CharacterSelection>();
+        Player = temp.SelectCharacter.CharacterObj;
 
         SetupCellArray();
 
@@ -110,8 +112,10 @@ public class World : MonoBehaviour
             {
                 var playerPosX = Random.Range(_rooms[i].XPos, _rooms[i].XPos + _rooms[i].RoomWidth);
                 var playerPosY = Random.Range(_rooms[i].YPos, _rooms[i].YPos + _rooms[i].RoomHeight);
-                Vector3 playerPos = new Vector3(playerPosX * ScaleFactor, 0, playerPosY * ScaleFactor);
-                Instantiate(Player, playerPos, Quaternion.identity);
+                Vector3 playerPos = new Vector3(playerPosX * ScaleFactor, .02f, playerPosY * ScaleFactor);
+                var player = Instantiate(Player, playerPos, Quaternion.identity);
+                player.name = "Jogador";
+                player.AddComponent<PlayerBase>();
             }
             else if(temp > ShopChance && scount < _shopCount)
             {

@@ -35,16 +35,19 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
+    public void ClearAllChildern()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     public void OnCharacterSelect(int characterChoice)
     {
         _selectedCharacterIndex += characterChoice;
-        SelectCharacter = Characters[_selectedCharacterIndex];
-        var childs = new List<GameObject>();
-        foreach (Transform child in transform)
-        {
-            childs.Add(child.gameObject);
-        }
-        childs.ForEach(child => Destroy(child));
+        SelectCharacter = Characters[Mathf.Abs(_selectedCharacterIndex%4)];
+        ClearAllChildern();
         transform.Rotate(Vector3.up*180);
         var temp = Instantiate(SelectCharacter.CharacterObj, transform.position, Quaternion.identity);
         temp.transform.parent = transform;
@@ -54,6 +57,7 @@ public class CharacterSelection : MonoBehaviour
 
     public void OnStatsSelect(int statsChoice)
     {
+
         SelectStats = CharacterStatsBase[statsChoice];
     }
 }
