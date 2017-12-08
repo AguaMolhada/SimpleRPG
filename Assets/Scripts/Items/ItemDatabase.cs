@@ -34,7 +34,7 @@ public class ItemDatabase : MonoBehaviour
         for (var i = 0; i < _itemData.Count; i++)
         {
             _database.Add(new Item((int)_itemData[i]["id"], _itemData[i]["title"].ToString(), (int)_itemData[i]["buyvalue"], (int)_itemData[i]["sellvalue"],
-                (Item.TItem)Enum.Parse(typeof(Item.TItem), _itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
+                (Item.ItemType)Enum.Parse(typeof(Item.ItemType), _itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
                 _itemData[i]["attribute"], bool.Parse(_itemData[i]["stackable"].ToString()), _itemData[i]["sprname"].ToString(), bool.Parse(_itemData[i]["usable"].ToString())
                 ));
         }
@@ -50,23 +50,23 @@ public class Item
     public string Title { get; set; }
     public int BuyValue { get; set; }
     public int SellValue { get; set; }
-    public enum TItem { Test = 0,Weapon = 1,Shield = 2,Armor = 3,Helmet = 4,Consumable = 5}
-    public TItem TypeItem { get; set; }
+    public enum ItemType { Test = 0,Weapon = 1,Shield = 2,Armor = 3,Helmet = 4,Consumable = 5}
+    public ItemType TypeItemType { get; set; }
     public int Attribute { get; set; } // atribute a ser modificado pelo item defesa/atk/tanto heal das potion
     public bool Stackable { get; set; }
     public Sprite Sprite { get; set; }
     public bool Usable { get; set; }
 
-    public Item(int id, string title, int bvalue,int svalue, TItem t,JsonData attr,bool stackable,string sprName, bool usable)
+    public Item(int id, string title, int bvalue,int svalue, ItemType t,JsonData attr,bool stackable,string sprName, bool usable)
     {
         this.Id = id;
         this.Title = title;
         this.BuyValue = bvalue;
         this.SellValue = svalue;
-        this.TypeItem = t;
+        this.TypeItemType = t;
         this.Stackable = stackable;
         this.Usable = usable;
-        if (t != TItem.Test)
+        if (t != ItemType.Test)
         {
             this.Attribute = (int)attr;
         }

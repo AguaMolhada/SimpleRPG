@@ -83,3 +83,4 @@ $RECYCLE.BIN/
 .vs/SimpleRPG/v15/Server/sqlite3/storage.ide
 .vs/SimpleRPG/v15/Server/sqlite3/storage.ide-shm
 .vs/SimpleRPG/v15/Server/sqlite3/storage.ide-wal
+.vs/config/applicationhost.config
