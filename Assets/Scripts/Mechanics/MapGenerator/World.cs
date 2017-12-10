@@ -119,6 +119,7 @@ public class World : MonoBehaviour
                 player.AddComponent<PlayerBase>();
                 player.GetComponent<PlayerBase>().PlayerStats = _3DCharacterHolder.AppliedPlayerStats;
                 player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
+                player.GetComponent<PlayerBase>().Speed = 5f;
             }
             else if(temp > ShopChance && scount < _shopCount)
             {

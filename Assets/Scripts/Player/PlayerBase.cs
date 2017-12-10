@@ -16,5 +16,11 @@ public class PlayerBase : MonoBehaviour
     public string NickName;
     public PlayerStats PlayerStats;
     public GameObject MySelf;
+    public float Speed;
+
+    private void Update()
+    {
+        transform.Translate(Input.GetAxis("Horizontal") * Speed * Time.deltaTime, 0f, Input.GetAxis("Vertical") * Speed * Time.deltaTime);
+    }
 
 }
