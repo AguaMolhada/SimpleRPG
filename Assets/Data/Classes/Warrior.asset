@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: 
   PlayerClass: 0
-  PlayerInt: 1
+  PlayerInt: 2
   PlayerCon: 6
   PlayerDex: 5
-  PlayerLuck: 3
-  PlayerVit: 10
+  PlayerLuk: 3
+  PlayerVit: 12
+  PlayerAgi: 2

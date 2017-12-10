@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   PlayerClass: 2
-  PlayerInt: 2
-  PlayerCon: 1
-  PlayerDex: 7
-  PlayerLuck: 10
-  PlayerVit: 5
+  PlayerInt: 4
+  PlayerCon: 3
+  PlayerDex: 6
+  PlayerLuk: 3
+  PlayerVit: 2
+  PlayerAgi: 12

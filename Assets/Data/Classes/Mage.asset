@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   PlayerClass: 1
-  PlayerInt: 10
-  PlayerCon: 2
+  PlayerInt: 12
+  PlayerCon: 3
   PlayerDex: 5
-  PlayerLuck: 5
+  PlayerLuk: 4
   PlayerVit: 3
+  PlayerAgi: 3

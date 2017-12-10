@@ -1,57 +1,78 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Ultility.cs" company="Dauler Palhares">
+//  © Copyright Dauler Palhares da Costa Viana 2017.
+//          http://github.com/DaulerPalhares
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System;
 using System.Text;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-public static class Ultility {
+public static class Ultility
+{
+    public static bool Btween(int value, int min, int max, bool inclusive)
+    {
+        if (inclusive)
+        {
+            return value >= min && value <= max;
+        }
+        else
+        {
+            return value > min && value < max;
+        }
+    }
+
+    public static Vector3 ClampVector3(Vector3 value, Vector3 min, Vector3 max)
+    {
+        return new Vector3(Mathf.Clamp(value.x, min.x, max.x), Mathf.Clamp(value.y, min.y, max.y), Mathf.Clamp(value.z, min.z, max.z));
+    }
 
     public static Vector3 DivVector3(Vector3 first, Vector3 second)
     {
-        return new Vector3((first.x/second.x),(first.y/second.y),(first.z/second.z));
+        return new Vector3((first.x / second.x), (first.y / second.y), (first.z / second.z));
     }
 
     public static T[] ShuffleArray<T>(T[] array, string seed)
     {
-        System.Random rnd = new System.Random(seed.GetHashCode());
+        var rnd = new System.Random(seed.GetHashCode());
 
-        for (var i = 0; i < array.Length-1; i++)
+        for (var i = 0; i < array.Length - 1; i++)
         {
-            int randomIndex = rnd.Next(i, array.Length);
-            T tempItem = array[randomIndex];
+            var randomIndex = rnd.Next(i, array.Length);
+            var tempItem = array[randomIndex];
             array[randomIndex] = array[i];
             array[i] = tempItem;
         }
         return array;
     }
 
-    public static T[,] ShuffleArray<T>(T[,] array)
+    public static void Shuffle<T>(T[,] array)
     {
-        System.Random rnd = new System.Random();
-        int lengthRow = array.GetLength(1);
+        var rnd = new System.Random();
+        var lengthRow = array.GetLength(1);
 
         for (var i = array.Length - 1; i > 0; i--)
         {
-            int i0 = i / lengthRow;
-            int i1 = i % lengthRow;
+            var i0 = i / lengthRow;
+            var i1 = i % lengthRow;
 
-            int j = rnd.Next(i + 1);
-            int j0 = j / lengthRow;
-            int j1 = j % lengthRow;
+            var j = rnd.Next(i + 1);
+            var j0 = j / lengthRow;
+            var j1 = j % lengthRow;
 
-            T temp = array[i0, i1];
+            var temp = array[i0, i1];
             array[i0, i1] = array[j0, j1];
             array[j0, j1] = temp;
         }
-        return array;
     }
 
     public static string GetRandomString(System.Random rnd, int length)
     {
-        int x = length;
-        string charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%&*()[]{}<>,.;:/?";
-        StringBuilder rs = new StringBuilder();
+        var x = length;
+        var charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%&*()[]{}<>,.;:/?";
+        var rs = new StringBuilder();
 
         while (x != 0)
         {
@@ -66,35 +87,60 @@ public static class Ultility {
         return (percent / 100) * total;
     }
 
-    public static float PercentValue(float total,float percent)
+    public static float PercentValue(float total, float percent)
     {
         return (percent / total) * 100;
     }
 
     #region Name Generator
+
     public static string NameGenerator()
     {
-        int pattern = Random.Range(0, 100);
-        if (pattern >= 0 && pattern < 40)        {  return StartName() + NameEnd();                                                                                         }
-        else if (pattern >= 40 && pattern < 50)  {  return NameVowel() + NameLink() + NameEnd();                                                                            }
-        else if (pattern >= 50 && pattern < 60)  {  return StartName() + NameVowel() + NameLink() + NameEnd();                                                              }
-        else if (pattern >= 60 && pattern < 70)  {  return NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();                                                 }
-        else if (pattern >= 70 && pattern < 80)  {  return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();                                   }
-        else if (pattern >= 80 && pattern < 90)  {  return NameVowel() + NameLink() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();                      }
-        else if (pattern >= 90 && pattern < 100) {  return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();        }
+        var pattern = Random.Range(0, 100);
+        if (pattern >= 0 && pattern < 40)
+        {
+            return StartName() + NameEnd();
+        }
+        else if (pattern >= 40 && pattern < 50)
+        {
+            return NameVowel() + NameLink() + NameEnd();
+        }
+        else if (pattern >= 50 && pattern < 60)
+        {
+            return StartName() + NameVowel() + NameLink() + NameEnd();
+        }
+        else if (pattern >= 60 && pattern < 70)
+        {
+            return NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();
+        }
+        else if (pattern >= 70 && pattern < 80)
+        {
+            return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();
+        }
+        else if (pattern >= 80 && pattern < 90)
+        {
+            return NameVowel() + NameLink() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameEnd();
+        }
+        else if (pattern >= 90 && pattern < 100)
+        {
+            return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + NameVowel() + NameLink() +
+                   NameEnd();
+        }
         return null;
     }
 
-    static string StartName()
+    private static string StartName()
     {
-        int a, b;
-        string[,] startName = new string[3, 19] {{"B","C","D","F","G","H","J","K","L","M","N","P","R","S","T","V","W","X","Z"},
-                                                 {"B","C","Ch","D","F","G","K","P","Ph","S","T","V","Z","R","L","","","",""},
-                                                 {"Ch","St","Th","Ct","Ph","Qu","Squ","Sh","","","","","","","","","","",""}};
-        a = Random.Range(0, startName.GetLength(0));
-        for (int i = 0; i < 1; i++)
+        var startName = new[,]
         {
-            b = Random.Range(0, startName.GetLength(1));
+            {"B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "S", "T", "V", "W", "X", "Z"},
+            {"B", "C", "Ch", "D", "F", "G", "K", "P", "Ph", "S", "T", "V", "Z", "R", "L", "", "", "", ""},
+            {"Ch", "St", "Th", "Ct", "Ph", "Qu", "Squ", "Sh", "", "", "", "", "", "", "", "", "", "", ""}
+        };
+        var a = Random.Range(0, startName.GetLength(0));
+        for (var i = 0; i < 1; i++)
+        {
+            var b = Random.Range(0, startName.GetLength(1));
             if (startName[a, b] == "")
             {
                 i--;
@@ -107,15 +153,21 @@ public static class Ultility {
         return null;
     }
 
-    static string NameVowel()
+    private static string NameVowel()
     {
-        int a, b;
-        string[,] nameVowel = new string[2, 22]{{"a","e","i","o","u","","","","","","","","","","","","","","","","",""},
-            {"ao","ae","ai","au","ay","eo","ea","ei","ey","io","ia","iu","oa","oe","oi","ou","oy","ui","uo","uy","ee","oo"}};
-        a = Random.Range(0, nameVowel.GetLength(0));
-        for (int i = 0; i < 1; i++)
+        var nameVowel = new[,]
         {
-            b = Random.Range(0, nameVowel.GetLength(1));
+            {"a", "e", "i", "o", "u", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""},
+            {
+                "ao", "ae", "ai", "au", "ay", "eo", "ea", "ei", "ey", "io", "ia", "iu", "oa", "oe", "oi", "ou", "oy",
+                "ui",
+                "uo", "uy", "ee", "oo"
+            }
+        };
+        var a = Random.Range(0, nameVowel.GetLength(0));
+        for (var i = 0; i < 1; i++)
+        {
+            var b = Random.Range(0, nameVowel.GetLength(1));
             if (nameVowel[a, b] == "")
             {
                 i--;
@@ -128,16 +180,30 @@ public static class Ultility {
         return null;
     }
 
-    static string NameLink()
+    private static string NameLink()
     {
-        int a, b;
-        string[,] nameLink = new string[3, 34] {{"b","c","d","f","g","h","j","k","l","m","n","p","r","s","t","v","w","x","z","","","","","","","","","","","","","","",""},
-                                                {"b","c","ch","d","f","g","k","p","ph","r","s","t","v","z","r","l","n","","","","","","","","","","","","","","","","",""},
-            {"ch","rt","rl","rs","rp","rb","rm","st","th","ct","ph","qu","tt","bb","nn","mm","gg","cc","dd","ff","pp","rr","ll","vv","ww","ck","squ","lm","sh","wm","wb","wt","lb","rg"}};
-        a = Random.Range(0, nameLink.GetLength(0));
-        for (int i = 0; i < 1; i++)
+        var nameLink = new[,]
         {
-            b = Random.Range(0, nameLink.GetLength(1));
+            {
+                "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "z", "", "",
+                "",
+                "", "", "", "", "", "", "", "", "", "", "", ""
+            },
+            {
+                "b", "c", "ch", "d", "f", "g", "k", "p", "ph", "r", "s", "t", "v", "z", "r", "l", "n", "", "", "", "",
+                "",
+                "", "", "", "", "", "", "", "", "", "", "", ""
+            },
+            {
+                "ch", "rt", "rl", "rs", "rp", "rb", "rm", "st", "th", "ct", "ph", "qu", "tt", "bb", "nn", "mm", "gg",
+                "cc",
+                "dd", "ff", "pp", "rr", "ll", "vv", "ww", "ck", "squ", "lm", "sh", "wm", "wb", "wt", "lb", "rg"
+            }
+        };
+        var a = Random.Range(0, nameLink.GetLength(0));
+        for (var i = 0; i < 1; i++)
+        {
+            var b = Random.Range(0, nameLink.GetLength(1));
             if (nameLink[a, b] == "")
             {
                 i--;
@@ -150,35 +216,59 @@ public static class Ultility {
         return null;
     }
 
-    static string NameEnd()
+    private static string NameEnd()
     {
-        int a;
-        string[] nameEnd = new string[42] { "id", "ant", "on", "ion", "an", "in", "at", "ate", "us", "oid", "aid", "al", "ark", "ork", "irk", "as", "os", "e", "o", "a", "y", "or", "ore", "es", "ot", "at", "ape", "ope", "el", "er", "ex", "ox", "ax", "ie", "eep", "ap", "op", "oop", "aut", "ond", "ont", "oth" };
-        a = Random.Range(0, nameEnd.Length);
+        var nameEnd = new[]
+        {
+            "id", "ant", "on", "ion", "an", "in", "at", "ate", "us", "oid", "aid", "al", "ark", "ork", "irk", "as",
+            "os", "e", "o", "a", "y", "or", "ore", "es", "ot", "at", "ape", "ope", "el", "er", "ex", "ox", "ax", "ie",
+            "eep", "ap", "op", "oop", "aut", "ond", "ont", "oth"
+        };
+        var a = Random.Range(0, nameEnd.Length);
         return nameEnd[a];
     }
+
     #endregion
 
     #region City Name Generator
+
     public static string CityNameGenerator()
     {
-        int pattern = Random.Range(0, 100);
-        if (pattern >= 0 && pattern < 20) { return StartName() + CityNameEnd(); }
-        else if (pattern >= 20 && pattern < 40) { return NameVowel() + NameLink() + CityNameEnd(); }
-        else if (pattern >= 40 && pattern < 60) { return StartName() + NameVowel() + NameLink() + CityNameEnd(); }
-        else if (pattern >= 60 && pattern < 80) { return NameVowel() + NameLink() + NameVowel() + NameLink() + CityNameEnd(); }
-        else if (pattern >= 80 && pattern < 100) { return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + CityNameEnd(); }
+        var pattern = Random.Range(0, 100);
+        if (pattern >= 0 && pattern < 20)
+        {
+            return StartName() + CityNameEnd();
+        }
+        else if (pattern >= 20 && pattern < 40)
+        {
+            return NameVowel() + NameLink() + CityNameEnd();
+        }
+        else if (pattern >= 40 && pattern < 60)
+        {
+            return StartName() + NameVowel() + NameLink() + CityNameEnd();
+        }
+        else if (pattern >= 60 && pattern < 80)
+        {
+            return NameVowel() + NameLink() + NameVowel() + NameLink() + CityNameEnd();
+        }
+        else if (pattern >= 80 && pattern < 100)
+        {
+            return StartName() + NameVowel() + NameLink() + NameVowel() + NameLink() + CityNameEnd();
+        }
         return null;
     }
-    static string CityNameEnd()
+
+    private static string CityNameEnd()
     {
-        int a;
-        string[] nameEnd = new string[] { "ville", "polis", " City", " Village", "town", "port", "boro", "burg", "burgh", "carden", "field","ness"};
-        a = Random.Range(0, nameEnd.Length);
+        var nameEnd = new[]
+            {"ville", "polis", " City", " Village", "town", "port", "boro", "burg", "burgh", "garden", "field", "ness"};
+        var a = Random.Range(0, nameEnd.Length);
         return nameEnd[a];
     }
+
     #endregion
 }
+
 public enum Direction
 {
     North, East, South, West,

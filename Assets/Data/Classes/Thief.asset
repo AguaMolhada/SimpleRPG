@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: Thief
   m_EditorClassIdentifier: 
   PlayerClass: 3
-  PlayerInt: 1
-  PlayerCon: 3
-  PlayerDex: 10
-  PlayerLuck: 7
-  PlayerVit: 4
+  PlayerInt: 3
+  PlayerCon: 1
+  PlayerDex: 12
+  PlayerLuk: 5
+  PlayerVit: 2
+  PlayerAgi: 7

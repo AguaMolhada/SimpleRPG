@@ -33,12 +33,13 @@ public class World : MonoBehaviour
     private Room[] _shops;                                  // all the rooms that have one shop.
     private Corridor[] _corridors;                          // All the corridors that connect the rooms.
     private GameObject _boardHolder;                        // GameObject that acts as a container for all other tiles.
+    private CharacterSelection _3DCharacterHolder;          // GameObject that cointains the caracter selection data.
 
     private void Start()
     {
         _boardHolder = new GameObject("WorldHolder");
-        var temp = GameObject.Find("3D Character Holder").GetComponent<CharacterSelection>();
-        Player = temp.SelectCharacter.CharacterObj;
+        _3DCharacterHolder = GameObject.Find("3D Character Holder").GetComponent<CharacterSelection>();
+        Player = _3DCharacterHolder.SelectCharacter.CharacterObj;
 
         SetupCellArray();
 
@@ -116,6 +117,7 @@ public class World : MonoBehaviour
                 var player = Instantiate(Player, playerPos, Quaternion.identity);
                 player.name = "Jogador";
                 player.AddComponent<PlayerBase>();
+                player.GetComponent<PlayerBase>().PlayerStats = _3DCharacterHolder.AppliedPlayerStats;
             }
             else if(temp > ShopChance && scount < _shopCount)
             {

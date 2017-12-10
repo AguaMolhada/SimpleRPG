@@ -2,6 +2,7 @@
 /// Sourced from - http://ciaccodavi.de/unity/uipolygon
 
 using System.Collections.Generic;
+using UnityEditor;
 
 namespace UnityEngine.UI.Extensions
 {
@@ -55,6 +56,14 @@ namespace UnityEngine.UI.Extensions
             VerticesDistances = _VerticesDistances;
             rotation = _rotation;
         }
+
+        public void Redraw()
+        {
+            OnPopulateMesh(new VertexHelper());
+            SetVerticesDirty();
+            SetMaterialDirty();
+        }
+
         void Update()
         {
             size = rectTransform.rect.width;
