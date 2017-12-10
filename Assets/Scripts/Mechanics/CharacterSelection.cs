@@ -22,6 +22,8 @@ public class CharacterSelection : MonoBehaviour
     public TMP_Text[] StatsValues;
     public UIPolygon statsUIBorder;
     public UIPolygon StatsUI;
+    public string NickName;
+    public TMP_InputField NickNameInput;
 
     private int _selectedCharacterIndex = 0;
     void Start()
@@ -80,6 +82,11 @@ public class CharacterSelection : MonoBehaviour
     {
         statsUIBorder.Redraw();
         StatsUI.Redraw();
+    }
+
+    public void AssignNickname(string n)
+    {
+        NickName = n;
     }
 
     /// <summary>

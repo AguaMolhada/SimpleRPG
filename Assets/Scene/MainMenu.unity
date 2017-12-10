@@ -310,6 +310,8 @@ MonoBehaviour:
   - {fileID: 1535722514}
   statsUIBorder: {fileID: 912140916}
   StatsUI: {fileID: 318166113}
+  NickName: 
+  NickNameInput: {fileID: 0}
 --- !u!1001 &72135802
 Prefab:
   m_ObjectHideFlags: 0
@@ -14585,7 +14587,18 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 44920907}
+        m_MethodName: AssignNickname
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: TMPro.TMP_InputField+SubmitEvent, TextMeshPro-1.0.55.2017.2.0b12,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_OnSubmit:

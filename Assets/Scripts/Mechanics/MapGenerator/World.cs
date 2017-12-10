@@ -118,6 +118,7 @@ public class World : MonoBehaviour
                 player.name = "Jogador";
                 player.AddComponent<PlayerBase>();
                 player.GetComponent<PlayerBase>().PlayerStats = _3DCharacterHolder.AppliedPlayerStats;
+                player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
             }
             else if(temp > ShopChance && scount < _shopCount)
             {

@@ -1,9 +1,6 @@
 ﻿/// Credit CiaccoDavide
 /// Sourced from - http://ciaccodavi.de/unity/uipolygon
 
-using System.Collections.Generic;
-using UnityEditor;
-
 namespace UnityEngine.UI.Extensions
 {
     [AddComponentMenu("UI/Extensions/Primitives/UI Polygon")]
