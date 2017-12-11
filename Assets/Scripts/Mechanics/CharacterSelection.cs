@@ -32,6 +32,7 @@ public class CharacterSelection : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         OnCharacterSelect(_selectedCharacterIndex);
         AppliedPlayerStats.ResetStats();
+        AppliedPlayerStats.ResetExp();
         StartCoroutine("rotate");
     }
 

@@ -12,7 +12,13 @@ public class PlayerStats : ScriptableObject
     /// </summary>
     public PlayerClass PlayerClass = PlayerClass.Warrior;
 
-    public int PlayerLevel { get; private set; }
+    public int PlayerLevel
+    {
+        get { return ReturnLevel(PlayerExperience); }
+        set { value = ReturnLevel(PlayerExperience); }
+    }
+
+    public int PlayerExperience { get; protected set; }
     public int PlayerInt;
     public int PlayerCon;
     public int PlayerDex;
@@ -33,6 +39,16 @@ public class PlayerStats : ScriptableObject
     public int ExtraLuk { get; private set; }
     public int ExtraVit { get; private set; }
     public int ExtraAgi { get; private set; }
+
+    protected int ReturnLevel(int exp)
+    {
+        return (int) exp / GameController.ExperienceBase + (PlayerLevel * (GameController.ExperienceBase * 1 / 3));
+    }
+
+    public void AddExperience(int x)
+    {
+        PlayerExperience += x;
+    }
 
     public void AddStatsInt(int Int)
     {
@@ -122,6 +138,11 @@ public class PlayerStats : ScriptableObject
         PlayerLuk = 1;
         PlayerVit = 1;
         PlayerAgi = 1;
+    }
+
+    public void ResetExp()
+    {
+        PlayerExperience = 0;
     }
 
 }

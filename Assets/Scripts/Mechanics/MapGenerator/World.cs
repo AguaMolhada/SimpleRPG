@@ -103,7 +103,7 @@ public class World : MonoBehaviour
             // If we haven't reached the end of the corridors array...
             if (i < _corridors.Length)
             {
-                // ... create a corridor.
+                //create a corridor.
                 _corridors[i] = new Corridor();
                 // Setup the corridor based on the room that was just created.
                 _corridors[i].SetupCorridor(_rooms[i], CorridorLength, RoomWidth, RoomHeight, Columns, Rows, false);
@@ -111,6 +111,7 @@ public class World : MonoBehaviour
             
             if (i == _rooms.Length/2)
             {
+                //Initializing the player on the roon)
                 var playerPosX = Random.Range(_rooms[i].XPos, _rooms[i].XPos + _rooms[i].RoomWidth);
                 var playerPosY = Random.Range(_rooms[i].YPos, _rooms[i].YPos + _rooms[i].RoomHeight);
                 Vector3 playerPos = new Vector3(playerPosX * ScaleFactor, .02f, playerPosY * ScaleFactor);
@@ -120,6 +121,7 @@ public class World : MonoBehaviour
                 player.GetComponent<PlayerBase>().PlayerStats = _3DCharacterHolder.AppliedPlayerStats;
                 player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
                 player.GetComponent<PlayerBase>().Speed = 5f;
+                player.GetComponent<PlayerBase>().PlayerStats.AddExperience(1);
             }
             else if(temp > ShopChance && scount < _shopCount)
             {
