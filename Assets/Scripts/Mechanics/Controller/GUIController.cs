@@ -12,23 +12,25 @@ public class GUIController : MonoBehaviour
     public AudioMixer AudioMixer;
     public TMP_Dropdown ResolutionDropDown;
     public Slider ProgressSlider;
+    public Slider VolumeSlider;
     public TMP_Text ProgressText;
-
-    private Resolution[] resolutions;
+    
+    private Resolution[] _resolutions;
 
     void Start()
     {
-        resolutions = Screen.resolutions;
-
+        _resolutions = Screen.resolutions;
+        var volumeSliderValue = 0f;
+        AudioMixer.GetFloat("volume", out volumeSliderValue);
         ResolutionDropDown.ClearOptions();
-
+        VolumeSlider.value = volumeSliderValue;
         int currentResolutionIndex = 0;
         List<string> options = new List<string>();
-        for (int i = 0; i < resolutions.Length; i++)
+        for (int i = 0; i < _resolutions.Length; i++)
         {
-            string option = "("+ resolutions[i].width + " x " + resolutions[i].height+")";
+            string option = "("+ _resolutions[i].width + " x " + _resolutions[i].height+")";
             options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            if (_resolutions[i].width == Screen.currentResolution.width && _resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResolutionIndex = i;
             }
