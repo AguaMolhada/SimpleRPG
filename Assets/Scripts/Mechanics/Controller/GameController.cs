@@ -12,5 +12,6 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
     public const int ExperienceBase = 100;
-
+    public const int MaxGold = 999999999;
+    public const int MaxCash = 999999999;
 }

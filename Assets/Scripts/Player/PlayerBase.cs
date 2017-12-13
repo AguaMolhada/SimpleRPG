@@ -17,6 +17,14 @@ public class PlayerBase : MonoBehaviour
     public PlayerStats PlayerStats;
     public GameObject MySelf;
     public float Speed;
+    /// <summary>
+    /// Ammount player gold.
+    /// </summary>
+    public int GoldAmmount { get; protected set; }
+    /// <summary>
+    /// Ammount player cash.
+    /// </summary>
+    public int CashAmmount { get; protected set; }
 
     private void Update()
     {

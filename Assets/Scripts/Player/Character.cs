@@ -19,5 +19,6 @@ public class Character : ScriptableObject
     /// Base Character Stats.
     /// </summary>
     public PlayerStats CharacterStats;
-    
+
+
 }
