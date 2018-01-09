@@ -12,44 +12,64 @@ public class PlayerStats : ScriptableObject
     /// </summary>
     public PlayerClass PlayerClass = PlayerClass.Warrior;
 
-    public int PlayerLevel
-    {
-        get { return ReturnLevel(PlayerExperience); }
-        set { value = ReturnLevel(PlayerExperience); }
-    }
+    public int PlayerLevel { get; protected set; }
 
     public int PlayerExperience { get; protected set; }
-    public int PlayerInt;
-    public int PlayerCon;
+    public int RequiredExperience { get; protected set; }
+
+    public int PlayerAgi;
     public int PlayerDex;
+    public int PlayerInt;
     public int PlayerLuk;
     public int PlayerVit;
-    public int PlayerAgi;
+    public int PlayerCon;
 
-    [SerializeField]
     public int AvaliablePointsToDistribute
     {
         get { return (PlayerLevel * 5 + 25) - (PlayerInt + PlayerCon + PlayerDex + PlayerLuk + PlayerVit + PlayerAgi); }
        set { value = (PlayerLevel * 5 + 25) - (PlayerInt + PlayerCon + PlayerDex + PlayerLuk + PlayerVit + PlayerAgi); }
     }
 
-    public int ExtraInt { get; private set; }
-    public int ExtraCon { get; private set; }
+    public int ExtraAgi { get; private set; }
     public int ExtraDex { get; private set; }
+    public int ExtraInt { get; private set; }
     public int ExtraLuk { get; private set; }
     public int ExtraVit { get; private set; }
-    public int ExtraAgi { get; private set; }
+    public int ExtraCon { get; private set; }
 
+    /// <summary>
+    /// Check the level
+    /// </summary>
+    /// <param name="exp">Current xp to check</param>
+    /// <returns>Level based on the exp.</returns>
     protected int ReturnLevel(int exp)
     {
-        return (int) exp / GameController.ExperienceBase + (PlayerLevel * (GameController.ExperienceBase * 1 / 3));
+        return (int) (exp / (GameController.ExperienceBase + Mathf.Log10(PlayerLevel))) + 1;
     }
 
+    public void AddExtraStats(int a, int d, int i, int l, int v, int c)
+    {
+        ExtraAgi = a;
+        ExtraDex = d;
+        ExtraInt = i;
+        ExtraLuk = l;
+        ExtraVit = v;
+        ExtraCon = c;
+    }
+
+    /// <summary>
+    /// Add experience to the character
+    /// </summary>
+    /// <param name="x">Ammout</param>
     public void AddExperience(int x)
     {
         PlayerExperience += x;
+        PlayerLevel = ReturnLevel(PlayerExperience);
     }
-
+    /// <summary>
+    /// Add int stats if there is avaliable points to distribute.
+    /// </summary>
+    /// <param name="Int">Ammount to add</param>
     public void AddStatsInt(int Int)
     {
         if (AvaliablePointsToDistribute == 0 && Int > 0)
@@ -60,8 +80,10 @@ public class PlayerStats : ScriptableObject
         PlayerInt = Mathf.Clamp(PlayerInt, 1, 255);
         CheckStatus();
     }
-
-
+    /// <summary>
+    /// Add con stats if there is avaliable points to distribute.
+    /// </summary>
+    /// <param name="Con">Ammount to add</param>
     public void AddStatsCon(int Con)
     {
         if (AvaliablePointsToDistribute == 0 && Con > 0)
@@ -72,8 +94,10 @@ public class PlayerStats : ScriptableObject
         PlayerCon = Mathf.Clamp(PlayerCon, 1, 255);
         CheckStatus();
     }
-
-
+    /// <summary>
+    /// Add dex stats if there is avaliable points to distribute.
+    /// </summary>
+    /// <param name="Dex">Ammount to add</param>
     public void AddStatsDex(int Dex)
     {
         if (AvaliablePointsToDistribute == 0 && Dex > 0)
@@ -85,7 +109,10 @@ public class PlayerStats : ScriptableObject
         CheckStatus();
 
     }
-
+    /// <summary>
+    /// Add luk stats if there is avaliable points to distribute.
+    /// </summary>
+    /// <param name="Luk">Ammount to add</param>
     public void AddStatsLuk(int Luk)
     {
         if (AvaliablePointsToDistribute == 0 && Luk > 0)
@@ -96,7 +123,10 @@ public class PlayerStats : ScriptableObject
         PlayerLuk = Mathf.Clamp(PlayerLuk, 1, 255);
         CheckStatus();
     }
-
+    /// <summary>
+    /// Add vit stats if there is avaliable points to distribute.
+    /// </summary>
+    /// <param name="Vit">Ammount to add</param>
     public void AddStatsVit(int Vit)
     {
         if (AvaliablePointsToDistribute == 0 && Vit > 0)
@@ -107,7 +137,10 @@ public class PlayerStats : ScriptableObject
         PlayerVit = Mathf.Clamp(PlayerVit, 1, 255);
         CheckStatus();
     }
-
+    /// <summary>
+    /// Add agi stats if there is avaliable points to distribute.
+    /// </summary>
+    /// <param name="Agi">Ammount to add</param>
     public void AddStatsAgi(int Agi)
     {
         if (AvaliablePointsToDistribute == 0 && Agi > 0)
@@ -119,6 +152,9 @@ public class PlayerStats : ScriptableObject
         CheckStatus();
     }
 
+    /// <summary>
+    /// Check if the ammout of stats distributed isn't greater than the max in the actual level
+    /// </summary>
     private void CheckStatus()
     {
         Debug.Log(AvaliablePointsToDistribute);
@@ -130,6 +166,9 @@ public class PlayerStats : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Reset all stats to 1
+    /// </summary>
     public void ResetStats()
     {
         PlayerInt = 1;
@@ -140,17 +179,13 @@ public class PlayerStats : ScriptableObject
         PlayerAgi = 1;
     }
 
+    /// <summary>
+    /// Reset the expt to 0
+    /// </summary>
     public void ResetExp()
     {
-        PlayerExperience = 0;
+        PlayerExperience = 1;
+        PlayerLevel = ReturnLevel(PlayerExperience);
     }
 
-}
-
-public enum PlayerClass
-{
-    Warrior,
-    Mage,
-    Archer,
-    Thief,
 }

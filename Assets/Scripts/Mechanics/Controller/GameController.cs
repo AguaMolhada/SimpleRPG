@@ -14,4 +14,21 @@ public class GameController : MonoBehaviour
     public const int ExperienceBase = 100;
     public const int MaxGold = 999999999;
     public const int MaxCash = 999999999;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 }

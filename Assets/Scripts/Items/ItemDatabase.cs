@@ -8,15 +8,17 @@ using System.Linq;
 
 public class ItemDatabase : MonoBehaviour
 {
-
-    private readonly List<Item> _database = new List<Item>();
+    private List<Item> _database = new List<Item>();
     private JsonData _itemData;
 
     void Start()
     {
+
+        DontDestroyOnLoad(gameObject);
         _itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
         Debug.Log(Application.dataPath + "/StreamingAssets/Items.json");
         ConstructItemDatabase();
+
     }
 
     public Item FetchItemById(int id)
@@ -31,39 +33,49 @@ public class ItemDatabase : MonoBehaviour
 
     private void ConstructItemDatabase()
     {
+        var temp = File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json");
+        Debug.Log(temp);
+
+        Item[] tempDatabase = JsonHelper.FromJson<Item>(temp);
+        Debug.Log(tempDatabase[2].Id);
+        for (int i = 0; i < tempDatabase.Length; i++)
+        {
+            _database.Add(tempDatabase[i]);
+        }
         for (var i = 0; i < _itemData.Count; i++)
         {
-            _database.Add(new Item((int)_itemData[i]["id"], _itemData[i]["title"].ToString(), (int)_itemData[i]["buyvalue"], (int)_itemData[i]["sellvalue"],
-                (Item.ItemType)Enum.Parse(typeof(Item.ItemType), _itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
-                _itemData[i]["attribute"], bool.Parse(_itemData[i]["stackable"].ToString()), _itemData[i]["sprname"].ToString(), bool.Parse(_itemData[i]["usable"].ToString())
-                ));
+          //  _database.Add(new Item((int)_itemData[i]["id"], _itemData[i]["title"].ToString(), (int)_itemData[i]["buyvalue"], (int)_itemData[i]["sellvalue"],
+          //      (ItemType)Enum.Parse(typeof(ItemType), _itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
+          //      _itemData[i]["attribute"], bool.Parse(_itemData[i]["stackable"].ToString()), _itemData[i]["sprname"].ToString(), bool.Parse(_itemData[i]["usable"].ToString())
+          //      ));
         }
 
     }
 
 }
 
-[System.Serializable]
+[Serializable]
 public class Item
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public int BuyValue { get; set; }
-    public int SellValue { get; set; }
-    public enum ItemType { Test = 0,Weapon = 1,Shield = 2,Armor = 3,Helmet = 4,Consumable = 5}
-    public ItemType TypeItemType { get; set; }
-    public int Attribute { get; set; } // atribute a ser modificado pelo item defesa/atk/tanto heal das potion
-    public bool Stackable { get; set; }
-    public Sprite Sprite { get; set; }
-    public bool Usable { get; set; }
+    [SerializeField] public int Id;
+    [SerializeField] public string Title;
+    [SerializeField] public int BuyValue;
+    [SerializeField] public int SellValue;
+    [SerializeField] public ItemType TypeItemType;
+    [SerializeField] public BonusAttribute[] BonusAttributes;
+    [SerializeField] public int Attribute; // atribute a ser modificado pelo item defesa/atk/tanto heal das potion
+    [SerializeField] public bool Stackable;
+    [SerializeField] public string Sprite;
+    [SerializeField] public bool Usable;
 
-    public Item(int id, string title, int bvalue,int svalue, ItemType t,JsonData attr,bool stackable,string sprName, bool usable)
+    public Item(int id, string title, int bvalue, int svalue, ItemType t, JsonData attr, bool stackable, string sprName, bool usable, BonusAttribute[] bonus)
     {
         this.Id = id;
         this.Title = title;
         this.BuyValue = bvalue;
         this.SellValue = svalue;
         this.TypeItemType = t;
+        this.BonusAttributes = bonus;
         this.Stackable = stackable;
         this.Usable = usable;
         if (t != ItemType.Test)
@@ -74,12 +86,12 @@ public class Item
         {
             this.Attribute = 0;
         }
-        this.Sprite = Resources.Load<Sprite>("Sprites/"+ sprName);
+
+        this.Sprite = sprName;
     }
 
     public Item()
     {
         this.Id = -1;
     }
-
 }

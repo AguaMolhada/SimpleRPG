@@ -2,13 +2,6 @@
 
 public class World : MonoBehaviour
 {
-
-    public enum CellType
-    {
-        Wall,
-        Floor,
-    }
-
     public float ScaleFactor;
     [Range(0,100)]
     public int ShopChance;
@@ -119,9 +112,23 @@ public class World : MonoBehaviour
                 player.name = "Jogador";
                 player.AddComponent<PlayerBase>();
                 player.GetComponent<PlayerBase>().PlayerStats = _3DCharacterHolder.AppliedPlayerStats;
-                player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
+                if (_3DCharacterHolder.NickName == "")
+                {
+                    player.GetComponent<PlayerBase>().NickName = Ultility.NameGenerator();
+                }
+                else
+                {
+                    player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
+                }
                 player.GetComponent<PlayerBase>().Speed = 5f;
                 player.GetComponent<PlayerBase>().PlayerStats.AddExperience(1);
+                player.layer = 8;
+                player.tag = "Player";
+                foreach (Transform child in player.transform)
+                {
+                    child.gameObject.layer = 8;
+                }
+                
             }
             else if(temp > ShopChance && scount < _shopCount)
             {

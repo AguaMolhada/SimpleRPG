@@ -19,9 +19,7 @@ public class CharacterSelection : MonoBehaviour
     public PlayerStats[] CharacterStatsBase;
     public PlayerStats AppliedPlayerStats;
     public TMP_Text SkinName;
-    public TMP_Text[] StatsValues;
-    public UIPolygon statsUIBorder;
-    public UIPolygon StatsUI;
+    public StatsPolygon Stats;
     public string NickName;
     public TMP_InputField NickNameInput;
 
@@ -58,33 +56,22 @@ public class CharacterSelection : MonoBehaviour
     {
         var skin = SelectCharacter.CharacterObj.name.Split('_');
         SkinName.text = skin[1];
-        StatsUI.VerticesDistances[0] = GetPercentValue(AppliedPlayerStats.PlayerAgi);
-        StatsUI.VerticesDistances[1] = GetPercentValue(AppliedPlayerStats.PlayerDex);
-        StatsUI.VerticesDistances[2] = GetPercentValue(AppliedPlayerStats.PlayerInt);
-        StatsUI.VerticesDistances[3] = GetPercentValue(AppliedPlayerStats.PlayerLuk);
-        StatsUI.VerticesDistances[4] = GetPercentValue(AppliedPlayerStats.PlayerVit);
-        StatsUI.VerticesDistances[5] = GetPercentValue(AppliedPlayerStats.PlayerCon);
-        StatsValues[0].text = AppliedPlayerStats.PlayerAgi.ToString();
-        StatsValues[1].text = AppliedPlayerStats.PlayerDex.ToString();
-        StatsValues[2].text = AppliedPlayerStats.PlayerInt.ToString();
-        StatsValues[3].text = AppliedPlayerStats.PlayerLuk.ToString();
-        StatsValues[4].text = AppliedPlayerStats.PlayerVit.ToString();
-        StatsValues[5].text = AppliedPlayerStats.PlayerCon.ToString();
+        Stats.StatsUi.VerticesDistances[0] = GetPercentValue(AppliedPlayerStats.PlayerAgi);
+        Stats.StatsUi.VerticesDistances[1] = GetPercentValue(AppliedPlayerStats.PlayerDex);
+        Stats.StatsUi.VerticesDistances[2] = GetPercentValue(AppliedPlayerStats.PlayerInt);
+        Stats.StatsUi.VerticesDistances[3] = GetPercentValue(AppliedPlayerStats.PlayerLuk);
+        Stats.StatsUi.VerticesDistances[4] = GetPercentValue(AppliedPlayerStats.PlayerVit);
+        Stats.StatsUi.VerticesDistances[5] = GetPercentValue(AppliedPlayerStats.PlayerCon);
+        Stats.StatsValues[0].text = AppliedPlayerStats.PlayerAgi.ToString();
+        Stats.StatsValues[1].text = AppliedPlayerStats.PlayerDex.ToString();
+        Stats.StatsValues[2].text = AppliedPlayerStats.PlayerInt.ToString();
+        Stats.StatsValues[3].text = AppliedPlayerStats.PlayerLuk.ToString();
+        Stats.StatsValues[4].text = AppliedPlayerStats.PlayerVit.ToString();
+        Stats.StatsValues[5].text = AppliedPlayerStats.PlayerCon.ToString();
 
-        RedrawPolygonUI();
+        Stats.RedrawPolygonUI();
     }
-
-    void OnEnable()
-    {
-        RedrawPolygonUI();
-    }
-
-    public void RedrawPolygonUI()
-    {
-        statsUIBorder.Redraw();
-        StatsUI.Redraw();
-    }
-
+    
     public void AssignNickname(string n)
     {
         NickName = n;

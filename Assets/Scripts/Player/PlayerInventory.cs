@@ -4,74 +4,178 @@
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _openedSlotsPefab;
-    [SerializeField]
-    private GameObject _closedSlotsPrefab;
-    [SerializeField]
-    private TMP_Text _playerGold;
-    [SerializeField]
-    private TMP_Text _playerCash;
+    /// <summary>
+    /// Max slots number.
+    /// </summary>
+    public const int NumItemSlots = 36;
+    /// <summary>
+    /// Number of slots unlocked at start. 
+    /// </summary>
+    public const int UnlockedSlots = 16;
+    /// <summary>
+    /// Number of slots currenty unlocked.
+    /// </summary>
+    public int NumIntemSlotsUnlocked { get; private set; }
+    /// <summary>
+    /// Empyt slots prefab.
+    /// </summary>
+    [SerializeField] private GameObject _openedSlotsPefab;
+    /// <summary>
+    /// Locked slots prefab.
+    /// </summary>
+    [SerializeField] private GameObject _closedSlotsPrefab;
+    /// <summary>
+    /// Item data holder prefab.
+    /// </summary>
+    [SerializeField] private GameObject _itemDataPrefab;
+    /// <summary>
+    /// Gold text.
+    /// </summary>
+    [SerializeField] private TMP_Text _playerGold;
+    /// <summary>
+    /// Cash text.
+    /// </summary>
+    [SerializeField] private TMP_Text _playerCash;
+    /// <summary>
+    /// Nickname text.
+    /// </summary>
+    [SerializeField] private TMP_Text _playerNickname;
+    /// <summary>
+    /// Player selected class.
+    /// </summary>
+    [SerializeField] private TMP_Text _PlayerClass;
+    /// <summary>
+    /// Reference to the player.
+    /// </summary>
+    private PlayerBase _player;
 
-    private GameObject _MySelf;
-
-    public Item[] InventoryItems;
-
-    public List<GameObject> Slots;
-    public List<GameObject> LockSlots;
+    public List<Slot> Slots = new List<Slot>();
 
     void Start()
     {
-        _MySelf = gameObject;
-        Init(16,36);
-        _playerGold.text = GameController.MaxCash.ToString("##,###");
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
+        NumIntemSlotsUnlocked = UnlockedSlots;
+        Init(NumIntemSlotsUnlocked, NumItemSlots);
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        UpdateUiElemets();
+    }
+    /// <summary>
+    /// Update the ui elements.
+    /// </summary>
+    private void UpdateUiElemets()
+    {
+
+        _playerCash.text = _player.GoldAmmount.ToString("##,###");
+        _playerGold.text = _player.CashAmmount.ToString("##,###");
+        _playerNickname.text = _player.NickName;
+        _PlayerClass.text = _player.PlayerStats.PlayerClass.ToString();
+    }
+
+    /// <summary>
+    /// to add item to the inventory
+    /// </summary>
+    /// <param name="itemToAdd">item data to add</param>
+    public void AddItem(Item itemToAdd)
+    {
+        //Check if item exist in the inventory if exists add 1 to the ammout.
+        if (itemToAdd.Stackable)
+        {
+            for (int i = 0; i < NumIntemSlotsUnlocked; i++)
+            {
+                if (Slots[i].SlotItem != null && Slots[i].SlotItem.Item == itemToAdd)
+                {
+                    Slots[i].SlotItem.Ammount += 1;
+                    return;
+                }
+            }
+        }
+        //If the item to add doesn't exist add in new slot.
+        for (var i = 0; i < NumIntemSlotsUnlocked; i++)
+        {
+            if (Slots[i].SlotItem == null)
+            {
+                var temp = Instantiate(_itemDataPrefab, Slots[i].transform);
+                temp.GetComponent<ItemData>().Init(itemToAdd, Slots[i]);
+                Slots[i].SlotItem = temp.GetComponent<ItemData>();
+                return;
+            }
+        }
+        Debug.LogWarning("Full Inventory");
+    }
+
+    public void RemoveItem(Item itemToRemove)
+    {
+        for (var i = 0; i < NumIntemSlotsUnlocked; i++)
+        {
+            if (Slots[i].SlotItem.Item == itemToRemove)
+            {
+                Slots[i].SlotItem.Ammount -= 1;
+                return;
+            }
+        }
     }
 
     void Init(int open, int max)
     {
-        for (int i = 0; i < max; i++)
+        for (var i = 0; i < max; i++)
         {
             if (i < open)
             {
                 var slot = Instantiate(_openedSlotsPefab, transform);
                 slot.name = i+"_"+_openedSlotsPefab.name;
-                Slots.Add(slot);
-                
+                Slots.Add(slot.GetComponent<Slot>());
             }
             else
             {
                 var slot = Instantiate(_closedSlotsPrefab, transform);
                 slot.name = "_" + _closedSlotsPrefab;
                 slot.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => Unlock(slot));
-                LockSlots.Add(slot);
             }
         }
     }
 
     private void Unlock(GameObject x)
     {
-        if (GameObject.Find("Jogador").GetComponent<PlayerBase>().CashAmmount < 0)
+        var player = GameObject.Find("Jogador").GetComponent<PlayerBase>();
+        int slotCost;
+        if (NumIntemSlotsUnlocked - UnlockedSlots == 0)
         {
-            Debug.LogError("Not Enought Cash");
+            slotCost = 50 * (NumIntemSlotsUnlocked - UnlockedSlots + 1);
         }
-        LockSlots.Remove(x);
+        else
+        {
+            slotCost = (int)(50f * ((NumIntemSlotsUnlocked - UnlockedSlots + 1) * 0.7f))+1;
+        }
+
+        if (player.CashAmmount < slotCost)
+        {
+            Debug.LogError("Not Enought Cash, You have" + player.CashAmmount +
+                           "$ and you need " + slotCost);
+            return;
+        }
         Destroy(x);
-        var slot = Instantiate(_openedSlotsPefab, _MySelf.transform);
-        slot.name = name[0] + "_" + _openedSlotsPefab;
-        slot.transform.SetSiblingIndex(Slots.Count);
-        Slots.Add(slot);
-        
+        var slot = Instantiate(_openedSlotsPefab, transform);
+        slot.name = NumIntemSlotsUnlocked + "_" + _openedSlotsPefab.name;
+        slot.transform.SetSiblingIndex(NumIntemSlotsUnlocked);
+        NumIntemSlotsUnlocked += 1;
+        Slots.Add(slot.GetComponent<Slot>());
     }
 }

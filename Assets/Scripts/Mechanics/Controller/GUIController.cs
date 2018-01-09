@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -9,15 +10,20 @@ using UnityEngine.UI;
 // ReSharper disable once InconsistentNaming
 public class GUIController : MonoBehaviour
 {
+    public static bool IsPaused;
     public AudioMixer AudioMixer;
     public TMP_Dropdown ResolutionDropDown;
     public Slider ProgressSlider;
     public Slider VolumeSlider;
     public TMP_Text ProgressText;
-    
+
+    public GameObject PauseMenu;
+    public GameObject InventoryMenu;
+
+
     private Resolution[] _resolutions;
 
-    void Start()
+    private void Start()
     {
         _resolutions = Screen.resolutions;
         var volumeSliderValue = 0f;
@@ -39,6 +45,19 @@ public class GUIController : MonoBehaviour
         ResolutionDropDown.value = currentResolutionIndex;
         ResolutionDropDown.RefreshShownValue();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SetActiveMenu(InventoryMenu);
+        }
+    }
+
 
     public void PlayGame()
     {
@@ -72,11 +91,30 @@ public class GUIController : MonoBehaviour
 
     }
 
+    private void PauseGame()
+    {
+        PauseMenu.SetActive(true);
+        Time.timeScale = 0;
+        IsPaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        IsPaused = false;
+    }
+
     public void ExitGame()
     {
         Application.Quit();
     }
 
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene(0);   
+    }
+    
     public void SetActiveMenu(GameObject x)
     {
         x.SetActive(!x.activeSelf);

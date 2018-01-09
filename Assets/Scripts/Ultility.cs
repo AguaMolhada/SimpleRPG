@@ -268,11 +268,9 @@ public static class Ultility
 
     #endregion
 }
-
-public enum Direction
-{
-    North, East, South, West,
-}
+/// <summary>
+/// Class structure for rooms.
+/// </summary>
 public class Room
 {
     public int XPos;                      // The x coordinate of the lower left tile of the room.
@@ -347,11 +345,14 @@ public class Room
         }
     }
 }
+/// <summary>
+/// Class structure for corridors.
+/// </summary>
 public class Corridor
 {
     public int StartXPos;         // The x coordinate for the start of the corridor.
     public int StartYPos;         // The y coordinate for the start of the corridor.
-    public int CorridorLength;            // How many units long the corridor is.
+    public int CorridorLength;    // How many units long the corridor is.
     public Direction Direction;   // Which direction the corridor is heading from it's room.
 
 
@@ -463,4 +464,78 @@ public class IntRange
     {
         get { return UnityEngine.Random.Range(MMin, MMax); }
     }
+}
+[Serializable]
+public class BonusAttribute
+{
+    public ItemBonusAttribute AttributeBonus;
+    public int BonusAmmout;
+
+    public BonusAttribute(ItemBonusAttribute a, int b)
+    {
+        AttributeBonus = a;
+        BonusAmmout = b;
+    }
+}
+
+/// <summary>
+/// Player Classes.
+/// </summary>
+public enum PlayerClass
+{
+    Warrior = 0,
+    Mage = 1,
+    Archer = 2,
+    Thief = 3
+}
+/// <summary>
+/// Type of slots.
+/// </summary>
+public enum SlotType
+{
+    Inventory = 0,
+    Equipment = 1
+}
+/// <summary>
+/// Item Types.
+/// </summary>
+public enum ItemType
+{
+    Test = 0,
+    Helmet = 1,
+    Armor = 2,
+    Gloves = 3,
+    Legs = 4,
+    Boots = 5,
+    Weapon = 6,
+    Shield = 7,
+    Backpack = 8,
+    Consumable = 9
+}
+/// <summary>
+/// Bonus attribute types.
+/// </summary>
+public enum ItemBonusAttribute
+{
+    MinDmg = 0,
+    MaxDmg = 1,
+    Agi = 2,
+    Dex = 3,
+    Int = 4,
+    Luk = 5,
+    Vit = 6,
+    Con = 7
+}
+
+/// <summary>
+/// Directions that will face.
+/// </summary>
+public enum Direction
+{
+    North = 0, East = 1, South = 2, West = 3
+}
+public enum CellType
+{
+    Wall = 0,
+    Floor = 1
 }

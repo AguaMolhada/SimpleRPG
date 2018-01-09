@@ -2,69 +2,98 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using System;
-using Assets.Scripts.Items;
 
 public class Slot : MonoBehaviour, IDropHandler
 {
-
-    public enum SlotType
-    {
-        Inventory,
-        Equipment,
-    }
-
-    public enum EquipmentType
-    {
-        None,
-        Helmet,
-        Armor,
-        Boots,
-        Weapon,
-        Shield,
-        Necklace,
-        Ring,
-    }
-
-    public EquipmentType EquipType;
+    /// <summary>
+    /// Slot type. Inventory or Equipment.
+    /// </summary>
     public SlotType SlotT;
-    public int SlotId;
-
-    private PlayerInventory _inv;
-//    private PlayerEquipment _equip;
-
-    private void Start()
-    {
-          _inv = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
-//        _equip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>();
-    }
+    /// <summary>
+    /// If sloty type is Equipment wich one will be used.
+    /// </summary>
+    public ItemType EquipType;
+    /// <summary>
+    /// Item that is in the slot.
+    /// </summary>
+    public ItemData SlotItem;
 
     public void OnDrop(PointerEventData eventData)
     {
         if (SlotT == SlotType.Inventory)
         {
             var droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
-            Debug.Log(_inv.InventoryItems[SlotId].Id);
-            if (_inv.InventoryItems[SlotId].Id == -1)
+            droppedItem.MySlot.SlotItem = null;
+            if (SlotItem == null)
             {
-                _inv.InventoryItems[droppedItem.Slot] = new Item();
-                _inv.InventoryItems[SlotId] = droppedItem.Item;
-                droppedItem.Slot = SlotId;
+                AssignItemToEmptySlot(droppedItem);
             }
             else
             {
-                var item = transform.GetChild(0);
-                item.GetComponent<ItemData>().Slot = droppedItem.Slot;
-                item.transform.SetParent(_inv.Slots[droppedItem.Slot].transform);
-                item.transform.position = _inv.Slots[droppedItem.Slot].transform.position;
-
-                droppedItem.Slot = SlotId;
-                droppedItem.transform.SetParent(transform);
-                droppedItem.transform.position = transform.position;
-
-                _inv.InventoryItems[droppedItem.Slot] = item.GetComponent<ItemData>().Item;
-                _inv.InventoryItems[SlotId] = droppedItem.Item;
+                AssignItemToSlot(droppedItem);
             }
+
         }
     }
+    /// <summary>
+    /// Assign itemData to the respective slot.
+    /// </summary>
+    /// <param name="itemData">itemData data to be assigned.</param>
+    private void AssignItemToSlot(ItemData itemData)
+    {
+        switch (SlotT)
+        {
+            case SlotType.Inventory:
+                if (SlotItem.Item == itemData.Item && SlotItem.Item.Stackable)
+                {
+                    itemData.MySlot = gameObject.GetComponent<Slot>();
+                    itemData.Ammount += SlotItem.Ammount;
+                    SlotItem = itemData;
+                    return;
+                }
+                else if (SlotItem.Item != itemData.Item)
+                {
+                    var temp = SlotItem;
+                    temp.MySlot = itemData.MySlot;
+                    itemData.MySlot = gameObject.GetComponent<Slot>();
+                    return;
+                }
+
+                break;
+            case SlotType.Equipment:
+                if (SlotItem.Item != itemData.Item)
+                {
+                    var temp = SlotItem;
+                    temp.MySlot = itemData.MySlot;
+                    itemData.MySlot = gameObject.GetComponent<Slot>();
+                    return;
+                }
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Assign itemData to the respective slot.
+    /// </summary>
+    /// <param name="itemData">itemData data to be assigned.</param>
+    private void AssignItemToEmptySlot(ItemData itemData)
+    {
+        switch (SlotT)
+        {
+            case SlotType.Inventory:
+                SlotItem = itemData;
+                itemData.MySlot = gameObject.GetComponent<Slot>();
+                break;
+            case SlotType.Equipment:
+                if (itemData.Item.TypeItemType == EquipType)
+                {
+                    SlotItem = itemData;
+                    itemData.MySlot = gameObject.GetComponent<Slot>();
+                    return;
+                }
+                break;
+        }
+    }
+
 }
 
