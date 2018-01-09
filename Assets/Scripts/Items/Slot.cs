@@ -85,7 +85,7 @@ public class Slot : MonoBehaviour, IDropHandler
                 itemData.MySlot = gameObject.GetComponent<Slot>();
                 break;
             case SlotType.Equipment:
-                if (itemData.Item.TypeItemType == EquipType)
+                if (itemData.Item.ItemT == EquipType)
                 {
                     SlotItem = itemData;
                     itemData.MySlot = gameObject.GetComponent<Slot>();

@@ -36,8 +36,8 @@ public class ItemDatabase : MonoBehaviour
         var temp = File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json");
         Debug.Log(temp);
 
-        Item[] tempDatabase = JsonHelper.FromJson<Item>(temp);
-        Debug.Log(tempDatabase[2].Id);
+        Item[] tempDatabase = JsonHelper.FromJsonWrapped<Item>(temp);
+        Debug.Log(tempDatabase[0].Title);
         for (int i = 0; i < tempDatabase.Length; i++)
         {
             _database.Add(tempDatabase[i]);
@@ -61,20 +61,19 @@ public class Item
     [SerializeField] public string Title;
     [SerializeField] public int BuyValue;
     [SerializeField] public int SellValue;
-    [SerializeField] public ItemType TypeItemType;
+    [SerializeField] public ItemType ItemT;
     [SerializeField] public BonusAttribute[] BonusAttributes;
     [SerializeField] public int Attribute; // atribute a ser modificado pelo item defesa/atk/tanto heal das potion
     [SerializeField] public bool Stackable;
     [SerializeField] public string Sprite;
     [SerializeField] public bool Usable;
-
     public Item(int id, string title, int bvalue, int svalue, ItemType t, JsonData attr, bool stackable, string sprName, bool usable, BonusAttribute[] bonus)
     {
         this.Id = id;
         this.Title = title;
         this.BuyValue = bvalue;
         this.SellValue = svalue;
-        this.TypeItemType = t;
+        this.ItemT = t;
         this.BonusAttributes = bonus;
         this.Stackable = stackable;
         this.Usable = usable;

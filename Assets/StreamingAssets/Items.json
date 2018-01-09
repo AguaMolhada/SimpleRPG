@@ -1,11 +1,11 @@
 {
-	"Items": [
+	"items": [
 		{
-			"id": 0,
-			"title": "test item ",
-			"buyvalue": 999,
+			"Id": 0,
+			"Title": "test item ",
+			"BuyValue": 999,
 			"sellvalue": 999,
-			"TypeItemType": 0,
+			"ItemT": 0,
 			"BonusAttributes":
 			[
 				{
@@ -23,11 +23,11 @@
 			"Usable": false
 		},
 		{
-			"id": 1,
-			"title": "Lether Helmet",
-			"buyvalue": 10,
+			"Id": 1,
+			"Title": "Lether Helmet",
+			"BuyValue": 10,
 			"sellvalue": 5,
-			"TypeItemType": 1,
+			"ItemT": 1,
 			"BonusAttributes":
 			[
 				{
@@ -43,17 +43,17 @@
 					"BonusAmmout": 1
 				}
 			],
-			"attribute": 3,
-			"stackable": false,
-			"sprname": "C_Elm01",
-			"usable": false
+			"Attribute": 3,
+			"Stackable": false,
+			"Sprite": "C_Elm01",
+			"Usable": false
 		},
 		{
-			"id": 2,
-			"title": "Lether Armor",
-			"buyvalue": 15,
+			"Id": 2,
+			"Title": "Lether Armor",
+			"BuyValue": 15,
 			"sellvalue": 9,
-			"TypeItemType": 2,
+			"ItemT": 2,
 			"BonusAttributes":
 			[
 				{
@@ -69,17 +69,17 @@
 					"BonusAmmout": 2
 				}
 			],
-			"attribute": 5,
-			"stackable": false,
-			"sprname": "A_Armour01",
-			"usable": false
+			"Attribute": 5,
+			"Stackable": false,
+			"Sprite": "A_Armour01",
+			"Usable": false
 		},
 		{
-			"id": 3,
-			"title": "Iron Helmet",
-			"buyvalue": 20,
+			"Id": 3,
+			"Title": "Iron Helmet",
+			"BuyValue": 20,
 			"sellvalue": 12,
-			"TypeItemType": 1,
+			"ItemT": 1,
 			"BonusAttributes":
 			[
 				{
@@ -95,17 +95,17 @@
 					"BonusAmmout": 1
 				}
 			],
-			"attribute": 8,
-			"stackable": false,
-			"sprname": "C_Elm03",
-			"usable": false
+			"Attribute": 8,
+			"Stackable": false,
+			"Sprite": "C_Elm03",
+			"Usable": false
 		},
 		{
-			"id": 4,
-			"title": "Iron Armor",
-			"buyvalue": 35,
+			"Id": 4,
+			"Title": "Iron Armor",
+			"BuyValue": 35,
 			"sellvalue": 29,
-			"TypeItemType": 2,
+			"ItemT": 2,
 			"BonusAttributes":
 			[
 				{
@@ -117,66 +117,66 @@
 					"BonusAmmout": 1
 				}
 			],
-			"attribute": 12,
-			"stackable": false,
-			"sprname": "A_Armour02",
-			"usable": false
+			"Attribute": 12,
+			"Stackable": false,
+			"Sprite": "A_Armour02",
+			"Usable": false
 		},
 		{
-			"id": 7,
-			"title": "Health Potion",
-			"buyvalue": 25,
+			"Id": 7,
+			"Title": "Health Potion",
+			"BuyValue": 25,
 			"sellvalue": 0,
-			"TypeItemType": 9,
+			"ItemT": 9,
 			"BonusAttributes":
 			[
 			],
-			"attribute": 20,
-			"stackable": true,
-			"sprname": "P_Red02",
-			"usable": true
+			"Attribute": 20,
+			"Stackable": true,
+			"Sprite": "P_Red02",
+			"Usable": true
 		},
 		{
-			"id": 8,
-			"title": "Great Health Potion",
-			"buyvalue": 60,
+			"Id": 8,
+			"Title": "Great Health Potion",
+			"BuyValue": 60,
 			"sellvalue": 0,
-			"TypeItemType": 9,
+			"ItemT": 9,
 			"BonusAttributes":
 			[
 			],
-			"attribute": 50,
-			"stackable": true,
-			"sprname": "P_Red03",
-			"usable": true
+			"Attribute": 50,
+			"Stackable": true,
+			"Sprite": "P_Red03",
+			"Usable": true
 		},
 		{
-			"id": 9,
-			"title": "Ultra Health Potion",
-			"buyvalue": 100,
+			"Id": 9,
+			"Title": "Ultra Health Potion",
+			"BuyValue": 100,
 			"sellvalue": 0,
-			"TypeItemType": 9,
+			"ItemT": 9,
 			"BonusAttributes":
 			[
 			],
-			"attribute": 100,
-			"stackable": true,
-			"sprname": "P_Red01",
-			"usable": true
+			"Attribute": 100,
+			"Stackable": true,
+			"Sprite": "P_Red01",
+			"Usable": true
 		},
 		{
-			"id": 10,
-			"title": "Iron Sword",
-			"buyvalue": 250,
+			"Id": 10,
+			"Title": "Iron Sword",
+			"BuyValue": 250,
 			"sellvalue": 95,
-			"TypeItemType": 6,
+			"ItemT": 6,
 			"BonusAttributes":
 			[
 			],
-			"attribute": 15,
-			"stackable": false,
-			"sprname": "W_Sword004",
-			"usable": false
+			"Attribute": 15,
+			"Stackable": false,
+			"Sprite": "W_Sword004",
+			"Usable": false
 		}
 	]
 }
