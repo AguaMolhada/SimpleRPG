@@ -302,7 +302,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cab105adf6e12b743a49cf011874e596, type: 2}
   AppliedPlayerStats: {fileID: 11400000, guid: d12675115c1113e429c2037e6ea34ce2, type: 2}
   SkinName: {fileID: 1859034554}
-  Stats: {fileID: 0}
+  Stats: {fileID: 912140918}
   NickName: 
   NickNameInput: {fileID: 2036156258}
 --- !u!1001 &72135802
@@ -12534,7 +12534,7 @@ GameObject:
   - component: {fileID: 1635761190}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

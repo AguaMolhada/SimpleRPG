@@ -1051,7 +1051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fd7be34ce7d5a4e894cdf564363eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EquipedItems: []
   Slots:
   - {fileID: 1710220224}
   - {fileID: 302529762}
@@ -1062,6 +1061,14 @@ MonoBehaviour:
   - {fileID: 850514705}
   - {fileID: 186755522}
   EquipmentPanel: {fileID: 190103344}
+  ExtraStats:
+  - {fileID: 52245912}
+  - {fileID: 559245331}
+  - {fileID: 1473449660}
+  - {fileID: 2121134740}
+  - {fileID: 343327648}
+  - {fileID: 1096217807}
+  ExtraStatsAmmout: 000000000000000000000000000000000000000000000000
 --- !u!1 &200106300
 GameObject:
   m_ObjectHideFlags: 0
@@ -3000,7 +3007,7 @@ MonoBehaviour:
   _playerGold: {fileID: 1646461335}
   _playerCash: {fileID: 1124835819}
   _playerNickname: {fileID: 2020551779}
-  _PlayerClass: {fileID: 1776564042}
+  _playerClass: {fileID: 1776564042}
   Slots: []
 --- !u!1 &486517402
 GameObject:
@@ -11748,7 +11755,7 @@ GameObject:
   - component: {fileID: 1772409096}
   m_Layer: 0
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

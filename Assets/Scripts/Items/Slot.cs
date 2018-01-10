@@ -9,6 +9,7 @@ public class Slot : MonoBehaviour, IDropHandler
     /// Slot type. Inventory or Equipment.
     /// </summary>
     public SlotType SlotT;
+
     /// <summary>
     /// If sloty type is Equipment wich one will be used.
     /// </summary>
@@ -16,7 +17,27 @@ public class Slot : MonoBehaviour, IDropHandler
     /// <summary>
     /// Item that is in the slot.
     /// </summary>
-    public ItemData SlotItem;
+    private ItemData _slotItem;
+    /// <summary>
+    /// Item that is in the slot (when ever this is changed will call OnItemChanged() to subscribe use OnItemChanged += Mehtod).
+    /// </summary>
+    public ItemData SlotItem
+    {
+        get { return _slotItem; }
+        set {
+            if (_slotItem == value)
+            {
+                return;
+            }
+            _slotItem = value;
+            if (OnItemChanged != null)
+            {
+                OnItemChanged();
+            }
+        }
+    }
+    public delegate void OnItemChangedDelegate();
+    public event OnItemChangedDelegate OnItemChanged;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -32,7 +53,19 @@ public class Slot : MonoBehaviour, IDropHandler
             {
                 AssignItemToSlot(droppedItem);
             }
-
+        }
+        else if (SlotT == SlotType.Equipment)
+        {
+            var droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
+            droppedItem.MySlot.SlotItem = null;
+            if (SlotItem == null)
+            {
+                AssignItemToEmptySlot(droppedItem);
+            }
+            else
+            {
+                AssignItemToSlot(droppedItem);
+            }
         }
     }
     /// <summary>

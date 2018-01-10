@@ -47,14 +47,14 @@ public class PlayerStats : ScriptableObject
         return (int) (exp / (GameController.ExperienceBase + Mathf.Log10(PlayerLevel))) + 1;
     }
 
-    public void AddExtraStats(int a, int d, int i, int l, int v, int c)
+    public void AddExtraStats(int[] extraStatas)
     {
-        ExtraAgi = a;
-        ExtraDex = d;
-        ExtraInt = i;
-        ExtraLuk = l;
-        ExtraVit = v;
-        ExtraCon = c;
+        ExtraAgi = extraStatas[0];
+        ExtraDex = extraStatas[1];
+        ExtraInt = extraStatas[2];
+        ExtraLuk = extraStatas[3];
+        ExtraVit = extraStatas[4];
+        ExtraCon = extraStatas[5];
     }
 
     /// <summary>

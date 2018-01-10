@@ -50,7 +50,7 @@ public class PlayerInventory : MonoBehaviour
     /// <summary>
     /// Player selected class.
     /// </summary>
-    [SerializeField] private TMP_Text _PlayerClass;
+    [SerializeField] private TMP_Text _playerClass;
     /// <summary>
     /// Reference to the player.
     /// </summary>
@@ -86,7 +86,7 @@ public class PlayerInventory : MonoBehaviour
         _playerCash.text = _player.GoldAmmount.ToString("##,###");
         _playerGold.text = _player.CashAmmount.ToString("##,###");
         _playerNickname.text = _player.NickName;
-        _PlayerClass.text = _player.PlayerStats.PlayerClass.ToString();
+        _playerClass.text = _player.PlayerStats.PlayerClass.ToString();
     }
 
     /// <summary>

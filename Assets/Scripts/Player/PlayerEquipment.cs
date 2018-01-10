@@ -23,16 +23,59 @@ public class PlayerEquipment : MonoBehaviour
     /// <summary>
     /// Text do show stats gain via equipment.
     /// </summary>
-    public TMP_Text[] ExtraStats = new TMP_Text[EquipmentSlots];
+    public TMP_Text[] ExtraStats = new TMP_Text[6];
 
-    void UpdateEquipmentGui()
+    public int[] ExtraStatsAmmout = new int[6];
+
+    private void Start()
     {
-        var ExtraAgi = 0;
-        var ExtraDex = 0;
-        var ExtraInt = 0;
-        var ExtraLuk = 0;
-        var ExtraVit = 0;
-        var ExtraCon = 0;
+        foreach (var slot in Slots)
+        {
+            slot.OnItemChanged += UpdateEquipmentGui;
+        }
+    }
+
+    private void UpdateEquipmentGui()
+    {
+        ExtraStatsAmmout = new int[6] {0,0,0,0,0,0};
+        
+        foreach (var slot in Slots)
+        {
+            if (slot.SlotItem != null)
+            {
+                foreach (var itemAtribute in slot.SlotItem.Item.BonusAttributes)
+                {
+                    switch (itemAtribute.AttributeBonus)
+                    {
+                        case ItemBonusAttribute.Agi:
+                            ExtraStatsAmmout[0] += itemAtribute.BonusAmmout;
+                            break;
+                        case ItemBonusAttribute.Dex:
+                            ExtraStatsAmmout[1] += itemAtribute.BonusAmmout;
+                            break;
+                        case ItemBonusAttribute.Int:
+                            ExtraStatsAmmout[2] += itemAtribute.BonusAmmout;
+                            break;
+                        case ItemBonusAttribute.Luk:
+                            ExtraStatsAmmout[3] += itemAtribute.BonusAmmout;
+                            break;
+                        case ItemBonusAttribute.Vit:
+                            ExtraStatsAmmout[4] += itemAtribute.BonusAmmout;
+                            break;
+                        case ItemBonusAttribute.Con:
+                            ExtraStatsAmmout[5] += itemAtribute.BonusAmmout;
+                            break;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < ExtraStatsAmmout.Length; i++)
+        {
+            ExtraStats[i].text = "+" + ExtraStatsAmmout[i].ToString();
+        }
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>().PlayerStats.AddExtraStats(ExtraStatsAmmout);
+
     }
 
 }

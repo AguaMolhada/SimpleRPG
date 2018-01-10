@@ -55,7 +55,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         if (Item != null)
         {
             _itemOffset = eventData.position - new Vector2(transform.position.x, transform.position.y);
-            transform.SetParent(transform.parent.parent);
+            transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform);
             transform.position = eventData.position - _itemOffset;
             GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
