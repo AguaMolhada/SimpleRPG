@@ -11,17 +11,41 @@ public class PlayerStats : ScriptableObject
     /// Player Character Class
     /// </summary>
     public PlayerClass PlayerClass = PlayerClass.Warrior;
-
+    /// <summary>
+    /// Current Player Level.
+    /// </summary>
     public int PlayerLevel { get; protected set; }
-
+    /// <summary>
+    /// Total Ammount exp.
+    /// </summary>
     public int PlayerExperience { get; protected set; }
+    /// <summary>
+    /// Required exp to next lvl.
+    /// </summary>
     public int RequiredExperience { get; protected set; }
-
+    /// <summary>
+    /// Ammount player Agility.
+    /// </summary>
     public int PlayerAgi;
+    /// <summary>
+    /// Ammmount player Dexterity.
+    /// </summary>
     public int PlayerDex;
+    /// <summary>
+    /// Ammount player Intelligence..
+    /// </summary>
     public int PlayerInt;
+    /// <summary>
+    /// Ammount player Lucky.
+    /// </summary>
     public int PlayerLuk;
+    /// <summary>
+    /// Ammount player Vitality
+    /// </summary>
     public int PlayerVit;
+    /// <summary>
+    /// Ammount player Constitution.
+    /// </summary>
     public int PlayerCon;
 
     public int AvaliablePointsToDistribute

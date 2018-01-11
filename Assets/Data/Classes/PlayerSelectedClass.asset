@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: PlayerSelectedClass
   m_EditorClassIdentifier: 
   PlayerClass: 0
-  PlayerInt: 0
-  PlayerCon: 0
-  PlayerDex: 0
-  PlayerLuck: 0
-  PlayerVit: 0
+  PlayerAgi: 1
+  PlayerDex: 1
+  PlayerInt: 1
+  PlayerLuk: 1
+  PlayerVit: 1
+  PlayerCon: 1

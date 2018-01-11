@@ -4,6 +4,8 @@
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +27,11 @@ public class PlayerBase : MonoBehaviour
     /// Ammount player cash.
     /// </summary>
     public int CashAmmount { get; protected set; }
+
+    private void Start()
+    {
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().Player = this;
+    }
 
     private void Update()
     {

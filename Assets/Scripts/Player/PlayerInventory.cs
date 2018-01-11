@@ -4,10 +4,13 @@
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -54,28 +57,26 @@ public class PlayerInventory : MonoBehaviour
     /// <summary>
     /// Reference to the player.
     /// </summary>
-    private PlayerBase _player;
 
     public List<Slot> Slots = new List<Slot>();
 
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>();
         NumIntemSlotsUnlocked = UnlockedSlots;
         Init(NumIntemSlotsUnlocked, NumItemSlots);
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(4));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(3));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(1));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(2));
+        AddItem(ItemDatabase.Instance.FetchItemById(4));
+        AddItem(ItemDatabase.Instance.FetchItemById(3));
+        AddItem(ItemDatabase.Instance.FetchItemById(1));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItemById(9));
         UpdateUiElemets();
     }
     /// <summary>
@@ -84,10 +85,10 @@ public class PlayerInventory : MonoBehaviour
     private void UpdateUiElemets()
     {
 
-        _playerCash.text = _player.GoldAmmount.ToString("##,###");
-        _playerGold.text = _player.CashAmmount.ToString("##,###");
-        _playerNickname.text = _player.NickName;
-        _playerClass.text = _player.PlayerStats.PlayerClass.ToString();
+        _playerCash.text = GameController.Instance.Player.GoldAmmount.ToString("##,###");
+        _playerGold.text = GameController.Instance.Player.CashAmmount.ToString("##,###");
+        _playerNickname.text = GameController.Instance.Player.NickName;
+        _playerClass.text = GameController.Instance.Player.PlayerStats.PlayerClass.ToString();
     }
     /// <summary>
     /// to add item to the inventory
@@ -120,7 +121,10 @@ public class PlayerInventory : MonoBehaviour
         }
         Debug.LogWarning("Full Inventory");
     }
-
+    /// <summary>
+    /// Remove the item. if ammount > 0 remove only 1 unity.
+    /// </summary>
+    /// <param name="itemToRemove">Item data to remove</param>
     public void RemoveItem(Item itemToRemove)
     {
         for (var i = 0; i < NumIntemSlotsUnlocked; i++)
@@ -132,7 +136,11 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Initialize the inventory.
+    /// </summary>
+    /// <param name="open">Opened Slots.</param>
+    /// <param name="max">Max Slots.</param>
     void Init(int open, int max)
     {
         for (var i = 0; i < max; i++)
@@ -151,10 +159,12 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Unlock the inventory cell.
+    /// </summary>
+    /// <param name="x">Cell to unlock</param>
     private void Unlock(GameObject x)
     {
-        var player = GameObject.Find("Jogador").GetComponent<PlayerBase>();
         int slotCost;
         if (NumIntemSlotsUnlocked - UnlockedSlots == 0)
         {
@@ -165,9 +175,9 @@ public class PlayerInventory : MonoBehaviour
             slotCost = (int)(50f * ((NumIntemSlotsUnlocked - UnlockedSlots + 1) * 0.7f))+1;
         }
 
-        if (player.CashAmmount < slotCost)
+        if (GameController.Instance.Player.CashAmmount < slotCost)
         {
-            Debug.LogError("Not Enought Cash, You have" + player.CashAmmount +
+            Debug.LogError("Not Enought Cash, You have" + GameController.Instance.Player.CashAmmount +
                            "$ and you need " + slotCost);
             return;
         }
@@ -177,5 +187,21 @@ public class PlayerInventory : MonoBehaviour
         slot.transform.SetSiblingIndex(NumIntemSlotsUnlocked);
         NumIntemSlotsUnlocked += 1;
         Slots.Add(slot.GetComponent<Slot>());
+    } 
+    /// <summary>
+    /// Sorting the inventory orderby alphabetical.
+    /// </summary>
+    public void SortAlphabetical()
+    {
+        var temp = Slots.OrderBy(x=> x.SlotItem != null ? x.SlotItem.Item.Title : "zzzzzzzzzzzz").ToList();
+        Slots = temp;
+
+        for (int i = 0; i < Slots.Count; i++)
+        {
+            Slots[i].transform.SetSiblingIndex(i);
+            Slots[i].name = i.ToString() + "_" + _openedSlotsPefab.name;
+        }
+
     }
+   
 }

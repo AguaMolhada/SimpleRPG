@@ -8,12 +8,24 @@ using System.Linq;
 
 public class ItemDatabase : MonoBehaviour
 {
+    public static ItemDatabase Instance;
     private List<Item> _database = new List<Item>();
     private JsonData _itemData;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
-
         DontDestroyOnLoad(gameObject);
         _itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
         Debug.Log(Application.dataPath + "/StreamingAssets/Items.json");
