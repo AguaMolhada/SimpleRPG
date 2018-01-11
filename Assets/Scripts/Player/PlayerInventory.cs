@@ -64,8 +64,9 @@ public class PlayerInventory : MonoBehaviour
         NumIntemSlotsUnlocked = UnlockedSlots;
         Init(NumIntemSlotsUnlocked, NumItemSlots);
         AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
-        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(2));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(4));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(3));
+        AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(1));
         AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
         AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
         AddItem(GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>().FetchItemById(9));
@@ -88,7 +89,6 @@ public class PlayerInventory : MonoBehaviour
         _playerNickname.text = _player.NickName;
         _playerClass.text = _player.PlayerStats.PlayerClass.ToString();
     }
-
     /// <summary>
     /// to add item to the inventory
     /// </summary>

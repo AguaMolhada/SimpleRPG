@@ -33,8 +33,12 @@ public class PlayerEquipment : MonoBehaviour
         {
             slot.OnItemChanged += UpdateEquipmentGui;
         }
+        UpdateEquipmentGui();
     }
 
+    /// <summary>
+    /// Update the stats on the player and in GUI.
+    /// </summary>
     private void UpdateEquipmentGui()
     {
         ExtraStatsAmmout = new int[6] {0,0,0,0,0,0};
@@ -72,7 +76,15 @@ public class PlayerEquipment : MonoBehaviour
 
         for (int i = 0; i < ExtraStatsAmmout.Length; i++)
         {
-            ExtraStats[i].text = "+" + ExtraStatsAmmout[i].ToString();
+            string temp = ExtraStatsAmmout[i].ToString("+#;-#;0");
+            if (temp == "0")
+            {
+                ExtraStats[i].text = "";
+            }
+            else
+            {
+                ExtraStats[i].text = temp;
+            }
         }
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>().PlayerStats.AddExtraStats(ExtraStatsAmmout);
 

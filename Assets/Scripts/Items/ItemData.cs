@@ -39,15 +39,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             Destroy(gameObject);
         }
-
-        if (Item.Stackable)
-        {
-            _ammountText.text = Ammount.ToString();
-        }
-        else
-        {
-            _ammountText.text = "";
-        }
+        _ammountText.text = Item.Stackable ? Ammount.ToString() : "";
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -66,18 +58,22 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         if (Item != null)
         {
             transform.position = eventData.position - _itemOffset;
-
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        UpdateTransform();
+    }
 
+    public void UpdateTransform()
+    {
         gameObject.transform.SetParent(MySlot.transform, false);
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(45, 45);
         transform.position = MySlot.transform.position;
     }
+
 
     public void OnPointerDown(PointerEventData eventData)
     {

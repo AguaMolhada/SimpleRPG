@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using System;
+using System.Linq;
 
 public class Slot : MonoBehaviour, IDropHandler
 {
@@ -44,7 +45,6 @@ public class Slot : MonoBehaviour, IDropHandler
         if (SlotT == SlotType.Inventory)
         {
             var droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
-            droppedItem.MySlot.SlotItem = null;
             if (SlotItem == null)
             {
                 AssignItemToEmptySlot(droppedItem);
@@ -57,7 +57,6 @@ public class Slot : MonoBehaviour, IDropHandler
         else if (SlotT == SlotType.Equipment)
         {
             var droppedItem = eventData.pointerDrag.GetComponent<ItemData>();
-            droppedItem.MySlot.SlotItem = null;
             if (SlotItem == null)
             {
                 AssignItemToEmptySlot(droppedItem);
@@ -89,6 +88,8 @@ public class Slot : MonoBehaviour, IDropHandler
                     var temp = SlotItem;
                     temp.MySlot = itemData.MySlot;
                     itemData.MySlot = gameObject.GetComponent<Slot>();
+                    SlotItem = itemData;
+                    temp.UpdateTransform();
                     return;
                 }
 
@@ -99,6 +100,8 @@ public class Slot : MonoBehaviour, IDropHandler
                     var temp = SlotItem;
                     temp.MySlot = itemData.MySlot;
                     itemData.MySlot = gameObject.GetComponent<Slot>();
+                    SlotItem = itemData;
+                    temp.UpdateTransform();
                     return;
                 }
                 break;
@@ -111,6 +114,7 @@ public class Slot : MonoBehaviour, IDropHandler
     /// <param name="itemData">itemData data to be assigned.</param>
     private void AssignItemToEmptySlot(ItemData itemData)
     {
+        itemData.MySlot.SlotItem = null;
         switch (SlotT)
         {
             case SlotType.Inventory:
