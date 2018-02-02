@@ -21,8 +21,10 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     /// Item offset to dragging be in the center.
     /// </summary>
     private Vector2 _itemOffset;
-    [SerializeField]
-    private TMP_Text _ammountText;
+    /// <summary>
+    /// Amount texto to display
+    /// </summary>
+    [SerializeField] private TMP_Text _amountText;
 
 
     public void Init(Item i, Slot s)
@@ -39,7 +41,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             Destroy(gameObject);
         }
-        _ammountText.text = Item.Stackable ? Ammount.ToString() : "";
+        _amountText.text = Item.Stackable ? Ammount.ToString() : "";
     }
 
     public void OnBeginDrag(PointerEventData eventData)

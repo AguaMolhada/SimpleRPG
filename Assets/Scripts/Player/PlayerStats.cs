@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
-using System.Net.NetworkInformation;
-using System.Security.Cryptography.X509Certificates;
+
 
 [Serializable]
 [CreateAssetMenu(menuName = "New PlayerStats Base")]
@@ -24,7 +23,7 @@ public class PlayerStats : ScriptableObject
     /// </summary>
     public int RequiredExperience { get; protected set; }
     /// <summary>
-    /// Ammount player Agility.
+    /// Amount player Agility.
     /// </summary>
     public int PlayerAgi;
     /// <summary>
@@ -32,19 +31,19 @@ public class PlayerStats : ScriptableObject
     /// </summary>
     public int PlayerDex;
     /// <summary>
-    /// Ammount player Intelligence..
+    /// Amount player Intelligence..
     /// </summary>
     public int PlayerInt;
     /// <summary>
-    /// Ammount player Lucky.
+    /// Amount player Lucky.
     /// </summary>
     public int PlayerLuk;
     /// <summary>
-    /// Ammount player Vitality
+    /// Amount player Vitality
     /// </summary>
     public int PlayerVit;
     /// <summary>
-    /// Ammount player Constitution.
+    /// Amount player Constitution.
     /// </summary>
     public int PlayerCon;
 
@@ -62,13 +61,13 @@ public class PlayerStats : ScriptableObject
     public int ExtraCon { get; private set; }
 
     /// <summary>
-    /// Check the level
+    /// Level Up
     /// </summary>
-    /// <param name="exp">Current xp to check</param>
-    /// <returns>Level based on the exp.</returns>
-    protected int ReturnLevel(int exp)
+    protected void LevelUp()
     {
-        return (int) (exp / (GameController.ExperienceBase + Mathf.Log10(PlayerLevel))) + 1;
+        PlayerLevel += 1;
+        PlayerExperience -= RequiredExperience;
+        RequiredExperience = GameController.Instance.ExperienceCurve(PlayerLevel);
     }
 
     public void AddExtraStats(int[] extraStatas)
@@ -88,12 +87,18 @@ public class PlayerStats : ScriptableObject
     public void AddExperience(int x)
     {
         PlayerExperience += x;
-        PlayerLevel = ReturnLevel(PlayerExperience);
+        if (PlayerExperience >= RequiredExperience)
+        {
+            if (PlayerLevel < GameController.MaxLevel)
+            {
+                LevelUp();
+            }
+        }
     }
     /// <summary>
     /// Add int stats if there is avaliable points to distribute.
     /// </summary>
-    /// <param name="Int">Ammount to add</param>
+    /// <param name="Int">Amount to add</param>
     public void AddStatsInt(int Int)
     {
         if (AvaliablePointsToDistribute == 0 && Int > 0)
@@ -107,7 +112,7 @@ public class PlayerStats : ScriptableObject
     /// <summary>
     /// Add con stats if there is avaliable points to distribute.
     /// </summary>
-    /// <param name="Con">Ammount to add</param>
+    /// <param name="Con">Amount to add</param>
     public void AddStatsCon(int Con)
     {
         if (AvaliablePointsToDistribute == 0 && Con > 0)
@@ -121,7 +126,7 @@ public class PlayerStats : ScriptableObject
     /// <summary>
     /// Add dex stats if there is avaliable points to distribute.
     /// </summary>
-    /// <param name="Dex">Ammount to add</param>
+    /// <param name="Dex">Amount to add</param>
     public void AddStatsDex(int Dex)
     {
         if (AvaliablePointsToDistribute == 0 && Dex > 0)
@@ -136,7 +141,7 @@ public class PlayerStats : ScriptableObject
     /// <summary>
     /// Add luk stats if there is avaliable points to distribute.
     /// </summary>
-    /// <param name="Luk">Ammount to add</param>
+    /// <param name="Luk">Amount to add</param>
     public void AddStatsLuk(int Luk)
     {
         if (AvaliablePointsToDistribute == 0 && Luk > 0)
@@ -150,7 +155,7 @@ public class PlayerStats : ScriptableObject
     /// <summary>
     /// Add vit stats if there is avaliable points to distribute.
     /// </summary>
-    /// <param name="Vit">Ammount to add</param>
+    /// <param name="Vit">Amount to add</param>
     public void AddStatsVit(int Vit)
     {
         if (AvaliablePointsToDistribute == 0 && Vit > 0)
@@ -164,7 +169,7 @@ public class PlayerStats : ScriptableObject
     /// <summary>
     /// Add agi stats if there is avaliable points to distribute.
     /// </summary>
-    /// <param name="Agi">Ammount to add</param>
+    /// <param name="Agi">Amount to add</param>
     public void AddStatsAgi(int Agi)
     {
         if (AvaliablePointsToDistribute == 0 && Agi > 0)
@@ -209,7 +214,8 @@ public class PlayerStats : ScriptableObject
     public void ResetExp()
     {
         PlayerExperience = 1;
-        PlayerLevel = ReturnLevel(PlayerExperience);
+        RequiredExperience = GameController.ExperienceBase;
+        PlayerLevel = 1;
     }
 
 }

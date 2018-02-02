@@ -5,11 +5,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
+
 
 public class CharacterSelection : MonoBehaviour
 {
@@ -17,24 +15,24 @@ public class CharacterSelection : MonoBehaviour
     public PlayerStats SelectStats { get; private set; }
     public Character[] Characters;
     public PlayerStats[] CharacterStatsBase;
-    public PlayerStats AppliedPlayerStats;
     public TMP_Text SkinName;
-    public StatsPolygon Stats;
+    public StatsUiPolygon StatsUi;
     public string NickName;
     public TMP_InputField NickNameInput;
 
     private int _selectedCharacterIndex = 0;
     void Start()
     {
-        SelectStats = CharacterStatsBase[0];
         DontDestroyOnLoad(gameObject);
+        SelectStats = CharacterStatsBase[0];
         OnCharacterSelect(_selectedCharacterIndex);
-        AppliedPlayerStats.ResetStats();
-        AppliedPlayerStats.ResetExp();
-        StartCoroutine("rotate");
+        GameController.Instance.Player.PlayerStats.ResetStats();
+        GameController.Instance.Player.PlayerStats.ResetExp();
+        StartCoroutine("Rotate");
+        StatsUi.UpdateStatsGui();
     }
 
-    IEnumerator rotate()
+    IEnumerator Rotate()
     {
         var rmp = 1f;
         while (true)
@@ -52,67 +50,16 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
-    public void UpdateStatsGUI()
+    public void UpdateStatsGui()
     {
         var skin = SelectCharacter.CharacterObj.name.Split('_');
         SkinName.text = skin[1];
-        Stats.StatsUi.VerticesDistances[0] = GetPercentValue(AppliedPlayerStats.PlayerAgi);
-        Stats.StatsUi.VerticesDistances[1] = GetPercentValue(AppliedPlayerStats.PlayerDex);
-        Stats.StatsUi.VerticesDistances[2] = GetPercentValue(AppliedPlayerStats.PlayerInt);
-        Stats.StatsUi.VerticesDistances[3] = GetPercentValue(AppliedPlayerStats.PlayerLuk);
-        Stats.StatsUi.VerticesDistances[4] = GetPercentValue(AppliedPlayerStats.PlayerVit);
-        Stats.StatsUi.VerticesDistances[5] = GetPercentValue(AppliedPlayerStats.PlayerCon);
-        Stats.StatsValues[0].text = AppliedPlayerStats.PlayerAgi.ToString();
-        Stats.StatsValues[1].text = AppliedPlayerStats.PlayerDex.ToString();
-        Stats.StatsValues[2].text = AppliedPlayerStats.PlayerInt.ToString();
-        Stats.StatsValues[3].text = AppliedPlayerStats.PlayerLuk.ToString();
-        Stats.StatsValues[4].text = AppliedPlayerStats.PlayerVit.ToString();
-        Stats.StatsValues[5].text = AppliedPlayerStats.PlayerCon.ToString();
-
-        Stats.RedrawPolygonUI();
+        StatsUi.UpdateStatsGui();
     }
-    
+
     public void AssignNickname(string n)
     {
         NickName = n;
-    }
-
-    /// <summary>
-    /// Chacnge determined playerstats.
-    /// </summary>
-    /// <param name="t">First Letter of the stats to change;Ammout (Ex.: i;1)</param>
-    public void ChangeStats(string t)
-    {
-        var splitstring = t.Split(';');
-        var x = int.Parse(splitstring[2]);
-        if (splitstring[1] == "-")
-        {
-            x = x* -1;
-        }
-        switch (splitstring[0])
-        {
-            case "int":
-                AppliedPlayerStats.AddStatsInt(x);
-                break;
-            case "luk":
-                AppliedPlayerStats.AddStatsLuk(x);
-                break;
-            case "vit":
-                AppliedPlayerStats.AddStatsVit(x);
-                break;
-            case "con":
-                AppliedPlayerStats.AddStatsCon(x);
-                break;
-            case "agi":
-                AppliedPlayerStats.AddStatsAgi(x);
-                break;
-            case "dex":
-                AppliedPlayerStats.AddStatsDex(x);
-                break;
-            default:
-                break;
-        }
-        UpdateStatsGUI();
     }
 
     public void OnCharacterSelect(int characterChoice)
@@ -125,31 +72,24 @@ public class CharacterSelection : MonoBehaviour
         temp.transform.parent = transform;
         temp.transform.localScale = Vector3.one;
         temp.transform.rotation = transform.rotation;
-        UpdateStatsGUI();
+        UpdateStatsGui();
     }
 
     public void OnStatsSelect(int statsChoice)
     {
         SelectStats = CharacterStatsBase[statsChoice];
         ApplyStats();
-        UpdateStatsGUI();
+        UpdateStatsGui();
     }
 
     public void ApplyStats()
     {
-        AppliedPlayerStats.PlayerClass = SelectStats.PlayerClass;
-        AppliedPlayerStats.PlayerAgi = SelectStats.PlayerAgi;
-        AppliedPlayerStats.PlayerCon = SelectStats.PlayerCon;
-        AppliedPlayerStats.PlayerDex = SelectStats.PlayerDex;
-        AppliedPlayerStats.PlayerInt = SelectStats.PlayerInt;
-        AppliedPlayerStats.PlayerLuk = SelectStats.PlayerLuk;
-        AppliedPlayerStats.PlayerVit = SelectStats.PlayerVit;
-    }
-
-    private float GetPercentValue(int x)
-    {
-        var y = (float)x/(12);
-        y = Mathf.Clamp(y, 0.1f, 1f);
-        return y;
+        GameController.Instance.Player.PlayerStats.PlayerClass = SelectStats.PlayerClass;
+        GameController.Instance.Player.PlayerStats.PlayerAgi = SelectStats.PlayerAgi;
+        GameController.Instance.Player.PlayerStats.PlayerCon = SelectStats.PlayerCon;
+        GameController.Instance.Player.PlayerStats.PlayerDex = SelectStats.PlayerDex;
+        GameController.Instance.Player.PlayerStats.PlayerInt = SelectStats.PlayerInt;
+        GameController.Instance.Player.PlayerStats.PlayerLuk = SelectStats.PlayerLuk;
+        GameController.Instance.Player.PlayerStats.PlayerVit = SelectStats.PlayerVit;
     }
 }

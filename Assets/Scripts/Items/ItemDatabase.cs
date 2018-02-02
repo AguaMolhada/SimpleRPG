@@ -54,14 +54,6 @@ public class ItemDatabase : MonoBehaviour
         {
             _database.Add(tempDatabase[i]);
         }
-        for (var i = 0; i < _itemData.Count; i++)
-        {
-          //  _database.Add(new Item((int)_itemData[i]["id"], _itemData[i]["title"].ToString(), (int)_itemData[i]["buyvalue"], (int)_itemData[i]["sellvalue"],
-          //      (ItemType)Enum.Parse(typeof(ItemType), _itemData[i]["typeitem"].ToString()), //Convertendo a string para entrar dentro do Enum da classe item
-          //      _itemData[i]["attribute"], bool.Parse(_itemData[i]["stackable"].ToString()), _itemData[i]["sprname"].ToString(), bool.Parse(_itemData[i]["usable"].ToString())
-          //      ));
-        }
-
     }
 
 }

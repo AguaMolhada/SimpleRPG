@@ -4,7 +4,7 @@
 			"Id": 0,
 			"Title": "test item ",
 			"BuyValue": 999,
-			"sellvalue": 999,
+			"SellValue": 999,
 			"ItemT": 0,
 			"BonusAttributes":
 			[
@@ -26,7 +26,7 @@
 			"Id": 1,
 			"Title": "Lether Helmet",
 			"BuyValue": 10,
-			"sellvalue": 5,
+			"SellValue": 5,
 			"ItemT": 1,
 			"BonusAttributes":
 			[
@@ -52,7 +52,7 @@
 			"Id": 2,
 			"Title": "Lether Armor",
 			"BuyValue": 15,
-			"sellvalue": 9,
+			"SellValue": 9,
 			"ItemT": 2,
 			"BonusAttributes":
 			[
@@ -78,7 +78,7 @@
 			"Id": 3,
 			"Title": "Iron Helmet",
 			"BuyValue": 20,
-			"sellvalue": 12,
+			"SellValue": 12,
 			"ItemT": 1,
 			"BonusAttributes":
 			[
@@ -104,7 +104,7 @@
 			"Id": 4,
 			"Title": "Iron Armor",
 			"BuyValue": 35,
-			"sellvalue": 29,
+			"SellValue": 29,
 			"ItemT": 2,
 			"BonusAttributes":
 			[
@@ -126,7 +126,7 @@
 			"Id": 7,
 			"Title": "Health Potion",
 			"BuyValue": 25,
-			"sellvalue": 0,
+			"SellValue": 0,
 			"ItemT": 9,
 			"BonusAttributes":
 			[
@@ -140,7 +140,7 @@
 			"Id": 8,
 			"Title": "Great Health Potion",
 			"BuyValue": 60,
-			"sellvalue": 0,
+			"SellValue": 0,
 			"ItemT": 9,
 			"BonusAttributes":
 			[
@@ -154,7 +154,7 @@
 			"Id": 9,
 			"Title": "Ultra Health Potion",
 			"BuyValue": 100,
-			"sellvalue": 0,
+			"SellValue": 0,
 			"ItemT": 9,
 			"BonusAttributes":
 			[
@@ -168,7 +168,7 @@
 			"Id": 10,
 			"Title": "Iron Sword",
 			"BuyValue": 250,
-			"sellvalue": 95,
+			"SellValue": 95,
 			"ItemT": 6,
 			"BonusAttributes":
 			[

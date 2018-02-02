@@ -111,7 +111,7 @@ public class World : MonoBehaviour
                 var player = Instantiate(Player, playerPos, Quaternion.identity);
                 player.name = "Jogador";
                 player.AddComponent<PlayerBase>();
-                player.GetComponent<PlayerBase>().PlayerStats = _3DCharacterHolder.AppliedPlayerStats;
+                player.GetComponent<PlayerBase>().PlayerStats = GameController.Instance.Player.PlayerStats;
                 if (_3DCharacterHolder.NickName == "")
                 {
                     player.GetComponent<PlayerBase>().NickName = Ultility.NameGenerator();
@@ -121,7 +121,6 @@ public class World : MonoBehaviour
                     player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
                 }
                 player.GetComponent<PlayerBase>().Speed = 5f;
-                player.GetComponent<PlayerBase>().PlayerStats.AddExperience(1);
                 player.layer = 8;
                 player.tag = "Player";
                 foreach (Transform child in player.transform)
@@ -138,6 +137,8 @@ public class World : MonoBehaviour
             }
         }
 
+        GameController.Instance.Player = Player.GetComponent<PlayerBase>();
+        Destroy(_3DCharacterHolder.gameObject);
     }
 
 

@@ -16,7 +16,7 @@ public class Character : ScriptableObject
     /// </summary>
     public GameObject CharacterObj;
     /// <summary>
-    /// Base Character Stats.
+    /// Base Character StatsUi.
     /// </summary>
     public PlayerStats CharacterStats;
 

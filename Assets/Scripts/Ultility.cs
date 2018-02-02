@@ -82,14 +82,19 @@ public static class Ultility
         return rs.ToString();
     }
 
-    public static float GetPercent(float total, float percent)
-    {
-        return (percent / 100) * total;
-    }
-
-    public static float PercentValue(float total, float percent)
+    public static float GetPercentValue(float total, float percent)
     {
         return (percent / total) * 100;
+    }
+    /// <summary>
+    /// Percent value btween 0,1
+    /// </summary>
+    /// <param name="total">Total</param>
+    /// <param name="percent">Ammount to check</param>
+    /// <returns>value bteween 0 and 1</returns>
+    public static float GetPercent(float total, float percent)
+    {
+        return (percent / total);
     }
 
     #region Name Generator

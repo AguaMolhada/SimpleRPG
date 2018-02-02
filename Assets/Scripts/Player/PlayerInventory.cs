@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,9 +56,16 @@ public class PlayerInventory : MonoBehaviour
     /// </summary>
     [SerializeField] private TMP_Text _playerClass;
     /// <summary>
-    /// Reference to the player.
+    /// Experience Slider.
     /// </summary>
-
+    [SerializeField] private Slider _expSlider;
+    /// <summary>
+    /// Experience ammount in %
+    /// </summary>
+    [SerializeField] private TMP_Text _expPercent;
+    /// <summary>
+    /// List of all Slot avaliable.
+    /// </summary>
     public List<Slot> Slots = new List<Slot>();
 
     void Start()
@@ -78,18 +86,28 @@ public class PlayerInventory : MonoBehaviour
         AddItem(ItemDatabase.Instance.FetchItemById(9));
         AddItem(ItemDatabase.Instance.FetchItemById(9));
         UpdateUiElemets();
+        FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
     }
     /// <summary>
     /// Update the ui elements.
     /// </summary>
     private void UpdateUiElemets()
     {
-
-        _playerCash.text = GameController.Instance.Player.GoldAmmount.ToString("##,###");
-        _playerGold.text = GameController.Instance.Player.CashAmmount.ToString("##,###");
-        _playerNickname.text = GameController.Instance.Player.NickName;
-        _playerClass.text = GameController.Instance.Player.PlayerStats.PlayerClass.ToString();
+        var tempPlayer = GameController.Instance.Player;
+        _expSlider.value = Ultility.GetPercent(tempPlayer.PlayerStats.RequiredExperience, tempPlayer.PlayerStats.PlayerExperience);
+        _expPercent.text = Ultility.GetPercentValue(tempPlayer.PlayerStats.RequiredExperience, tempPlayer.PlayerStats.PlayerExperience).ToString("#.##")+"%";
+        _playerCash.text = tempPlayer.GoldAmmount.ToString("##,###");
+        _playerGold.text = tempPlayer.CashAmmount.ToString("##,###");
+        _playerNickname.text = tempPlayer.NickName + " - Lvl: "+tempPlayer.PlayerStats.PlayerLevel;
+        _playerClass.text = tempPlayer.PlayerStats.PlayerClass.ToString();
+        FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
     }
+
+    private void FixedUpdate()
+    {
+        UpdateUiElemets();
+    }
+
     /// <summary>
     /// to add item to the inventory
     /// </summary>
@@ -122,7 +140,7 @@ public class PlayerInventory : MonoBehaviour
         Debug.LogWarning("Full Inventory");
     }
     /// <summary>
-    /// Remove the item. if ammount > 0 remove only 1 unity.
+    /// Remove the item. if amount > 0 remove only 1 unity.
     /// </summary>
     /// <param name="itemToRemove">Item data to remove</param>
     public void RemoveItem(Item itemToRemove)
@@ -193,8 +211,9 @@ public class PlayerInventory : MonoBehaviour
     /// </summary>
     public void SortAlphabetical()
     {
-        var temp = Slots.OrderBy(x=> x.SlotItem != null ? x.SlotItem.Item.Title : "zzzzzzzzzzzz").ToList();
-        Slots = temp;
+        Slots.Sort(Comparison);
+        //var temp = Slots.OrderBy(x=> x.SlotItem != null ? x.SlotItem.Item.Title : "zzzzzzzzzzzz").ToList();
+       // Slots = temp;
 
         for (int i = 0; i < Slots.Count; i++)
         {
@@ -203,5 +222,12 @@ public class PlayerInventory : MonoBehaviour
         }
 
     }
-   
+
+    private int Comparison(Slot slot1, Slot slot2)
+    {
+        string s1 = slot1.SlotItem == null ? "Zzzzzzzzzzzzzzzzzzzz" : slot1.SlotItem.Item.Title;
+        string s2 = slot2.SlotItem == null ? "Zzzzzzzzzzzzzzzzzzzz" : slot2.SlotItem.Item.Title;
+
+        return string.Compare(s1, s2);
+    }
 }

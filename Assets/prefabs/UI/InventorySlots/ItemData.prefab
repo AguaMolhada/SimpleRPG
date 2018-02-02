@@ -58,9 +58,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfe4641d48d51a4b8ed91ca1dd5de32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Item:
+    Id: -1
+    Title: 
+    BuyValue: 0
+    SellValue: 0
+    ItemT: 0
+    BonusAttributes: []
+    Attribute: 0
+    Stackable: 0
+    Sprite: 
+    Usable: 0
   Ammount: 0
   MySlot: {fileID: 0}
-  _ammountText: {fileID: 114532957941734280}
+  _amountText: {fileID: 114532957941734280}
 --- !u!114 &114497274583797140
 MonoBehaviour:
   m_ObjectHideFlags: 1

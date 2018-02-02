@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -19,7 +18,6 @@ public class GUIController : MonoBehaviour
 
     public GameObject PauseMenu;
     public GameObject InventoryMenu;
-
 
     private Resolution[] _resolutions;
 
@@ -52,12 +50,12 @@ public class GUIController : MonoBehaviour
         {
             PauseGame();
         }
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && !PauseMenu.activeSelf)
         {
+            GameController.Instance.IsPaused = !GameController.Instance.IsPaused;
             SetActiveMenu(InventoryMenu);
         }
     }
-
 
     public void PlayGame()
     {
@@ -94,6 +92,7 @@ public class GUIController : MonoBehaviour
     private void PauseGame()
     {
         PauseMenu.SetActive(true);
+        GameController.Instance.IsPaused = true;
         Time.timeScale = 0;
         IsPaused = true;
     }
@@ -101,6 +100,7 @@ public class GUIController : MonoBehaviour
     public void ResumeGame()
     {
         PauseMenu.SetActive(false);
+        GameController.Instance.IsPaused = true;
         Time.timeScale = 1;
         IsPaused = false;
     }
@@ -134,5 +134,6 @@ public class GUIController : MonoBehaviour
     {
         AudioMixer.SetFloat("volume", volume);
     }
+
 
 }
