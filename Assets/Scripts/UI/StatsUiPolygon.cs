@@ -4,6 +4,8 @@
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -89,13 +91,14 @@ public class StatsUiPolygon : MonoBehaviour
     private static float GetPercentValue(int x)
     {
         var tempPlayer = GameController.Instance.Player.PlayerStats;
-        var totalpoints = tempPlayer.PlayerAgi + tempPlayer.PlayerDex + tempPlayer.PlayerInt + tempPlayer.PlayerLuk +
-                          tempPlayer.PlayerVit + tempPlayer.PlayerCon;
-        if (totalpoints <= 6)
-        {
-            totalpoints = 12;
+        var points = new int[] {tempPlayer.PlayerAgi,tempPlayer.PlayerDex ,tempPlayer.PlayerInt , tempPlayer.PlayerLuk ,
+                          tempPlayer.PlayerVit , tempPlayer.PlayerCon};
+        var maxPoints = points.Max();
+        if(maxPoints <=11){
+            maxPoints = 12;
         }
-        var y = (float) x / totalpoints;
+        maxPoints += 5;
+        var y = (float) x / maxPoints;
         y = Mathf.Clamp(y, 0.1f, 1f);
         return y;
     }
