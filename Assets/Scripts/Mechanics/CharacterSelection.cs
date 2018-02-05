@@ -7,17 +7,19 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class CharacterSelection : MonoBehaviour
 {
     /// <summary>
-    /// Character
+    /// Selected character sking.
     /// </summary>
     public CharacterSkin SelectCharacterSkin { get; private set; }
     public PlayerStats SelectStats { get; private set; }
     public CharacterSkin[] CharactersSkin;
     public PlayerStats[] CharacterStatsBase;
+    public Image LockedImg;
     public TMP_Text SkinName;
     public StatsUiPolygon StatsUi;
     public string NickName;
@@ -91,6 +93,16 @@ public class CharacterSelection : MonoBehaviour
         temp.transform.parent = transform;
         temp.transform.localScale = Vector3.one;
         temp.transform.rotation = transform.rotation;
+        if (SelectCharacterSkin.Unlocked)
+        {
+            SelectCharacterSkin.CharacterObj.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color = new Color(0.8f, 0.8f, 0.8f);
+            LockedImg.gameObject.SetActive(false);
+        }
+        else
+        {
+            SelectCharacterSkin.CharacterObj.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color = new Color(0.15f, 0.15f, 0.15f);
+            LockedImg.gameObject.SetActive(true);
+        }
         UpdateStatsGui();
     }
     /// <summary>

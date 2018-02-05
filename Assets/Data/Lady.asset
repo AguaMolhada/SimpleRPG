@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: Lady
   m_EditorClassIdentifier: 
   CharacterObj: {fileID: 133838, guid: 7e4ccd705cdbd434b8f02da843554178, type: 2}
-  CharacterStats: {fileID: 11400000, guid: d12675115c1113e429c2037e6ea34ce2, type: 2}
+  Unlocked: 0

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: Bananaman
   m_EditorClassIdentifier: 
   CharacterObj: {fileID: 111540, guid: b3ae1af2f4a2f43f0a47c05d4f574743, type: 2}
-  CharacterStats: {fileID: 11400000, guid: d12675115c1113e429c2037e6ea34ce2, type: 2}
+  Unlocked: 1

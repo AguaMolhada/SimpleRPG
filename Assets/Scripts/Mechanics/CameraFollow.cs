@@ -10,8 +10,10 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public bool characterUICamera;
-
+    /// <summary>
+    /// Is this a UI Camera?
+    /// </summary>
+    public bool CharacterUiCamera;
     /// <summary>
     /// Transform to follow.
     /// </summary>
@@ -47,7 +49,7 @@ public class CameraFollow : MonoBehaviour
         {
             Zoom(Input.GetAxis("Mouse ScrollWheel"));
             FollowTransform();
-            if (characterUICamera)
+            if (CharacterUiCamera)
             {
                 RotateCamera();
             }
@@ -58,7 +60,9 @@ public class CameraFollow : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Method to make the camera follow the certain target.
+    /// </summary>
     private void FollowTransform()
     {
         Vector3 desiredPosition = _target.position + Offset;
@@ -67,13 +71,18 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, SmoothSpeed * Time.deltaTime);
 
     }
-
-    private void Zoom(float ammout)
+    /// <summary>
+    /// Method to zoom in and out.
+    /// </summary>
+    /// <param name="amount">Amount to zoom.</param>
+    private void Zoom(float amount)
     {
-        Distance -= ammout * ScrollSensitivity;
+        Distance -= amount * ScrollSensitivity;
         Distance = Mathf.Clamp(Distance, MinDistance, MaxDistance);
     }
-
+    /// <summary>
+    /// Making the camera rotating around the target.
+    /// </summary>
     private void RotateCamera()
     {
         transform.RotateAround(_target.transform.position,new Vector3(0,1,0),2);

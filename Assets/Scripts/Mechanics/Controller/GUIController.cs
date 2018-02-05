@@ -59,7 +59,21 @@ public class GUIController : MonoBehaviour
 
     public void PlayGame()
     {
-        StartCoroutine("LoadAsynchronously");
+        var temp = GameObject.FindObjectOfType<CharacterSelection>();
+        var temp2 = GameObject.Find("SelectCharacter");
+        var temp3 = GameObject.Find("Canvas").transform.GetChild(1).gameObject;
+
+        if (temp.SelectCharacterSkin.Unlocked)
+        {
+            SetActiveMenu(temp2);
+            SetActiveMenu(temp3);
+            FindObjectOfType<CharacterSelection>().ClearAllChildern();
+            StartCoroutine("LoadAsynchronously");
+        }
+        else
+        {
+            Debug.LogError("Se tem aidis?");
+        }
     }
 
     IEnumerator LoadAsynchronously()
