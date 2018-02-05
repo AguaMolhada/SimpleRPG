@@ -31,8 +31,8 @@ public class World : MonoBehaviour
     private void Start()
     {
         _boardHolder = new GameObject("WorldHolder");
-        _3DCharacterHolder = GameObject.Find("3D Character Holder").GetComponent<CharacterSelection>();
-        Player = _3DCharacterHolder.SelectCharacter.CharacterObj;
+        _3DCharacterHolder = FindObjectOfType<CharacterSelection>();
+        Player = _3DCharacterHolder.SelectCharacterSkin.CharacterObj;
 
         SetupCellArray();
 

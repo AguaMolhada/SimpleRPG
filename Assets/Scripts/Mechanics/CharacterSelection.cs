@@ -11,9 +11,12 @@ using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
 {
-    public Character SelectCharacter { get; private set; }
+    /// <summary>
+    /// Character
+    /// </summary>
+    public CharacterSkin SelectCharacterSkin { get; private set; }
     public PlayerStats SelectStats { get; private set; }
-    public Character[] Characters;
+    public CharacterSkin[] CharactersSkin;
     public PlayerStats[] CharacterStatsBase;
     public TMP_Text SkinName;
     public StatsUiPolygon StatsUi;
@@ -32,6 +35,16 @@ public class CharacterSelection : MonoBehaviour
         StatsUi.UpdateStatsGui();
     }
 
+    private void OnEnable()
+    {
+        StopCoroutine(Rotate());
+        StartCoroutine("Rotate");
+    }
+
+    /// <summary>
+    /// Cotinuos rotation of the character obj preview.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Rotate()
     {
         var rmp = 1f;
@@ -52,29 +65,38 @@ public class CharacterSelection : MonoBehaviour
 
     public void UpdateStatsGui()
     {
-        var skin = SelectCharacter.CharacterObj.name.Split('_');
+        var skin = SelectCharacterSkin.CharacterObj.name.Split('_');
         SkinName.text = skin[1];
         StatsUi.UpdateStatsGui();
     }
-
+    /// <summary>
+    /// Mehtod to assign player nickname.
+    /// </summary>
+    /// <param name="n"></param>
     public void AssignNickname(string n)
     {
         NickName = n;
     }
-
+    /// <summary>
+    /// Method called to change the current selected character obj.
+    /// </summary>
+    /// <param name="characterChoice">Character index</param>
     public void OnCharacterSelect(int characterChoice)
     {
         _selectedCharacterIndex += characterChoice;
-        SelectCharacter = Characters[Mathf.Abs(_selectedCharacterIndex%4)];
+        SelectCharacterSkin = CharactersSkin[Mathf.Abs(_selectedCharacterIndex%CharactersSkin.Length)];
         ClearAllChildern();
         transform.Rotate(Vector3.up*180);
-        var temp = Instantiate(SelectCharacter.CharacterObj, transform.position, Quaternion.identity);
+        var temp = Instantiate(SelectCharacterSkin.CharacterObj, transform.position, Quaternion.identity);
         temp.transform.parent = transform;
         temp.transform.localScale = Vector3.one;
         temp.transform.rotation = transform.rotation;
         UpdateStatsGui();
     }
-
+    /// <summary>
+    /// Method called by changing the character class.
+    /// </summary>
+    /// <param name="statsChoice">Id of dropdown menu</param>
     public void OnStatsSelect(int statsChoice)
     {
         SelectStats = CharacterStatsBase[statsChoice];

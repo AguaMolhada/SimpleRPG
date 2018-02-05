@@ -76,12 +76,27 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         transform.position = MySlot.transform.position;
     }
 
-
+    ///
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-        
+            if (Item.Usable)
+            {
+                Debug.Log("Usando Item");
+                Ammount -= 1;
+            }
+            else if (!Item.Usable)
+            {
+                if (MySlot.SlotT == SlotType.Equipment)
+                {
+                    Debug.Log("DeEquip");
+                }
+                else if (MySlot.SlotT == SlotType.Inventory)
+                {
+                    Debug.Log("Equip");
+                }
+            }
         }
     }
 }

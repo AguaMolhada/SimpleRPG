@@ -17,7 +17,6 @@
 					"BonusAmmout": 100
 				}
 			],
-			"Attribute": 0,
 			"Stackable": false,
 			"Sprite": "E_Metal05",
 			"Usable": false
@@ -43,7 +42,6 @@
 					"BonusAmmout": 1
 				}
 			],
-			"Attribute": 3,
 			"Stackable": false,
 			"Sprite": "C_Elm01",
 			"Usable": false
@@ -69,7 +67,6 @@
 					"BonusAmmout": 2
 				}
 			],
-			"Attribute": 5,
 			"Stackable": false,
 			"Sprite": "A_Armour01",
 			"Usable": false
@@ -95,7 +92,6 @@
 					"BonusAmmout": 1
 				}
 			],
-			"Attribute": 8,
 			"Stackable": false,
 			"Sprite": "C_Elm03",
 			"Usable": false
@@ -117,7 +113,6 @@
 					"BonusAmmout": 1
 				}
 			],
-			"Attribute": 12,
 			"Stackable": false,
 			"Sprite": "A_Armour02",
 			"Usable": false
@@ -131,7 +126,6 @@
 			"BonusAttributes":
 			[
 			],
-			"Attribute": 20,
 			"Stackable": true,
 			"Sprite": "P_Red02",
 			"Usable": true
@@ -145,7 +139,6 @@
 			"BonusAttributes":
 			[
 			],
-			"Attribute": 50,
 			"Stackable": true,
 			"Sprite": "P_Red03",
 			"Usable": true
@@ -159,7 +152,6 @@
 			"BonusAttributes":
 			[
 			],
-			"Attribute": 100,
 			"Stackable": true,
 			"Sprite": "P_Red01",
 			"Usable": true
@@ -173,7 +165,6 @@
 			"BonusAttributes":
 			[
 			],
-			"Attribute": 15,
 			"Stackable": false,
 			"Sprite": "W_Sword004",
 			"Usable": false

@@ -87,7 +87,5 @@ public class PlayerEquipment : MonoBehaviour
             }
         }
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBase>().PlayerStats.AddExtraStats(ExtraStatsAmmout);
-
     }
-
 }

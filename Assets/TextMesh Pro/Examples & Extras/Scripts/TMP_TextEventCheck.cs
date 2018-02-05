@@ -34,7 +34,7 @@ namespace TMPro.Examples
 
         void OnCharacterSelection(char c, int index)
         {
-            Debug.Log("Character [" + c + "] at Index: " + index + " has been selected.");
+            Debug.Log("CharacterBase [" + c + "] at Index: " + index + " has been selected.");
         }
 
         void OnWordSelection(string word, int firstCharacterIndex, int length)

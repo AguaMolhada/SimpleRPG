@@ -7,7 +7,7 @@ using System;
 public class PlayerStats : ScriptableObject
 {
     /// <summary>
-    /// Player Character Class
+    /// Player CharacterSkin Class
     /// </summary>
     public PlayerClass PlayerClass = PlayerClass.Warrior;
     /// <summary>

@@ -83,7 +83,7 @@ namespace TMPro.Examples
 
                 int characterCount = textInfo.characterCount;
 
-                // If No Characters then just yield and wait for some text to be added
+                // If No CharactersBase then just yield and wait for some text to be added
                 if (characterCount == 0)
                 {
                     yield return new WaitForSeconds(0.25f);

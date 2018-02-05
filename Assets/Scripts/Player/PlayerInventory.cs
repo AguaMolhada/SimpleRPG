@@ -72,19 +72,19 @@ public class PlayerInventory : MonoBehaviour
     {
         NumIntemSlotsUnlocked = UnlockedSlots;
         Init(NumIntemSlotsUnlocked, NumItemSlots);
-        AddItem(ItemDatabase.Instance.FetchItemById(2));
-        AddItem(ItemDatabase.Instance.FetchItemById(4));
-        AddItem(ItemDatabase.Instance.FetchItemById(3));
-        AddItem(ItemDatabase.Instance.FetchItemById(1));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
-        AddItem(ItemDatabase.Instance.FetchItemById(9));
+        AddItem(ItemDatabase.Instance.FetchItem(2));
+        AddItem(ItemDatabase.Instance.FetchItem(4));
+        AddItem(ItemDatabase.Instance.FetchItem(3));
+        AddItem(ItemDatabase.Instance.FetchItem(1));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
+        AddItem(ItemDatabase.Instance.FetchItem(9));
         UpdateUiElemets();
         FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
     }
@@ -107,7 +107,6 @@ public class PlayerInventory : MonoBehaviour
     {
         UpdateUiElemets();
     }
-
     /// <summary>
     /// to add item to the inventory
     /// </summary>

@@ -39,12 +39,12 @@ namespace TMPro.Examples
             // Update Text Statistics
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
 
-            ObjectStats = "Characters: " + textInfo.characterCount + "   Words: " + textInfo.wordCount + "   Spaces: " + textInfo.spaceCount + "   Sprites: " + textInfo.spriteCount + "   Links: " + textInfo.linkCount
+            ObjectStats = "CharactersBase: " + textInfo.characterCount + "   Words: " + textInfo.wordCount + "   Spaces: " + textInfo.spaceCount + "   Sprites: " + textInfo.spriteCount + "   Links: " + textInfo.linkCount
                       + "\nLines: " + textInfo.lineCount + "   Pages: " + textInfo.pageCount;
 
 
-            // Draw Quads around each of the Characters
-            #region Draw Characters
+            // Draw Quads around each of the CharactersBase
+            #region Draw CharactersBase
             if (ShowCharacters)
                 DrawCharactersBounds();
             #endregion
@@ -217,7 +217,7 @@ namespace TMPro.Examples
                         }
                     }
 
-                    // Last Character of Word
+                    // Last CharacterBase of Word
                     if (isBeginRegion && j == wInfo.characterCount - 1)
                     {
                         isBeginRegion = false;
@@ -323,7 +323,7 @@ namespace TMPro.Examples
                         }
                     }
 
-                    // Last Character of Link
+                    // Last CharacterBase of Link
                     if (isBeginRegion && j == linkInfo.linkTextLength - 1)
                     {
                         isBeginRegion = false;
