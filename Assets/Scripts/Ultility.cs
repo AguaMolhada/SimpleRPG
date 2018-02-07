@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Ultility.cs" company="Dauler Palhares">
-//  © Copyright Dauler Palhares da Costa Viana 2017.
+// <copyright file="Ultility.cs" by="Akapagion">
+//  © Copyright Dauler Palhares da Costa Vianna 2018.
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------

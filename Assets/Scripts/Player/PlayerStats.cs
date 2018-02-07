@@ -1,11 +1,24 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PlayerStats.cs" by="Akapagion">
+//  © Copyright Dauler Palhares da Costa Vianna 2018.
+//          http://github.com/DaulerPalhares
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+using UnityEngine;
 using System;
-
 
 [Serializable]
 [CreateAssetMenu(menuName = "New PlayerStats Base")]
 public class PlayerStats : ScriptableObject
 {
+    /// <summary>
+    /// Public Player Health.
+    /// </summary>
+    public int Health
+    {
+        get { return (int) (((PlayerVit + ExtraCon) * 0.25f) * 100); }
+        set { value = (int) (((PlayerVit + ExtraCon) * 0.25f) * 100); }
+    }
     /// <summary>
     /// Player CharacterSkin Class
     /// </summary>
@@ -68,6 +81,30 @@ public class PlayerStats : ScriptableObject
         PlayerLevel += 1;
         PlayerExperience -= RequiredExperience;
         RequiredExperience = GameController.Instance.ExperienceCurve(PlayerLevel);
+    }
+    /// <summary>
+    /// Add health to the player if amount negative subdract.
+    /// </summary>
+    /// <param name="x">Amount</param>
+    public void AddHealth(int x)
+    {
+        Health -= x;
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+    /// <summary>
+    /// When the caracter dies.
+    /// </summary>
+    public void Die()
+    {
+        Health = 
+        PlayerExperience -= (int) (PlayerExperience * 0.25);
+        if (PlayerExperience <= 0)
+        {
+            PlayerExperience = 0;
+        }
     }
 
     public void AddExtraStats(int[] extraStatas)
@@ -206,6 +243,7 @@ public class PlayerStats : ScriptableObject
         PlayerLuk = 1;
         PlayerVit = 1;
         PlayerAgi = 1;
+        
     }
 
     /// <summary>

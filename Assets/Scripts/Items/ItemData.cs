@@ -1,4 +1,10 @@
-﻿using TMPro;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ItemData.cs" by="Akapagion">
+//  © Copyright Dauler Palhares da Costa Vianna 2018.
+//          http://github.com/DaulerPalhares
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

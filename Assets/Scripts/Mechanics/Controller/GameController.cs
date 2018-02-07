@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GameController.cs" by="Akapagion">
-//  © Copyright Dauler Palhares da Costa Viana 2017.
+//  © Copyright Dauler Palhares da Costa Vianna 2018.
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     public const int MaxLevel = 100;
     public const int ExperienceBase = 100;
     public const int MaxExperience = 1000000;
-    public PlayerBase Player;
+    public PlayerController Player;
     public bool IsPaused;
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PlayerBase.cs" by="Akapagion">
-//  © Copyright Dauler Palhares da Costa Viana 2017.
+// <copyright file="PlayerController.cs" by="Akapagion">
+//  © Copyright Dauler Palhares da Costa Vianna 2018.
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,14 +11,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerBase : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     /// <summary>
     /// Player Nickname
     /// </summary>
     public string NickName;
-    public PlayerStats PlayerStats;
-    public GameObject MySelf;
+
+    /// <summary>
+    /// Player stats.
+    /// </summary>
+    [HideInInspector]public PlayerStats PlayerStats;
+    /// <summary>
+    /// This game object.
+    /// </summary>
+    [HideInInspector]public GameObject MySelf;
+    /// <summary>
+    /// Movment Speed Amount.
+    /// </summary>
     public float Speed;
     /// <summary>
     /// Ammount player gold.
@@ -32,12 +42,14 @@ public class PlayerBase : MonoBehaviour
     protected Vector3 MoveVelocity;
     protected Rigidbody MyRigidyBody;
 
+
     private void Start()
     {
         GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().Player = this;
         MyRigidyBody = gameObject.GetComponent<Rigidbody>();
         MyRigidyBody.constraints = RigidbodyConstraints.FreezeRotation;
         MyRigidyBody.isKinematic = false;
+        Debug.Log(PlayerStats.Health);
     }
 
     private void Update()
@@ -56,7 +68,6 @@ public class PlayerBase : MonoBehaviour
                 transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
             }
         }
-
         if (Input.GetKeyDown(KeyCode.K))
         {
             PlayerStats.AddExperience(10);

@@ -110,17 +110,17 @@ public class World : MonoBehaviour
                 Vector3 playerPos = new Vector3(playerPosX * ScaleFactor, .02f, playerPosY * ScaleFactor);
                 var player = Instantiate(Player, playerPos, Quaternion.identity);
                 player.name = "Jogador";
-                player.AddComponent<PlayerBase>();
-                player.GetComponent<PlayerBase>().PlayerStats = GameController.Instance.Player.PlayerStats;
+                player.AddComponent<PlayerController>();
+                player.GetComponent<PlayerController>().PlayerStats = GameController.Instance.Player.PlayerStats;
                 if (_3DCharacterHolder.NickName == "")
                 {
-                    player.GetComponent<PlayerBase>().NickName = Ultility.NameGenerator();
+                    player.GetComponent<PlayerController>().NickName = Ultility.NameGenerator();
                 }
                 else
                 {
-                    player.GetComponent<PlayerBase>().NickName = _3DCharacterHolder.NickName;
+                    player.GetComponent<PlayerController>().NickName = _3DCharacterHolder.NickName;
                 }
-                player.GetComponent<PlayerBase>().Speed = 5f;
+                player.GetComponent<PlayerController>().Speed = 5f;
                 player.layer = 8;
                 player.tag = "Player";
                 foreach (Transform child in player.transform)
@@ -137,7 +137,7 @@ public class World : MonoBehaviour
             }
         }
 
-        GameController.Instance.Player = Player.GetComponent<PlayerBase>();
+        GameController.Instance.Player = Player.GetComponent<PlayerController>();
         Destroy(_3DCharacterHolder.gameObject);
     }
 

@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GUIController.cs" by="Akapagion">
+//  © Copyright Dauler Palhares da Costa Vianna 2018.
+//          http://github.com/DaulerPalhares
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,17 +15,21 @@ using UnityEngine.UI;
 // ReSharper disable once InconsistentNaming
 public class GUIController : MonoBehaviour
 {
-    public static bool IsPaused;
+    [Header("Global Settings")]
     public AudioMixer AudioMixer;
     public TMP_Dropdown ResolutionDropDown;
-    public Slider ProgressSlider;
     public Slider VolumeSlider;
+    private Resolution[] _resolutions;
+    [Header("MainMenu Settings")]
+    [Header("---------------------------------------------")]
+    public Slider ProgressSlider;
     public TMP_Text ProgressText;
-
+    [Header("InGame settings")]
+    [Header("---------------------------------------------")]
     public GameObject PauseMenu;
     public GameObject InventoryMenu;
+    public static bool IsPaused;
 
-    private Resolution[] _resolutions;
 
     private void Start()
     {
@@ -56,7 +66,9 @@ public class GUIController : MonoBehaviour
             SetActiveMenu(InventoryMenu);
         }
     }
-
+    /// <summary>
+    /// Start the game.
+    /// </summary>
     public void PlayGame()
     {
         var temp = GameObject.FindObjectOfType<CharacterSelection>();
@@ -75,7 +87,9 @@ public class GUIController : MonoBehaviour
             Debug.LogError("Se tem aidis?");
         }
     }
-
+    /// <summary>
+    /// Used in the loadscreen
+    /// </summary>
     IEnumerator LoadAsynchronously()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
@@ -102,7 +116,9 @@ public class GUIController : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Pause Game.
+    /// </summary>
     private void PauseGame()
     {
         PauseMenu.SetActive(true);
@@ -110,7 +126,9 @@ public class GUIController : MonoBehaviour
         Time.timeScale = 0;
         IsPaused = true;
     }
-
+    /// <summary>
+    /// Resume Game.
+    /// </summary>
     public void ResumeGame()
     {
         PauseMenu.SetActive(false);
@@ -118,32 +136,48 @@ public class GUIController : MonoBehaviour
         Time.timeScale = 1;
         IsPaused = false;
     }
-
+    /// <summary>
+    /// Close Game.
+    /// </summary>
     public void ExitGame()
     {
         Application.Quit();
     }
-
+    /// <summary>
+    /// Exit to main menu.
+    /// </summary>
     public void ExitToMenu()
     {
         SceneManager.LoadScene(0);   
     }
-    
+    /// <summary>
+    /// activate the menu
+    /// </summary>
+    /// <param name="x">GameObject to activate</param>
     public void SetActiveMenu(GameObject x)
     {
         x.SetActive(!x.activeSelf);
     }
-
+    /// <summary>
+    /// Set the game on fullscren or remove
+    /// </summary>
+    /// <param name="isFullscreen">Fullscreen(true)</param>
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
     }
-
+    /// <summary>
+    /// Set the game quality.
+    /// </summary>
+    /// <param name="choosen">Int for the quality.</param>
     public void SetQuality(int choosen)
     {
         QualitySettings.SetQualityLevel(choosen);
     }
-
+    /// <summary>
+    /// Set the game mixer volume.
+    /// </summary>
+    /// <param name="volume">Amount</param>
     public void SetVolume(float volume)
     {
         AudioMixer.SetFloat("volume", volume);
