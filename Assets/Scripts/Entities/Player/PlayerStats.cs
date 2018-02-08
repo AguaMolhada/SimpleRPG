@@ -12,12 +12,16 @@ using System;
 public class PlayerStats : ScriptableObject
 {
     /// <summary>
-    /// Public Player Health.
+    /// Public current Player Health.
     /// </summary>
-    public int Health
+    public int Health { get; protected set; }
+    /// <summary>
+    /// Public get max ammount of helth
+    /// </summary>
+    public int MaxHealth 
     {
-        get { return (int) (((PlayerVit + ExtraCon) * 0.25f) * 100); }
-        set { value = (int) (((PlayerVit + ExtraCon) * 0.25f) * 100); }
+        get { return (int)(((PlayerVit + ExtraCon) * 0.25f) * 100); }
+        set { value = (int)(((PlayerVit + ExtraCon) * 0.25f) * 100); }
     }
     /// <summary>
     /// Player CharacterSkin Class
@@ -28,7 +32,7 @@ public class PlayerStats : ScriptableObject
     /// </summary>
     public int PlayerLevel { get; protected set; }
     /// <summary>
-    /// Total Ammount exp.
+    /// Total Amount exp.
     /// </summary>
     public int PlayerExperience { get; protected set; }
     /// <summary>
@@ -92,6 +96,10 @@ public class PlayerStats : ScriptableObject
         if (Health <= 0)
         {
             Die();
+        }
+        if (Health > MaxHealth)
+        {
+            Health = MaxHealth;
         }
     }
     /// <summary>

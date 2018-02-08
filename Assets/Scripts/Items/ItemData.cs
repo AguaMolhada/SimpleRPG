@@ -18,7 +18,11 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     /// <summary>
     /// Ammout of the item.
     /// </summary>
-    public int Ammount;
+    public int Amount;
+    /// <summary>
+    /// Max itens allowed in stack.
+    /// </summary>
+    public const int MaxAmount = 255;
     /// <summary>
     /// Slot that i'm assigned.
     /// </summary>
@@ -37,17 +41,17 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         Item = i;
         MySlot = s;
-        Ammount = 1;
+        Amount = 1;
         gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + Item.Sprite);
     }
 
     private void Update()
     {
-        if (Ammount <= 0)
+        if (Amount <= 0)
         {
             Destroy(gameObject);
         }
-        _amountText.text = Item.Stackable ? Ammount.ToString() : "";
+        _amountText.text = Item.Stackable ? Amount.ToString() : "";
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -90,7 +94,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             if (Item.Usable)
             {
                 Debug.Log("Usando Item");
-                Ammount -= 1;
+                Amount -= 1;
             }
             else if (!Item.Usable)
             {

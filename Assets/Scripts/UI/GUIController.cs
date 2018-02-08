@@ -24,11 +24,6 @@ public class GUIController : MonoBehaviour
     [Header("---------------------------------------------")]
     public Slider ProgressSlider;
     public TMP_Text ProgressText;
-    [Header("InGame settings")]
-    [Header("---------------------------------------------")]
-    public GameObject PauseMenu;
-    public GameObject InventoryMenu;
-    public static bool IsPaused;
 
 
     private void Start()
@@ -54,18 +49,6 @@ public class GUIController : MonoBehaviour
         ResolutionDropDown.RefreshShownValue();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseGame();
-        }
-        if (Input.GetKeyDown(KeyCode.I) && !PauseMenu.activeSelf)
-        {
-            GameController.Instance.IsPaused = !GameController.Instance.IsPaused;
-            SetActiveMenu(InventoryMenu);
-        }
-    }
     /// <summary>
     /// Start the game.
     /// </summary>
@@ -116,26 +99,7 @@ public class GUIController : MonoBehaviour
         }
 
     }
-    /// <summary>
-    /// Pause Game.
-    /// </summary>
-    private void PauseGame()
-    {
-        PauseMenu.SetActive(true);
-        GameController.Instance.IsPaused = true;
-        Time.timeScale = 0;
-        IsPaused = true;
-    }
-    /// <summary>
-    /// Resume Game.
-    /// </summary>
-    public void ResumeGame()
-    {
-        PauseMenu.SetActive(false);
-        GameController.Instance.IsPaused = true;
-        Time.timeScale = 1;
-        IsPaused = false;
-    }
+
     /// <summary>
     /// Close Game.
     /// </summary>

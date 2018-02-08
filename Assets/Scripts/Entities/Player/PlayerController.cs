@@ -5,9 +5,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -31,13 +28,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public float Speed;
     /// <summary>
-    /// Ammount player gold.
+    /// Amount player gold.
     /// </summary>
-    public int GoldAmmount { get; protected set; }
+    public int GoldAmount { get; protected set; }
     /// <summary>
-    /// Ammount player cash.
+    /// Amount player cash.
     /// </summary>
-    public int CashAmmount { get; protected set; }
+    public int CashAmount { get; protected set; }
 
     protected Vector3 MoveVelocity;
     protected Rigidbody MyRigidyBody;
@@ -49,7 +46,7 @@ public class PlayerController : MonoBehaviour
         MyRigidyBody = gameObject.GetComponent<Rigidbody>();
         MyRigidyBody.constraints = RigidbodyConstraints.FreezeRotation;
         MyRigidyBody.isKinematic = false;
-        Debug.Log(PlayerStats.Health);
+        PlayerStats.AddHealth(int.MaxValue);
     }
 
     private void Update()

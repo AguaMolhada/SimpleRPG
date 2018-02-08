@@ -5,13 +5,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -40,30 +36,6 @@ public class PlayerInventory : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject _itemDataPrefab;
     /// <summary>
-    /// Gold text.
-    /// </summary>
-    [SerializeField] private TMP_Text _playerGold;
-    /// <summary>
-    /// Cash text.
-    /// </summary>
-    [SerializeField] private TMP_Text _playerCash;
-    /// <summary>
-    /// Nickname text.
-    /// </summary>
-    [SerializeField] private TMP_Text _playerNickname;
-    /// <summary>
-    /// Player selected class.
-    /// </summary>
-    [SerializeField] private TMP_Text _playerClass;
-    /// <summary>
-    /// Experience Slider.
-    /// </summary>
-    [SerializeField] private Slider _expSlider;
-    /// <summary>
-    /// Experience ammount in %
-    /// </summary>
-    [SerializeField] private TMP_Text _expPercent;
-    /// <summary>
     /// List of all Slot avaliable.
     /// </summary>
     public List<Slot> Slots = new List<Slot>();
@@ -72,40 +44,25 @@ public class PlayerInventory : MonoBehaviour
     {
         NumIntemSlotsUnlocked = UnlockedSlots;
         Init(NumIntemSlotsUnlocked, NumItemSlots);
-        AddItem(ItemDatabase.Instance.FetchItem(2));
-        AddItem(ItemDatabase.Instance.FetchItem(4));
-        AddItem(ItemDatabase.Instance.FetchItem(3));
-        AddItem(ItemDatabase.Instance.FetchItem(1));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        AddItem(ItemDatabase.Instance.FetchItem(9));
-        UpdateUiElemets();
-        FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
-    }
-    /// <summary>
-    /// Update the ui elements.
-    /// </summary>
-    private void UpdateUiElemets()
-    {
-        var tempPlayer = GameController.Instance.Player;
-        _expSlider.value = Ultility.GetPercent(tempPlayer.PlayerStats.RequiredExperience, tempPlayer.PlayerStats.PlayerExperience);
-        _expPercent.text = Ultility.GetPercentValue(tempPlayer.PlayerStats.RequiredExperience, tempPlayer.PlayerStats.PlayerExperience).ToString("#.##")+"%";
-        _playerCash.text = tempPlayer.GoldAmmount.ToString("##,###");
-        _playerGold.text = tempPlayer.CashAmmount.ToString("##,###");
-        _playerNickname.text = tempPlayer.NickName + " - Lvl: "+tempPlayer.PlayerStats.PlayerLevel;
-        _playerClass.text = tempPlayer.PlayerStats.PlayerClass.ToString();
+        AddItem(DatabaseControl.Instance.FetchItem(2));
+        AddItem(DatabaseControl.Instance.FetchItem(4));
+        AddItem(DatabaseControl.Instance.FetchItem(3));
+        AddItem(DatabaseControl.Instance.FetchItem(1));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
+        AddItem(DatabaseControl.Instance.FetchItem(9));
         FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
     }
 
     private void FixedUpdate()
     {
-        UpdateUiElemets();
+        FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
     }
     /// <summary>
     /// to add item to the inventory
@@ -120,7 +77,7 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (Slots[i].SlotItem != null && Slots[i].SlotItem.Item == itemToAdd)
                 {
-                    Slots[i].SlotItem.Ammount += 1;
+                    Slots[i].SlotItem.Amount += 1;
                     return;
                 }
             }
@@ -148,7 +105,7 @@ public class PlayerInventory : MonoBehaviour
         {
             if (Slots[i].SlotItem.Item == itemToRemove)
             {
-                Slots[i].SlotItem.Ammount -= 1;
+                Slots[i].SlotItem.Amount -= 1;
                 return;
             }
         }
@@ -192,9 +149,9 @@ public class PlayerInventory : MonoBehaviour
             slotCost = (int)(50f * ((NumIntemSlotsUnlocked - UnlockedSlots + 1) * 0.7f))+1;
         }
 
-        if (GameController.Instance.Player.CashAmmount < slotCost)
+        if (GameController.Instance.Player.CashAmount < slotCost)
         {
-            Debug.LogError("Not Enought Cash, You have" + GameController.Instance.Player.CashAmmount +
+            Debug.LogError("Not Enought Cash, You have" + GameController.Instance.Player.CashAmount +
                            "$ and you need " + slotCost);
             return;
         }
@@ -211,13 +168,11 @@ public class PlayerInventory : MonoBehaviour
     public void SortAlphabetical()
     {
         Slots.Sort(Comparison);
-        //var temp = Slots.OrderBy(x=> x.SlotItem != null ? x.SlotItem.Item.Title : "zzzzzzzzzzzz").ToList();
-       // Slots = temp;
 
         for (int i = 0; i < Slots.Count; i++)
         {
             Slots[i].transform.SetSiblingIndex(i);
-            Slots[i].name = i.ToString() + "_" + _openedSlotsPefab.name;
+            Slots[i].name = i + "_" + _openedSlotsPefab.name;
         }
 
     }

@@ -5,10 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using System;
-using System.Linq;
 
 public class Slot : MonoBehaviour, IDropHandler
 {
@@ -85,7 +82,7 @@ public class Slot : MonoBehaviour, IDropHandler
                 if (SlotItem.Item == itemData.Item && SlotItem.Item.Stackable)
                 {
                     itemData.MySlot = gameObject.GetComponent<Slot>();
-                    itemData.Ammount += SlotItem.Ammount;
+                    itemData.Amount += SlotItem.Amount;
                     SlotItem = itemData;
                     return;
                 }

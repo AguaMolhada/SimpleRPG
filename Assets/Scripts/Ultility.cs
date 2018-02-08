@@ -90,7 +90,7 @@ public static class Ultility
     /// Percent value btween 0,1
     /// </summary>
     /// <param name="total">Total</param>
-    /// <param name="percent">Ammount to check</param>
+    /// <param name="percent">Amount to check</param>
     /// <returns>value bteween 0 and 1</returns>
     public static float GetPercent(float total, float percent)
     {

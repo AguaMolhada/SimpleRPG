@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public class ItemDatabase : MonoBehaviour
+public class DatabaseControl : MonoBehaviour
 {
-    public static ItemDatabase Instance;
-    private readonly List<Item> _database = new List<Item>();
+    public static DatabaseControl Instance;
+    private readonly List<Item> _itemDb = new List<Item>();
 
     private void Awake()
     {
@@ -38,13 +38,13 @@ public class ItemDatabase : MonoBehaviour
     /// </summary>
     /// <param name="id">Desired item ID</param>
     /// <returns>A certain item in the database</returns>
-    public Item FetchItem(int id) => _database.FirstOrDefault(t => t.Id == id);
+    public Item FetchItem(int id) => _itemDb.FirstOrDefault(t => t.Id == id);
     /// <summary>
     /// Find a certain item instance.
     /// </summary>
     /// <param name="iname">Desired item name</param>
     /// <returns>A certain item in the database</returns>
-    public Item FetchItem(String iname) => _database.FirstOrDefault(t => t.Title == iname);
+    public Item FetchItem(String iname) => _itemDb.FirstOrDefault(t => t.Title == iname);
     /// <summary>
     /// Find all items with the specific param
     /// </summary>
@@ -53,7 +53,7 @@ public class ItemDatabase : MonoBehaviour
     public List<Item> FetchItems(ItemType type)
     {
         var temp = new List<Item>();
-        foreach (var item in _database)
+        foreach (var item in _itemDb)
         {
             if (item.ItemT == type && item.BuyValue != 0)
             {
@@ -69,7 +69,7 @@ public class ItemDatabase : MonoBehaviour
     /// <returns></returns>
     public int ItemsCount()
     {
-        return _database.Count;
+        return _itemDb.Count;
     }
     /// <summary>
     /// Construct Item database thought items.json file.
@@ -81,7 +81,7 @@ public class ItemDatabase : MonoBehaviour
         Debug.Log(tempDatabase[0].Title);
         for (int i = 0; i < tempDatabase.Length; i++)
         {
-            _database.Add(tempDatabase[i]);
+            _itemDb.Add(tempDatabase[i]);
         }
     }
 
