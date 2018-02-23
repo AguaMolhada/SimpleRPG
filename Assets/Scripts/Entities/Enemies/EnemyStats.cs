@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EnemyStats.cs" by="Akapagion">
-//  © Copyright Dauler Palhares da Costa Viana 2017.
+//  © Copyright Dauler Palhares da Costa Viana 2018.
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -25,13 +25,16 @@ public class EnemyStats : ScriptableObject
     /// </summary>
     public int BaseDmg;
     /// <summary>
-    /// Material Color to change.
+    /// The enemy can attack ranged?
     /// </summary>
-    public Color MaterialColor;
+    public bool Ranged;
+    /// <summary>
+    /// The enemy can attack meele?
+    /// </summary>
+    public bool Meele;
     /// <summary>
     /// Monster skin to instantiate.
     /// </summary>
     public GameObject MonsterSkin;
-
-
+    
 }
