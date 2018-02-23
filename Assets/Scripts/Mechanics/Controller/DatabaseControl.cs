@@ -14,6 +14,7 @@ public class DatabaseControl : MonoBehaviour
 {
     public static DatabaseControl Instance;
     private readonly List<Item> _itemDb = new List<Item>();
+    public RarityController RarityColor;
 
     private void Awake()
     {
@@ -84,7 +85,19 @@ public class DatabaseControl : MonoBehaviour
             _itemDb.Add(tempDatabase[i]);
         }
     }
-
+    public Color SelectOneColor(double roll)
+    {
+        var cumulative = 0.0;
+        for (int i = 0; i < RarityColor.Colors.Count; i++)
+        {
+            cumulative += RarityColor.Colors[i].Value;
+            if (roll < cumulative)
+            {
+                return RarityColor.Colors[i].Key;
+            }
+        }
+        return Color.white;
+    }
 }
 /// <summary>
 /// Default Item Class.
@@ -136,4 +149,23 @@ public class Item
     {
         this.Id = -1;
     }
+}
+[Serializable]
+public class ColorRarity
+{
+    [SerializeField]public Color Key;
+    [SerializeField]public double Value;
+    [SerializeField]public string RarityName;
+
+    public ColorRarity(Color k, double v)
+    {
+        this.Key = k;
+        this.Value = v;
+    }
+
+    public ColorRarity()
+    {
+
+    }
+
 }
