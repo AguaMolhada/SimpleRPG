@@ -1,20 +1,14 @@
 # SimpleRPG
-Reworking the core gameplay now will have a 3D enviroment to explore the world and the battles will be in turns.... 
-(obs.: i need to upload all the changes but idk why i didn't o.o )
-somethings are not working :(
+Reworking the core gameplay now will have a 3D enviroment to explore the world and kil enemies
 
 ### New Things that i think they are working:
-* Map Generator
-* Mesh Genrator
-* 3D enviroment
+* Map Generator (idk if will be in the final)
 
 ### Things working:
-* Level Up
-* Stats (Str,Con,Dex,Int)
-* Classes (Warrior,Mage,Archer)
-* Item Database
-* Usable Items
-* Inventory
+* Monster with certain prefixes
+* 3D Map
+* Level mechanic (Level up, stats, classes)
+* Items (Item database using json, usable items, equip itens, inventory)
 * Equipment (equip and change stats)
 
 ### Things Broken
@@ -23,12 +17,9 @@ somethings are not working :(
 
 ### Things to be done:
 * Monster drops
-* More Items
-* Item Database (put all itens in database)
+* More Item
 * Shop System (buy and sell)
 * Balance all the things
-* Cool Names (low % to get)
-* 3D Map
 * Chest mechanics
 
 Major of 3D Models made by Mike Judge
