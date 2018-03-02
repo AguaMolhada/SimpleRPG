@@ -31,6 +31,8 @@ public class MonsterSpawner : MonoBehaviour
             SpawnMonster();
             rnd = new Random(GetInstanceID()+i+(int)System.DateTime.Now.Ticks);
         }
+        GameController.Instance.ConstructAggroTable();
+        Debug.Log("Done");
     }
 
     private void SpawnMonster()
@@ -54,5 +56,8 @@ public class MonsterSpawner : MonoBehaviour
             temp.GetComponentInChildren<MeshRenderer>().material.color = color;
             temp.name = DatabaseControl.Instance.RarityColor.UncommunPrefixs[rnd.Next(0, DatabaseControl.Instance.RarityColor.UncommunPrefixs.Count - 1)] + " " + nametemp;
         }
+
+        temp.AddComponent<EnemyAI>();
+        temp.transform.tag = "Enemy";
     }
 }

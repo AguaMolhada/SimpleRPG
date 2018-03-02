@@ -5,19 +5,53 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton.
+    /// </summary>
     public static GameController Instance;
+    /// <summary>
+    /// Max Gold.
+    /// </summary>
     public const int MaxGold = 999999999;
+    /// <summary>
+    /// Max Cash.
+    /// </summary>
     public const int MaxCash = 999999999;
+    /// <summary>
+    /// Max Level.
+    /// </summary>
     public const int MaxLevel = 100;
+    /// <summary>
+    /// Amount of experience to start.
+    /// </summary>
     public const int ExperienceBase = 100;
+    /// <summary>
+    /// Max experience to obtain.
+    /// </summary>
     public const int MaxExperience = 1000000;
+    /// <summary>
+    /// Hello Player.
+    /// </summary>
     public PlayerController Player;
-    public bool IsPaused;
-
+    /// <summary>
+    /// Is the Game Paused?
+    /// </summary>
+    public bool IsPaused; 
+    /// <summary>
+    /// List with all enemies and respectives Aggros.
+    /// </summary>
+    public List<AggroStructure> EnemyAgroTabble;
+    /// <summary>
+    /// List with all clients
+    /// </summary>
+    public List<GameObject> PlayersClients;
     /// <summary>
     /// Player experience curve
     /// </summary>
@@ -48,4 +82,27 @@ public class GameController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+    
+    /// <summary>
+    /// Construc Aggro Table.
+    /// </summary>
+    public void ConstructAggroTable()
+    {
+        PlayersClients = GameObject.FindGameObjectsWithTag("Player").ToList();
+        EnemyAgroTabble = new List<AggroStructure>();
+        var tempE = GameObject.FindObjectsOfType<EnemyAI>();
+        foreach (var ai in tempE)
+        {
+            var tempAggro = new AggroStructure(ai);
+            foreach (var player in PlayersClients)
+            {
+                tempAggro.AddPlayerAggro(new AggroNode(player, 0));
+            }
+            var y = tempAggro.PlayerAggro.OrderByDescending(x => x.AggroAmount).ToList();
+            tempAggro.PlayerAggro = y;
+            EnemyAgroTabble.Add(tempAggro);
+        }
+    }
+
+
 }
