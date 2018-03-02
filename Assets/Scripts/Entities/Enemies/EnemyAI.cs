@@ -7,6 +7,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -26,4 +27,8 @@ public class EnemyAI : MonoBehaviour
     /// Max distance to start the chase/attack the Target.
     /// </summary>
     public float MaxDistancePerception;
+    /// <summary>
+    /// The NavMeshAgent to move.
+    /// </summary>
+    protected NavMeshAgent Agent;
 }

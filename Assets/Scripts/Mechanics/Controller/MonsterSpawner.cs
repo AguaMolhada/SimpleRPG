@@ -55,6 +55,4 @@ public class MonsterSpawner : MonoBehaviour
             temp.name = DatabaseControl.Instance.RarityColor.UncommunPrefixs[rnd.Next(0, DatabaseControl.Instance.RarityColor.UncommunPrefixs.Count - 1)] + " " + nametemp;
         }
     }
-
-
 }

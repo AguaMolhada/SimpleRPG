@@ -6,15 +6,16 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public bool ToTestRemoveLater;
     /// <summary>
     /// Player Nickname
     /// </summary>
     public string NickName;
-
     /// <summary>
     /// Player stats.
     /// </summary>
@@ -35,35 +36,83 @@ public class PlayerController : MonoBehaviour
     /// Amount player cash.
     /// </summary>
     public int CashAmount { get; protected set; }
-
-    protected Vector3 MoveVelocity;
+    /// <summary>
+    /// NavMesh agent to move.
+    /// </summary>
+    protected NavMeshAgent NavMeshAgent;
+    /// <summary>
+    /// The character rigidybody.
+    /// </summary>
     protected Rigidbody MyRigidyBody;
 
 
     private void Start()
     {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().Player = this;
+        NavMeshAgent = GetComponent<NavMeshAgent>();
+        if (!ToTestRemoveLater)
+        {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().Player = this;
+        }
+
         MyRigidyBody = gameObject.GetComponent<Rigidbody>();
         MyRigidyBody.constraints = RigidbodyConstraints.FreezeRotation;
         MyRigidyBody.isKinematic = false;
         PlayerStats.AddHealth(int.MaxValue);
     }
 
-    private void Update()
+    /// <summary>
+    /// Click to move the character in the world.
+    /// </summary>
+    private void ClickToMove()
     {
-        if (!GameController.Instance.IsPaused)
+        if (Input.GetMouseButton(1))
         {
             Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-            float rayLenght;
-
-            if (groundPlane.Raycast(cameraRay, out rayLenght))
+            RaycastHit hit;
+            if (Physics.Raycast(cameraRay, out hit))
             {
-                Vector3 pointToLook = cameraRay.GetPoint(rayLenght);
-                Debug.DrawLine(cameraRay.origin, pointToLook, Color.black);
-
-                transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    NavMeshAgent.isStopped = true;
+                    //Attack;
+                }
+                else
+                {
+                    NavMeshAgent.destination = hit.point;
+                    NavMeshAgent.isStopped = false;
+                }
             }
+        }
+    }
+
+    /// <summary>
+    /// Character aways looking to the mouse cursor.
+    /// </summary>
+    private void LookToMouse()
+    {
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayLenght;
+        if (groundPlane.Raycast(cameraRay, out rayLenght))
+        {
+            Vector3 pointToLook = cameraRay.GetPoint(rayLenght);
+            Debug.DrawLine(cameraRay.origin, pointToLook, Color.black);
+
+            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+        }
+    }
+
+    private void Update()
+    {
+        if (ToTestRemoveLater)
+        {
+            LookToMouse();
+            ClickToMove();
+        }
+        else if (!GameController.Instance.IsPaused)
+        {
+            LookToMouse();
+            ClickToMove();
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -71,15 +120,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (!GameController.Instance.IsPaused)
-        {
-            var moveImput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            MoveVelocity = moveImput * Speed;
-            MoveVelocity = transform.TransformDirection(MoveVelocity);
-
-            MyRigidyBody.velocity = MoveVelocity;
-        }
-    }
 }

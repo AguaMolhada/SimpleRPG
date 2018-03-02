@@ -9,6 +9,7 @@ TagManager:
   - ItemDatabase
   - CharacterSelection
   - Canvas
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -10,12 +10,18 @@ using UnityEditor;
 [CustomEditor(typeof(RarityController))]
 public class RarityContollerEditor : Editor
 {
+    /// <summary>
+    /// Target to edit on the inspector.
+    /// </summary>
     private RarityController _target;
-    private bool ShowInspectorColors;
-    private bool ShowInspectorUnc;
-    private bool ShowInspectorRare;
-    private bool ShowInspectorUnique;
-    private double TotalProbility = 0;
+    /// <summary>
+    /// 
+    /// </summary>
+    private bool _showInspectorColors;
+    private bool _showInspectorUnc;
+    private bool _showInspectorRare;
+    private bool _showInspectorUnique;
+    private double _totalProbility = 0;
 
     private void OnEnable()
     {
@@ -24,9 +30,9 @@ public class RarityContollerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        ShowInspectorColors = EditorGUILayout.Foldout(ShowInspectorColors, "Pallet with Probability"); if (ShowInspectorColors)
+        _showInspectorColors = EditorGUILayout.Foldout(_showInspectorColors, "Pallet with Probability"); if (_showInspectorColors)
         {
-            TotalProbility = 0;
+            _totalProbility = 0;
             for (int i = 0; i < _target.Colors.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
@@ -34,12 +40,12 @@ public class RarityContollerEditor : Editor
                 _target.Colors[i].Value = EditorGUILayout.DoubleField("Probability", _target.Colors[i].Value);
                 _target.Colors[i].RarityName = EditorGUILayout.TextField(_target.Colors[i].RarityName);
                 EditorGUILayout.EndHorizontal();
-                TotalProbility += _target.Colors[i].Value;
+                _totalProbility += _target.Colors[i].Value;
             }
 
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Total Probility (cannot pass 100) :");
-            GUILayout.Label((TotalProbility * 100).ToString());
+            GUILayout.Label((_totalProbility * 100).ToString());
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginVertical();
             GUILayout.Label("Color Management");
@@ -60,7 +66,7 @@ public class RarityContollerEditor : Editor
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
         }
-        ShowInspectorUnc = EditorGUILayout.Foldout(ShowInspectorUnc, "Uncommon"); if (ShowInspectorUnc)
+        _showInspectorUnc = EditorGUILayout.Foldout(_showInspectorUnc, "Uncommon"); if (_showInspectorUnc)
         {
             GUILayout.Label("Uncommon Prefixes");
             for (int i = 0; i < _target.UncommunPrefixs.Count; i++)
@@ -87,8 +93,8 @@ public class RarityContollerEditor : Editor
             EditorGUILayout.EndVertical();
         }
 
-        ShowInspectorRare = EditorGUILayout.Foldout(ShowInspectorRare, "Rare");
-        if (ShowInspectorRare)
+        _showInspectorRare = EditorGUILayout.Foldout(_showInspectorRare, "Rare");
+        if (_showInspectorRare)
         {
             GUILayout.Label("Rare Prefixes");
             for (int i = 0; i < _target.RarePrefixs.Count; i++)
@@ -113,8 +119,8 @@ public class RarityContollerEditor : Editor
             EditorGUILayout.EndVertical();
         }
 
-        ShowInspectorUnique = EditorGUILayout.Foldout(ShowInspectorUnique, "Unique");
-        if (ShowInspectorUnique)
+        _showInspectorUnique = EditorGUILayout.Foldout(_showInspectorUnique, "Unique");
+        if (_showInspectorUnique)
         {
             GUILayout.Label("Unique Names");
             for (int i = 0; i < _target.UniqueNames.Count; i++)
