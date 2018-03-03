@@ -16,22 +16,22 @@ namespace QuestSystem
         /// <summary>
         /// Acces to quest Unique Identifier.
         /// </summary>
-        public int ID {
-            get { return _ID; }
-        }
+        public int ID => _ID;
         /// <summary>
         /// Indentifier to where the quest belongs.
         /// </summary>
         private int _sourceID;
-        public int SourceID {
-            get { return _sourceID; }
-        }
+        /// <summary>
+        /// Access to where the quest belongs.
+        /// </summary>
+        public int SourceID => _sourceID;
         /// <summary>
         /// Next quest ID in the chain.
         /// </summary>
         private int _chainQuestID;
-        public int ChainQuestID {
-            get { return _chainQuestID; }
-        }
+        /// <summary>
+        /// Access to the next quest ID in the chain.
+        /// </summary>
+        public int ChainQuestID => _chainQuestID;
     }
 }

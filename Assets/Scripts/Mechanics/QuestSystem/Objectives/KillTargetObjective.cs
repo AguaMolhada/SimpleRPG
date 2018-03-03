@@ -1,14 +1,13 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CollectionObjective.cs" by="Akapagion">
+// <copyright file="KillTargetObjective.cs" by="Akapagion">
 //  © Copyright Dauler Palhares da Costa Viana 2018.
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using UnityEngine;
 
 namespace QuestSystem
 {
-    public class CollectionObjective : IQuestObjective
+    public class KillTargetObjective : IQuestObjective
     {
         /// <summary>
         /// What do you will do.
@@ -18,10 +17,6 @@ namespace QuestSystem
         /// Access to the objective title.
         /// </summary>
         public string Title => _title;
-        /// <summary>
-        /// Verb action to do.
-        /// </summary>
-        private string _verb;
         /// <summary>
         /// Description that what we need to do.
         /// </summary>
@@ -47,48 +42,48 @@ namespace QuestSystem
         /// </summary>
         public bool IsBonus => _isBonus;
         /// <summary>
-        /// Total amount of what we need.
+        /// Enemy To Kill.
         /// </summary>
-        private int _collectionAmount;
+        private EnemyStats _targetToKill;
         /// <summary>
-        /// Access to the total amount of things that we need.
+        /// Access to the target to be killed.
         /// </summary>
-        public int CollectionAmount => _collectionAmount;
+        public EnemyStats TargetToKill => _targetToKill;
         /// <summary>
-        /// Current amount of what we need. 
+        /// Titak Amount of targets to be eliminated.
         /// </summary>
-        private int _currentAmount;
+        private int _killTotalAmount;
         /// <summary>
-        /// Access to the current amount of things that we need.
+        /// Access to the total Amount of targets needed.
         /// </summary>
-        public int CurrentAmount => _currentAmount;
+        public int KillTotalAmount => _killTotalAmount;
         /// <summary>
-        /// What we need to collect.
+        /// Current amount of targets eliminated.
         /// </summary>
-        private GameObject _itemToCollect;
+        private int _killCurrentAmount;
         /// <summary>
-        /// Access to the thing that we need to collect.
+        /// Access to the current amount of targets killed.
         /// </summary>
-        public GameObject ItemToCollect => _itemToCollect;
+        public int KillCurrentAmount => _killCurrentAmount;
+
         /// <summary>
-        /// Constructor that builds a collection objective.
+        /// Constructor that builds a Kill target objective.        
         /// </summary>
-        /// <param name="tileVerb">Action required on the quest. ex.: Collect.</param>
-        /// <param name="totalAmount">Total of things that we need.</param>
-        /// <param name="item">Thing that we need.</param>
-        /// <param name="descrip">What will be collected.</param>
-        /// <param name="bonus">is bonus objective?</param>
-        public CollectionObjective(string tileVerb, int totalAmount, GameObject item, string descrip, bool bonus)
+        /// <param name="descript">Description of the monster.</param>
+        /// <param name="bonus">Is a bonus quest.</param>
+        /// <param name="target">Target to kill.</param>
+        /// <param name="kills">Total Amount of targets needed to kill.</param>
+        public KillTargetObjective(string descript, bool bonus, EnemyStats target, int kills)
         {
-            _title = tileVerb + " " + totalAmount + " " + item.name;
-            _verb = tileVerb;
-            _description = descrip;
-            _collectionAmount = totalAmount;
-            _currentAmount = 0;
-            _itemToCollect = item;
-            _isBonus = bonus;
+            _title = "Kill " + kills + " " + target.name;
+            _description = descript;
             _isComplete = false;
+            _isBonus = bonus;
+            _targetToKill = target;
+            _killTotalAmount = kills;
+            _killCurrentAmount = 0;
         }
+
 
         public void UpdateProgress()
         {
@@ -97,12 +92,7 @@ namespace QuestSystem
 
         public void CheckProgress()
         {
-            _isComplete = CurrentAmount >= CollectionAmount;
-        }
-
-        public override string ToString()
-        {
-            return CurrentAmount + "/" + CollectionAmount + " " + ItemToCollect.name + " " + _verb + "ed.";
+            throw new System.NotImplementedException();
         }
     }
 }
