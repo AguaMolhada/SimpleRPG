@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Zombie 3
   m_EditorClassIdentifier: 
   BaseHealth: 90
-  BaseSpeed: 3
+  BaseSpeed: 0.6
   BaseDmg: 2
   Ranged: 1
   Meele: 1

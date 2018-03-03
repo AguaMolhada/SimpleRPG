@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Alien engil
   m_EditorClassIdentifier: 
   BaseHealth: 150
-  BaseSpeed: 5
+  BaseSpeed: 2.5
   BaseDmg: 10
   Ranged: 0
   Meele: 1

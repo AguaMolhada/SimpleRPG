@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Alien bot
   m_EditorClassIdentifier: 
   BaseHealth: 20
-  BaseSpeed: 100
+  BaseSpeed: 1
   BaseDmg: 3
   Ranged: 0
   Meele: 0
