@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 namespace QuestSystem
 {
+    [System.Serializable]
     public class Quest
     {
         /// <summary>

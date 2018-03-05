@@ -8,17 +8,20 @@ using UnityEngine;
 
 namespace QuestSystem
 {
+    [System.Serializable]
     public class CollectionObjective : IQuestObjective
     {
         /// <summary>
         /// Access to the objective title.
         /// </summary>
-        public string Title { get; set; }
+        public string Title {
+            get { return Verb + " " + CollectionAmount + " " + ItemToCollect.name; }
+        }
 
         /// <summary>
         /// Verb action to do.
         /// </summary>
-        private string _verb;
+        public string Verb;
 
         /// <summary>
         /// Access to the objective description.
@@ -64,8 +67,7 @@ namespace QuestSystem
         /// <param name="bonus">is bonus objective?</param>
         public CollectionObjective(string tileVerb, int totalAmount, GameObject item, string descrip, bool bonus)
         {
-            Title = tileVerb + " " + totalAmount + " " + item.name;
-            _verb = tileVerb;
+            Verb = tileVerb;
             Description = descrip;
             CollectionAmount = totalAmount;
             CurrentAmount = 0;
@@ -86,7 +88,7 @@ namespace QuestSystem
 
         public override string ToString()
         {
-            return CurrentAmount + "/" + CollectionAmount + " " + ItemToCollect.name + " " + _verb + "ed.";
+            return CurrentAmount + "/" + CollectionAmount + " " + ItemToCollect.name + " " + Verb + "ed.";
         }
     }
 }

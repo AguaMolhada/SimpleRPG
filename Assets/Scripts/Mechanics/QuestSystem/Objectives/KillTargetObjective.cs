@@ -7,6 +7,7 @@
 
 namespace QuestSystem
 {
+    [System.Serializable]
     public class KillTargetObjective : IQuestObjective
     {
         /// <summary>
