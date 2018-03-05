@@ -20,11 +20,11 @@ namespace QuestSystem
         /// <summary>
         /// Indentifier to where the quest belongs.
         /// </summary>
-        private int _sourceID;
+        private int _previusID;
         /// <summary>
         /// Access to where the quest belongs.
         /// </summary>
-        public int SourceID => _sourceID;
+        public int PreviusID => _previusID;
         /// <summary>
         /// Next quest ID in the chain.
         /// </summary>
@@ -33,5 +33,28 @@ namespace QuestSystem
         /// Access to the next quest ID in the chain.
         /// </summary>
         public int ChainQuestID => _chainQuestID;
+
+        public QuestIdentifier(int id)
+        {
+            _ID = id;
+        }
+
+        /// <summary>
+        /// Set previus Quest ID
+        /// </summary>
+        /// <param name="id">previus Quest ID</param>
+        public void SetSourceID(int id)
+        {
+            _previusID = id;
+        }
+
+        /// <summary>
+        /// Set the next quest on the chain.
+        /// </summary>
+        /// <param name="id">Quest unique ID</param>
+        public void SetChainQuestID(int id)
+        {
+            _chainQuestID = id;
+        }
     }
 }

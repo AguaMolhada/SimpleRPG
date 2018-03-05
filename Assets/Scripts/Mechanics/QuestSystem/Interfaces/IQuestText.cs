@@ -12,6 +12,5 @@ namespace QuestSystem
         string Title { get; }
         string DescriptionSummary { get; }
         string Hint { get; }
-        string Dialog { get; }
     }
 }

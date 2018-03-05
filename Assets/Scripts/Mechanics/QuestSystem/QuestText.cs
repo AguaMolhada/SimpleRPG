@@ -12,7 +12,6 @@ namespace QuestSystem
         private string _title;
         private string _descriptionSummary;
         private string _hint;
-        private string _dialog;
 
         public string Title
         {
@@ -27,9 +26,12 @@ namespace QuestSystem
         {
             get { return _hint; }
         }
-        public string Dialog
+
+        public QuestText(string title, string descript, string hint)
         {
-            get { return _dialog; }
+            _title = title;
+            _descriptionSummary = descript;
+            _hint = hint;
         }
 
     }

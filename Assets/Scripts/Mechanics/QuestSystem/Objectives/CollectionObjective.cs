@@ -11,25 +11,20 @@ namespace QuestSystem
     public class CollectionObjective : IQuestObjective
     {
         /// <summary>
-        /// What do you will do.
-        /// </summary>
-        private string _title;
-        /// <summary>
         /// Access to the objective title.
         /// </summary>
-        public string Title => _title;
+        public string Title { get; set; }
+
         /// <summary>
         /// Verb action to do.
         /// </summary>
         private string _verb;
-        /// <summary>
-        /// Description that what we need to do.
-        /// </summary>
-        private string _description;
+
         /// <summary>
         /// Access to the objective description.
         /// </summary>
-        public string Description => _description;
+        public string Description { get; set; }
+
         /// <summary>
         /// Is this objective complete?
         /// </summary>
@@ -38,38 +33,27 @@ namespace QuestSystem
         /// Access to check if is complete.
         /// </summary>
         public bool IsComplete => _isComplete;
-        /// <summary>
-        /// Is this a bonus objective?
-        /// </summary>
-        private bool _isBonus;
+
         /// <summary>
         /// Access if this is bonus.
         /// </summary>
-        public bool IsBonus => _isBonus;
-        /// <summary>
-        /// Total amount of what we need.
-        /// </summary>
-        private int _collectionAmount;
+        public bool IsBonus { get; set; }
+
         /// <summary>
         /// Access to the total amount of things that we need.
         /// </summary>
-        public int CollectionAmount => _collectionAmount;
-        /// <summary>
-        /// Current amount of what we need. 
-        /// </summary>
-        private int _currentAmount;
+        public int CollectionAmount { get; set; }
+
         /// <summary>
         /// Access to the current amount of things that we need.
         /// </summary>
-        public int CurrentAmount => _currentAmount;
-        /// <summary>
-        /// What we need to collect.
-        /// </summary>
-        private GameObject _itemToCollect;
+        public int CurrentAmount { get; }
+
         /// <summary>
         /// Access to the thing that we need to collect.
         /// </summary>
-        public GameObject ItemToCollect => _itemToCollect;
+        public GameObject ItemToCollect { get; set; }
+
         /// <summary>
         /// Constructor that builds a collection objective.
         /// </summary>
@@ -80,13 +64,13 @@ namespace QuestSystem
         /// <param name="bonus">is bonus objective?</param>
         public CollectionObjective(string tileVerb, int totalAmount, GameObject item, string descrip, bool bonus)
         {
-            _title = tileVerb + " " + totalAmount + " " + item.name;
+            Title = tileVerb + " " + totalAmount + " " + item.name;
             _verb = tileVerb;
-            _description = descrip;
-            _collectionAmount = totalAmount;
-            _currentAmount = 0;
-            _itemToCollect = item;
-            _isBonus = bonus;
+            Description = descrip;
+            CollectionAmount = totalAmount;
+            CurrentAmount = 0;
+            ItemToCollect = item;
+            IsBonus = bonus;
             _isComplete = false;
         }
 
