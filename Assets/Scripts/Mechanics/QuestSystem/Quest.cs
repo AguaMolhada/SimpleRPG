@@ -31,15 +31,15 @@ namespace QuestSystem
         /// <summary>
         /// List with all objectives to do.
         /// </summary>
-        private List<IQuestObjective> _objectives;
+        private List<QuestObjective> _objectives;
         /// <summary>
         /// Access to the objectives list.
         /// </summary>
-        public List<IQuestObjective> Objectives => _objectives;
+        public List<QuestObjective> Objectives => _objectives;
         /// <summary>
         /// Quest Constructor.
         /// </summary>
-        public Quest(QuestIdentifier id, QuestText info, List<IQuestObjective> objectives)
+        public Quest(QuestIdentifier id, QuestText info, List<QuestObjective> objectives)
         {
             _identifier = id;
             _text = info;

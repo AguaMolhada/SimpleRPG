@@ -7,13 +7,14 @@
 
 namespace QuestSystem
 {
-    public interface IQuestObjective
+    [System.Serializable]
+    public class QuestObjective
     {
-        string Title { get; }
-        string Description { get; }
-        bool IsComplete { get; }
-        bool IsBonus { get; }
-        void UpdateProgress();
-        void CheckProgress();
+        public string Title { get; }
+        public string Description { get; }
+        public bool IsComplete { get; }
+        public bool IsBonus { get; }
+        public void UpdateProgress() { }
+        public void CheckProgress() { }
     }
 }

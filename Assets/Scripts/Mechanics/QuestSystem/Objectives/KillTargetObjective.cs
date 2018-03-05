@@ -8,7 +8,7 @@
 namespace QuestSystem
 {
     [System.Serializable]
-    public class KillTargetObjective : IQuestObjective
+    public class KillTargetObjective : QuestObjective
     {
         /// <summary>
         /// What do you will do.
@@ -17,7 +17,7 @@ namespace QuestSystem
         /// <summary>
         /// Access to the objective title.
         /// </summary>
-        public string Title => _title;
+        public new string Title => _title;
         /// <summary>
         /// Description that what we need to do.
         /// </summary>
@@ -25,7 +25,7 @@ namespace QuestSystem
         /// <summary>
         /// Access to the objective description.
         /// </summary>
-        public string Description => _description;
+        public new string Description => _description;
         /// <summary>
         /// Is this objective complete?
         /// </summary>
@@ -33,7 +33,7 @@ namespace QuestSystem
         /// <summary>
         /// Access to check if is complete.
         /// </summary>
-        public bool IsComplete => _isComplete;
+        public new bool IsComplete => _isComplete;
         /// <summary>
         /// Is this a bonus objective?
         /// </summary>
@@ -41,7 +41,7 @@ namespace QuestSystem
         /// <summary>
         /// Access if this is bonus.
         /// </summary>
-        public bool IsBonus => _isBonus;
+        public new bool IsBonus => _isBonus;
         /// <summary>
         /// Enemy To Kill.
         /// </summary>
@@ -86,12 +86,12 @@ namespace QuestSystem
         }
 
 
-        public void UpdateProgress()
+        public new void UpdateProgress()
         {
             throw new System.NotImplementedException();
         }
 
-        public void CheckProgress()
+        public new void CheckProgress()
         {
             throw new System.NotImplementedException();
         }

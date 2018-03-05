@@ -9,12 +9,12 @@ using UnityEngine;
 namespace QuestSystem
 {
     [System.Serializable]
-    public class CollectionObjective : IQuestObjective
+    public class CollectionObjective : QuestObjective
     {
         /// <summary>
         /// Access to the objective title.
         /// </summary>
-        public string Title {
+        public new string Title {
             get { return Verb + " " + CollectionAmount + " " + ItemToCollect.name; }
         }
 
@@ -26,7 +26,7 @@ namespace QuestSystem
         /// <summary>
         /// Access to the objective description.
         /// </summary>
-        public string Description { get; set; }
+        public new string Description { get; set; }
 
         /// <summary>
         /// Is this objective complete?
@@ -35,12 +35,12 @@ namespace QuestSystem
         /// <summary>
         /// Access to check if is complete.
         /// </summary>
-        public bool IsComplete => _isComplete;
+        public new bool IsComplete => _isComplete;
 
         /// <summary>
         /// Access if this is bonus.
         /// </summary>
-        public bool IsBonus { get; set; }
+        public new bool IsBonus { get; set; }
 
         /// <summary>
         /// Access to the total amount of things that we need.
@@ -76,12 +76,12 @@ namespace QuestSystem
             _isComplete = false;
         }
 
-        public void UpdateProgress()
+        public new void UpdateProgress()
         {
             throw new System.NotImplementedException();
         }
 
-        public void CheckProgress()
+        public new void CheckProgress()
         {
             _isComplete = CurrentAmount >= CollectionAmount;
         }

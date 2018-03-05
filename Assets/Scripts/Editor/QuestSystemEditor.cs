@@ -35,7 +35,7 @@ public class QuestSystemEditor : Editor
     private string qName;
     private string qDescript;
     private string qHint;
-    private List<IQuestObjective> qObjectives;
+    private List<QuestObjective> qObjectives;
     private enum QuestType { Gather, Kill}
     private QuestType qType;
     private string qobjText;
@@ -66,7 +66,7 @@ public class QuestSystemEditor : Editor
         SelectedQuestID = 0;
         SelectedQuest = false;
         ShowAllQuest = false;
-        qObjectives = new List<IQuestObjective>();
+        qObjectives = new List<QuestObjective>();
     }
 
     public override void OnInspectorGUI()
@@ -122,7 +122,7 @@ public class QuestSystemEditor : Editor
                ShowSelectedQuest(tempSelectedQuest);               
             }
         }
-
+        EditorUtility.SetDirty(_target);
     }
 
     /// <summary>
@@ -154,13 +154,12 @@ public class QuestSystemEditor : Editor
         EditorGUILayout.EndVertical();
     }
 
-    private void ShowALlObjectivesFromSelectedQuest(List<IQuestObjective> obj)
+    private void ShowALlObjectivesFromSelectedQuest(List<QuestObjective> obj)
     {
         List<QuestType> qTypes = new List<QuestType>();
-        for (var index = 0; index < obj.Count; index++)
+        foreach (var questObjective in obj)
         {
-            var questObjective = obj[index];
-            qTypes.Add(questObjective.GetType() == typeof(CollectionObjective) ? QuestType.Gather : QuestType.Kill);
+            qTypes.Add(questObjective is CollectionObjective ? QuestType.Gather : QuestType.Kill);
         }
         EditorGUILayout.Space();
         for (var index = 0; index < obj.Count; index++)
@@ -201,8 +200,11 @@ public class QuestSystemEditor : Editor
         EditorGUILayout.Space();
         AddNewObjective();
     }
+
     private void ShowSelectedQuest(Quest q)
     {
+        chain = q.Identifier.ChainQuestID;
+        previus = q.Identifier.PreviusID;
         EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -224,7 +226,6 @@ public class QuestSystemEditor : Editor
                     q.Identifier.SetSourceID(previus);
                 }
             EditorGUILayout.EndHorizontal();
-        
             ShowALlObjectivesFromSelectedQuest(q.Objectives);
         EditorGUILayout.EndVertical();
     }
@@ -241,7 +242,7 @@ public class QuestSystemEditor : Editor
                 var exampleQuestText = new QuestText(qName, qDescript, qHint);
                 var exampleQuest = new Quest(exampleQuestIdentifier, exampleQuestText, qObjectives);
                 _target.Quests.Add(exampleQuest);
-                qObjectives = new List<IQuestObjective>();
+                qObjectives = new List<QuestObjective>();
                 ShowNewQuestEditor = false;
             }
         }
