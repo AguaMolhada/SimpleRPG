@@ -58,7 +58,6 @@ public class QuestSystemEditor : Editor
 
     private void OnEnable()
     {
-        EditorUtility.SetDirty(target);
         ConstructStyles();
         _target = (QuestData) target;
         Help = false;
@@ -67,15 +66,15 @@ public class QuestSystemEditor : Editor
         SelectedQuest = false;
         ShowAllQuest = false;
         qObjectives = new List<QuestObjective>();
+        if (_target.Quests == null)
+        {
+            _target.Quests =new List<Quest>();
+        }
     }
 
     public override void OnInspectorGUI()
     {
-        if (GUI.changed)
-        {
-            Undo.RecordObject(_target, "Changing quests");
-            EditorUtility.SetDirty(_target);
-        }
+    
         GUILayout.Label(Resources.Load("QuestSystem/Logo") as Texture);      
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Show Help"))
@@ -127,6 +126,16 @@ public class QuestSystemEditor : Editor
                ShowSelectedQuest(tempSelectedQuest);               
             }
         }
+    }
+
+    private void OnValidate()
+    {
+        serializedObject.Update();
+        Undo.RecordObject(_target, "Changing quests");
+        serializedObject.ApplyModifiedProperties();
+        EditorUtility.SetDirty(target);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     /// <summary>
