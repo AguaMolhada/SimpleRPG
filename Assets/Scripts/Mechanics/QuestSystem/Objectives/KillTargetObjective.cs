@@ -13,59 +13,31 @@ namespace QuestSystem
         /// <summary>
         /// What do you will do.
         /// </summary>
-        private string _title;
-        /// <summary>
-        /// Access to the objective title.
-        /// </summary>
-        public new string Title => _title;
+        public new string Title { get; }
         /// <summary>
         /// Description that what we need to do.
         /// </summary>
-        private string _description;
-        /// <summary>
-        /// Access to the objective description.
-        /// </summary>
-        public new string Description => _description;
+        public new string Description { get; set; }
         /// <summary>
         /// Is this objective complete?
         /// </summary>
-        private bool _isComplete;
-        /// <summary>
-        /// Access to check if is complete.
-        /// </summary>
-        public new bool IsComplete => _isComplete;
+        public new bool IsComplete { get; }
         /// <summary>
         /// Is this a bonus objective?
         /// </summary>
-        private bool _isBonus;
-        /// <summary>
-        /// Access if this is bonus.
-        /// </summary>
-        public new bool IsBonus => _isBonus;
+        public new bool IsBonus { get; set; }
         /// <summary>
         /// Enemy To Kill.
         /// </summary>
-        private EnemyStats _targetToKill;
-        /// <summary>
-        /// Access to the target to be killed.
-        /// </summary>
-        public EnemyStats TargetToKill => _targetToKill;
+        public EnemyStats TargetToKill { get; }
         /// <summary>
         /// Titak Amount of targets to be eliminated.
         /// </summary>
-        private int _killTotalAmount;
-        /// <summary>
-        /// Access to the total Amount of targets needed.
-        /// </summary>
-        public int KillTotalAmount => _killTotalAmount;
+        public int KillTotalAmount { get; }
         /// <summary>
         /// Current amount of targets eliminated.
         /// </summary>
-        private int _killCurrentAmount;
-        /// <summary>
-        /// Access to the current amount of targets killed.
-        /// </summary>
-        public int KillCurrentAmount => _killCurrentAmount;
+        public int KillCurrentAmount { get; protected set; }
 
         /// <summary>
         /// Constructor that builds a Kill target objective.        
@@ -76,16 +48,15 @@ namespace QuestSystem
         /// <param name="kills">Total Amount of targets needed to kill.</param>
         public KillTargetObjective(string descript, bool bonus, EnemyStats target, int kills)
         {
-            _title = "Kill " + kills + " " + target.name;
-            _description = descript;
-            _isComplete = false;
-            _isBonus = bonus;
-            _targetToKill = target;
-            _killTotalAmount = kills;
-            _killCurrentAmount = 0;
+            Title = "Kill " + kills + " " + target.name;
+            Description = descript;
+            IsComplete = false;
+            IsBonus = bonus;
+            TargetToKill = target;
+            KillTotalAmount = kills;
+            KillCurrentAmount = 0;
         }
-
-
+        
         public new void UpdateProgress()
         {
             throw new System.NotImplementedException();

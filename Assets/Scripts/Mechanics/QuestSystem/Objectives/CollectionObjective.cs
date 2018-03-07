@@ -14,48 +14,45 @@ namespace QuestSystem
         /// <summary>
         /// Access to the objective title.
         /// </summary>
-        public new string Title {
-            get { return Verb + " " + CollectionAmount + " " + ItemToCollect.name; }
+        public new string Title
+        {
+            get
+            {
+                base.Title = Verb + " " + CollectionAmount + " " + ItemToCollect.name;
+                return base.Title;
+            }
         }
 
         /// <summary>
         /// Verb action to do.
         /// </summary>
         public string Verb;
-
         /// <summary>
         /// Access to the objective description.
         /// </summary>
-        public new string Description { get; set; }
-
+        public new string Description;
         /// <summary>
         /// Is this objective complete?
         /// </summary>
-        private bool _isComplete;
-        /// <summary>
-        /// Access to check if is complete.
-        /// </summary>
-        public new bool IsComplete => _isComplete;
-
+        public new bool IsComplete;
         /// <summary>
         /// Access if this is bonus.
         /// </summary>
-        public new bool IsBonus { get; set; }
-
+        public bool IsBonus;
         /// <summary>
         /// Access to the total amount of things that we need.
         /// </summary>
-        public int CollectionAmount { get; set; }
-
+        [SerializeField]
+        public int CollectionAmount;
         /// <summary>
         /// Access to the current amount of things that we need.
         /// </summary>
         public int CurrentAmount { get; }
-
         /// <summary>
         /// Access to the thing that we need to collect.
         /// </summary>
-        public GameObject ItemToCollect { get; set; }
+        [SerializeField]
+        public GameObject ItemToCollect;
 
         /// <summary>
         /// Constructor that builds a collection objective.
@@ -73,7 +70,7 @@ namespace QuestSystem
             CurrentAmount = 0;
             ItemToCollect = item;
             IsBonus = bonus;
-            _isComplete = false;
+            IsComplete = false;
         }
 
         public new void UpdateProgress()
@@ -83,7 +80,7 @@ namespace QuestSystem
 
         public new void CheckProgress()
         {
-            _isComplete = CurrentAmount >= CollectionAmount;
+            IsComplete = CurrentAmount >= CollectionAmount;
         }
 
         public override string ToString()

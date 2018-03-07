@@ -59,6 +59,7 @@ public class QuestSystemEditor : Editor
 
     private void OnEnable()
     {
+        EditorUtility.SetDirty(target);
         ConstructStyles();
         _target = (QuestData) target;
         Help = false;
@@ -122,7 +123,6 @@ public class QuestSystemEditor : Editor
                ShowSelectedQuest(tempSelectedQuest);               
             }
         }
-        EditorUtility.SetDirty(_target);
     }
 
     /// <summary>
