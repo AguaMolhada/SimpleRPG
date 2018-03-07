@@ -12,6 +12,30 @@ MonoBehaviour:
   m_Name: QuestDatabase
   m_EditorClassIdentifier: 
   Quests:
-  - Objectives: []
-  - Objectives: []
-  - Objectives: []
+  - Identifier:
+      ID: 0
+      PrQuest: -1
+      ChainQuestID: 1
+    Text:
+      Title: Begin the Jurney
+      DescriptionSummary: To begin your jorney you will need an Adnventure's Licence.
+        The licence is required to enter in all the dungeons across the world.
+      Hint: Go to the Adventure's Guildhall
+    Objectives:
+    - Title: Collect 1 Adventure's Licence
+      Description: Adventure's Licence
+      IsComplete: 0
+      IsBonus: 0
+  - Identifier:
+      ID: 1
+      PrQuest: 0
+      ChainQuestID: 2
+    Text:
+      Title: Test 2
+      DescriptionSummary: Test
+      Hint: Test
+    Objectives:
+    - Title: Test 12 Test
+      Description: Test
+      IsComplete: 0
+      IsBonus: 0
