@@ -28,9 +28,7 @@ public class QuestSystemEditor : Editor
     private bool ShowObjectiveEditor;
     ////////////////////////////
     private bool haveContinuation;
-    private int chain;
     private bool havePreviusQuest;
-    private int previus;
 
     private string qName;
     private string qDescript;
@@ -126,14 +124,16 @@ public class QuestSystemEditor : Editor
                ShowSelectedQuest(tempSelectedQuest);               
             }
         }
+        EditorUtility.SetDirty(target);
+        serializedObject.Update();
+        Undo.RecordObject(_target, "Changing quests");
+        serializedObject.ApplyModifiedProperties();
+
     }
 
     private void OnValidate()
     {
-        serializedObject.Update();
-        Undo.RecordObject(_target, "Changing quests");
-        serializedObject.ApplyModifiedProperties();
-        EditorUtility.SetDirty(target);
+
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -155,7 +155,7 @@ public class QuestSystemEditor : Editor
             }
             GUILayout.Label("ID: " + quest.Identifier.ID + " | ");
             GUILayout.Label(quest.Text.Title + " | ");
-            GUILayout.Label("Require:" + quest.Identifier.PreviusID + " | ");
+            GUILayout.Label("Require:" + quest.Identifier.PrQuest + " | ");
             GUILayout.Label("Next:" + quest.Identifier.ChainQuestID + " | ");
             if (GUILayout.Button("X"))
             {
@@ -215,8 +215,6 @@ public class QuestSystemEditor : Editor
 
     private void ShowSelectedQuest(Quest q)
     {
-        chain = q.Identifier.ChainQuestID;
-        previus = q.Identifier.PreviusID;
         EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -227,15 +225,14 @@ public class QuestSystemEditor : Editor
                 haveContinuation = EditorGUILayout.Toggle("Have Chain?", haveContinuation);
                 if (haveContinuation)
                 {
-                    chain = EditorGUILayout.IntField("Next Quest ID", chain);
-                    q.Identifier.SetChainQuestID(chain);
+                    q.Identifier.ChainQuestID = EditorGUILayout.IntField("Next Quest ID", q.Identifier.ChainQuestID);
+                    
                 }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
                 havePreviusQuest = EditorGUILayout.Toggle("Have PRQeust?", havePreviusQuest); if (havePreviusQuest)
                 {
-                    previus = EditorGUILayout.IntField("Previus Quest ID", previus);
-                    q.Identifier.SetSourceID(previus);
+                    q.Identifier.PrQuest = EditorGUILayout.IntField("PRQuest ID", q.Identifier.PrQuest);
                 }
             EditorGUILayout.EndHorizontal();
             ShowALlObjectivesFromSelectedQuest(q.Objectives);

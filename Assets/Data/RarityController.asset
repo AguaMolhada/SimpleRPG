@@ -27,6 +27,9 @@ MonoBehaviour:
   - Key: {r: 1, g: 1, b: 1, a: 0}
     Value: 0.75
     RarityName: Normal
+  - Key: {r: 0, g: 0, b: 0, a: 0}
+    Value: 0
+    RarityName: 
   UncommunPrefixs:
   - The Blind
   RarePrefixs:
@@ -43,6 +46,6 @@ MonoBehaviour:
   - The Evil
   - The Reckless
   - The Dark
+  - Testing
   UniqueNames:
   - Argathor, The Mighty Platypus
-  - 

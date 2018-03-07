@@ -13,5 +13,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "New QuestDatabase")]
 public class QuestData : ScriptableObject
 {
+    [SerializeField]
     public List<Quest> Quests;
 }

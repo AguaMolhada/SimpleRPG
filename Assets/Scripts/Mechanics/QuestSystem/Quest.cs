@@ -13,37 +13,25 @@ namespace QuestSystem
     public class Quest
     {
         /// <summary>
-        /// Quest Identifier.
+        /// Quest identifier.
         /// </summary>
-        private QuestIdentifier _identifier;
-        /// <summary>
-        /// Access to the quest identifier.
-        /// </summary>
-        public QuestIdentifier Identifier => _identifier;
+        public QuestIdentifier Identifier;
         /// <summary>
         /// Quest information text.
         /// </summary>
-        private QuestText _text;
-        /// <summary>
-        /// Access to the quest information text.
-        /// </summary>
-        public QuestText Text => _text;
+        public QuestText Text;
         /// <summary>
         /// List with all objectives to do.
         /// </summary>
-        private List<QuestObjective> _objectives;
-        /// <summary>
-        /// Access to the objectives list.
-        /// </summary>
-        public List<QuestObjective> Objectives => _objectives;
+        public List<QuestObjective> Objectives;
         /// <summary>
         /// Quest Constructor.
         /// </summary>
         public Quest(QuestIdentifier id, QuestText info, List<QuestObjective> objectives)
         {
-            _identifier = id;
-            _text = info;
-            _objectives = objectives;
+            Identifier = id;
+            Text = info;
+            Objectives = objectives;
         }
         /// <summary>
         /// Check the overall progress.
@@ -52,14 +40,14 @@ namespace QuestSystem
         private float CheckOverallProgress()
         {
             var temp = 0;
-            for (int i = 0; i < _objectives.Count; i++)
+            for (int i = 0; i < Objectives.Count; i++)
             {
-                if (_objectives[i].IsComplete && _objectives[i].IsBonus == false)
+                if (Objectives[i].IsComplete && Objectives[i].IsBonus == false)
                 {
                     temp++;
                 }
             }
-            return Ultility.GetPercentValue(_objectives.Count,temp);
+            return Ultility.GetPercentValue(Objectives.Count,temp);
         }
 
         public override string ToString()

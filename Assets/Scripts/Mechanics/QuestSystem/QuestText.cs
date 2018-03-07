@@ -8,31 +8,17 @@
 namespace QuestSystem
 {
     [System.Serializable]
-    public class QuestText : IQuestText
+    public class QuestText
     {
-        private string _title;
-        private string _descriptionSummary;
-        private string _hint;
-
-        public string Title
-        {
-            get { return _title; }
-        }
-
-        public string DescriptionSummary
-        {
-            get { return _descriptionSummary; }
-        }
-        public string Hint
-        {
-            get { return _hint; }
-        }
+        public string Title;
+        public string DescriptionSummary;
+        public string Hint;
 
         public QuestText(string title, string descript, string hint)
         {
-            _title = title;
-            _descriptionSummary = descript;
-            _hint = hint;
+            Title = title;
+            DescriptionSummary = descript;
+            Hint = hint;
         }
 
     }
