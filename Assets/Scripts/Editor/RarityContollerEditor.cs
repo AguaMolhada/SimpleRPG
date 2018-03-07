@@ -4,6 +4,8 @@
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -33,6 +35,11 @@ public class RarityContollerEditor : Editor
         _showInspectorColors = EditorGUILayout.Foldout(_showInspectorColors, "Pallet with Probability"); if (_showInspectorColors)
         {
             _totalProbility = 0;
+            if (_target.Colors == null)
+            {
+                _target.Colors =new List<ColorRarity>();
+            }
+
             for (int i = 0; i < _target.Colors.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();
@@ -69,6 +76,10 @@ public class RarityContollerEditor : Editor
         _showInspectorUnc = EditorGUILayout.Foldout(_showInspectorUnc, "Uncommon"); if (_showInspectorUnc)
         {
             GUILayout.Label("Uncommon Prefixes");
+            if (_target.UncommunPrefixs == null)
+            {
+                _target.UncommunPrefixs = new List<string>();
+            }
             for (int i = 0; i < _target.UncommunPrefixs.Count; i++)
             {
                 _target.UncommunPrefixs[i] = EditorGUILayout.TextField(_target.UncommunPrefixs[i]);
@@ -97,6 +108,10 @@ public class RarityContollerEditor : Editor
         if (_showInspectorRare)
         {
             GUILayout.Label("Rare Prefixes");
+            if (_target.RarePrefixs == null)
+            {
+                _target.RarePrefixs = new List<string>();
+            }
             for (int i = 0; i < _target.RarePrefixs.Count; i++)
             {
                 _target.RarePrefixs[i] = EditorGUILayout.TextField(_target.RarePrefixs[i]);
@@ -123,6 +138,10 @@ public class RarityContollerEditor : Editor
         if (_showInspectorUnique)
         {
             GUILayout.Label("Unique Names");
+            if (_target.UniqueNames == null)
+            {
+                _target.UniqueNames = new List<string>();
+            }
             for (int i = 0; i < _target.UniqueNames.Count; i++)
             {
                 _target.UniqueNames[i] = EditorGUILayout.TextField(_target.UniqueNames[i]);

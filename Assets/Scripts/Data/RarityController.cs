@@ -16,40 +16,21 @@ public class RarityController : ScriptableObject
     /// Array with all colors.
     /// </summary>
     public List<ColorRarity> Colors;
+
     /// <summary>
     /// Uncommon name prefixs.
     /// </summary>
-    public List<string> UncommunPrefixs = new List<string>()
-    {
-        "The Blind",
-    };
+    public List<string> UncommunPrefixs;
+
     /// <summary>
     /// Rare name prefixs.
     /// </summary>
-    public List<string> RarePrefixs = new List<string>()
-    {
-        "The Haunting",
-        "The Deadly",
-        "The Primitive",
-        "The Fiery Horror",
-        "The Quick",
-        "The Evasive",
-        "The Horrible",
-        "The Supreme",
-        "The Forsaken",
-        "The Matriarch",
-        "The Evil",
-        "The Reckless",
-        "The Dark"
-    };
+    public List<string> RarePrefixs;
+
     /// <summary>
     /// Unique names.
     /// </summary>
-    public List<string> UniqueNames = new List<string>()
-    {
-        "Argathor, The Mighty Platypus",
-        ""
-    };
+    public List<string> UniqueNames;
 
 }
 
