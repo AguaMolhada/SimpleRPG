@@ -9,12 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using QuestSystem;
 
 public class DatabaseControl : MonoBehaviour
 {
     public static DatabaseControl Instance;
     private readonly List<Item> _itemDb = new List<Item>();
     public RarityController RarityColor;
+    public readonly List<Quest> QuestDatabaseList = new List<Quest>();
 
     private void Awake()
     {
@@ -31,8 +34,9 @@ public class DatabaseControl : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        Debug.Log(Application.dataPath + "/StreamingAssets/Items.json");
         ConstructItemDatabase();
+        ConstructQuestDatabase();
+        print(QuestDatabaseList[0].Objectives[0].GetType());
     }
     /// <summary>
     /// Find a certain item instance.
@@ -98,6 +102,25 @@ public class DatabaseControl : MonoBehaviour
         }
         return Color.white;
     }
+
+    private void ConstructQuestDatabase()
+    {
+        QuestDatabaseList.Add(
+            new Quest(
+                new QuestIdentifier(QuestDatabaseList.Count, -1, 1),
+                new QuestText("Starting the Adventure",
+                    "You will need to join the Adventure's Guild to start your jurney to save Ecria",
+                    "Search the guild hall"),
+                    new List<QuestObjective>
+                    {
+                        new CollectionObjective("Collect", 1, "Adventure's License", false)
+                    }
+                )
+            );
+
+
+    }
+
 }
 /// <summary>
 /// Default Item Class.

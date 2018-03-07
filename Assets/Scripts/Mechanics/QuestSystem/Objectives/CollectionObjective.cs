@@ -18,7 +18,7 @@ namespace QuestSystem
         {
             get
             {
-                base.Title = Verb + " " + CollectionAmount + " " + ItemToCollect.name;
+                base.Title = Verb + " " + CollectionAmount + " " + Description;
                 return base.Title;
             }
         }
@@ -37,12 +37,6 @@ namespace QuestSystem
         /// </summary>
         public int CurrentAmount { get; }
         /// <summary>
-        /// Access to the thing that we need to collect.
-        /// </summary>
-        [SerializeField]
-        public GameObject ItemToCollect;
-
-        /// <summary>
         /// Constructor that builds a collection objective.
         /// </summary>
         /// <param name="tileVerb">Action required on the quest. ex.: Collect.</param>
@@ -50,13 +44,12 @@ namespace QuestSystem
         /// <param name="item">Thing that we need.</param>
         /// <param name="descrip">What will be collected.</param>
         /// <param name="bonus">is bonus objective?</param>
-        public CollectionObjective(string tileVerb, int totalAmount, GameObject item, string descrip, bool bonus)
+        public CollectionObjective(string tileVerb, int totalAmount, string descrip, bool bonus)
         {
             Verb = tileVerb;
             Description = descrip;
             CollectionAmount = totalAmount;
             CurrentAmount = 0;
-            ItemToCollect = item;
             IsBonus = bonus;
             IsComplete = false;
         }
@@ -73,7 +66,7 @@ namespace QuestSystem
 
         public override string ToString()
         {
-            return CurrentAmount + "/" + CollectionAmount + " " + ItemToCollect.name + " " + Verb + "ed.";
+            return CurrentAmount + "/" + CollectionAmount + " " + Description + " " + Verb + "ed.";
         }
     }
 }

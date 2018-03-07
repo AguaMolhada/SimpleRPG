@@ -35,9 +35,11 @@ namespace QuestSystem
         /// </summary>
         public int ChainQuestID => _chainQuestID;
 
-        public QuestIdentifier(int id)
+        public QuestIdentifier(int id,int prtQ,int nextQ)
         {
             _ID = id;
+            _previusID = prtQ;
+            _chainQuestID = nextQ;
         }
 
         /// <summary>

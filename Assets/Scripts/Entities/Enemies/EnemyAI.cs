@@ -66,8 +66,6 @@ public class EnemyAI : MonoBehaviour
                 {
                     MyAggroTable.AddAggro(client, -1);
                 }
-
-                Debug.Log("Olhando por" + client.name);
             }
 
             Target = amountonrange != 0 ? MyAggroTable.SetTargetBasedOnAggro() : null;

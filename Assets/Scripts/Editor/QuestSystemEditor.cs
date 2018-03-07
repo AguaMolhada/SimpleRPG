@@ -42,7 +42,6 @@ public class QuestSystemEditor : Editor
     private int qobjTotal;
     private string qobjDescript;
     private bool qobjBonus;
-    private GameObject qobjItem;
 
     private GUIStyle TitleStyle = new GUIStyle();
     private GUIStyle SubTiyleStyle = new GUIStyle();
@@ -72,6 +71,11 @@ public class QuestSystemEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        if (GUI.changed)
+        {
+            Undo.RecordObject(_target, "Changing quests");
+            EditorUtility.SetDirty(_target);
+        }
         GUILayout.Label(Resources.Load("QuestSystem/Logo") as Texture);      
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Show Help"))
@@ -179,7 +183,6 @@ public class QuestSystemEditor : Editor
                     EditorGUILayout.EndHorizontal();
                     tempCollect.CollectionAmount = EditorGUILayout.IntField("Total to " + tempCollect.Verb, tempCollect.CollectionAmount);
                     tempCollect.Description = EditorGUILayout.TextField("What do you need to " + tempCollect.Title,tempCollect.Description);
-                    tempCollect.ItemToCollect = EditorGUILayout.ObjectField(tempCollect.ItemToCollect, typeof(GameObject), true) as GameObject;
                     tempCollect.IsBonus = EditorGUILayout.Toggle("Bonus Objective:", tempCollect.IsBonus);
                     break;
                 case QuestType.Kill:
@@ -238,7 +241,7 @@ public class QuestSystemEditor : Editor
         {
             if (GUILayout.Button("Add this quest"))
             {
-                var exampleQuestIdentifier = new QuestIdentifier(_target.Quests.Count);
+                var exampleQuestIdentifier = new QuestIdentifier(_target.Quests.Count,-1,0);
                 var exampleQuestText = new QuestText(qName, qDescript, qHint);
                 var exampleQuest = new Quest(exampleQuestIdentifier, exampleQuestText, qObjectives);
                 _target.Quests.Add(exampleQuest);
@@ -275,12 +278,11 @@ public class QuestSystemEditor : Editor
                 qobjText = EditorGUILayout.TextField("Verb of action", qobjText);
                 qobjTotal = EditorGUILayout.IntField("Total to " + qobjText, qobjTotal);
                 qobjDescript = EditorGUILayout.TextField("What do you need to " + qobjText, qobjDescript);
-                qobjItem = EditorGUILayout.ObjectField(qobjItem, typeof(GameObject), true) as GameObject;
                 qobjBonus = EditorGUILayout.Toggle("Bonus Objective:", qobjBonus);
 
                 if (GUILayout.Button("Add New Objective"))
                 {
-                    qObjectives.Add(new CollectionObjective(qobjText,qobjTotal,qobjItem,qobjDescript,qobjBonus));
+                    qObjectives.Add(new CollectionObjective(qobjText,qobjTotal,qobjDescript,qobjBonus));
                 }
 
                 break;
