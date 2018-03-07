@@ -28,18 +28,6 @@ namespace QuestSystem
         /// </summary>
         public string Verb;
         /// <summary>
-        /// Access to the objective description.
-        /// </summary>
-        public new string Description;
-        /// <summary>
-        /// Is this objective complete?
-        /// </summary>
-        public new bool IsComplete;
-        /// <summary>
-        /// Access if this is bonus.
-        /// </summary>
-        public bool IsBonus;
-        /// <summary>
         /// Access to the total amount of things that we need.
         /// </summary>
         [SerializeField]
