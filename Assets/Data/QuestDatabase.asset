@@ -15,27 +15,43 @@ MonoBehaviour:
   - Identifier:
       ID: 0
       PrQuest: -1
-      ChainQuestID: 1
+      ChainQuestID: 0
     Text:
       Title: Begin the Jurney
       DescriptionSummary: To begin your jorney you will need an Adnventure's Licence.
         The licence is required to enter in all the dungeons across the world.
       Hint: Go to the Adventure's Guildhall
     Objectives:
-    - Title: Collect 1 Adventure's Licence
-      Description: Adventure's Licence
+    - Title: Collect 1 Adventure's License
+      Description: Adventure's License
       IsComplete: 0
       IsBonus: 0
+    CollectObjectives:
+    - Title: Collect 1 Adventure's License
+      Description: Adventure's License
+      IsComplete: 0
+      IsBonus: 0
+      Verb: Collect
+      CollectionAmount: 1
+    EliminationObjectives: []
   - Identifier:
       ID: 1
-      PrQuest: 0
-      ChainQuestID: 2
+      PrQuest: -1
+      ChainQuestID: 0
     Text:
-      Title: Test 2
-      DescriptionSummary: Test
-      Hint: Test
+      Title: Invasion
+      DescriptionSummary: Help terrible monsters are invading the city
+      Hint: Go to the captal and find those creatures
     Objectives:
-    - Title: Test 12 Test
-      Description: Test
+    - Title: Kill 23 Aliens
+      Description: Captal
       IsComplete: 0
       IsBonus: 0
+    CollectObjectives: []
+    EliminationObjectives:
+    - Title: Kill 23 Aliens
+      Description: Captal
+      IsComplete: 0
+      IsBonus: 0
+      Target: Aliens
+      KillTotalAmount: 23

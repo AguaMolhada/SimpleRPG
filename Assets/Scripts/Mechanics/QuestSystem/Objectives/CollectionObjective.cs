@@ -4,6 +4,8 @@
 //          http://github.com/DaulerPalhares
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using UnityEngine;
 
 namespace QuestSystem

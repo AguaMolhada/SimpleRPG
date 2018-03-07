@@ -5,6 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace QuestSystem
@@ -16,7 +18,9 @@ namespace QuestSystem
         public string Description;
         public bool IsComplete;
         public bool IsBonus;
+
         public void UpdateProgress() { }
         public void CheckProgress() { }
+
     }
 }

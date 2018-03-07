@@ -10,30 +10,12 @@ namespace QuestSystem
     [System.Serializable]
     public class KillTargetObjective : QuestObjective
     {
-        /// <summary>
-        /// What do you will do.
-        /// </summary>
-        public new string Title { get; }
-        /// <summary>
-        /// Description that what we need to do.
-        /// </summary>
-        public new string Description { get; set; }
-        /// <summary>
-        /// Is this objective complete?
-        /// </summary>
-        public new bool IsComplete { get; }
-        /// <summary>
-        /// Is this a bonus objective?
-        /// </summary>
-        public new bool IsBonus { get; set; }
-        /// <summary>
-        /// Enemy To Kill.
-        /// </summary>
-        public EnemyStats TargetToKill { get; }
+        public string Target;
+
         /// <summary>
         /// Titak Amount of targets to be eliminated.
         /// </summary>
-        public int KillTotalAmount { get; }
+        public int KillTotalAmount;
         /// <summary>
         /// Current amount of targets eliminated.
         /// </summary>
@@ -46,13 +28,13 @@ namespace QuestSystem
         /// <param name="bonus">Is a bonus quest.</param>
         /// <param name="target">Target to kill.</param>
         /// <param name="kills">Total Amount of targets needed to kill.</param>
-        public KillTargetObjective(string descript, bool bonus, EnemyStats target, int kills)
+        public KillTargetObjective(string target, string descript, bool bonus, int kills)
         {
-            Title = "Kill " + kills + " " + target.name;
+            Title = "Kill " + kills + " " + target;
+            Target = target;
             Description = descript;
             IsComplete = false;
             IsBonus = bonus;
-            TargetToKill = target;
             KillTotalAmount = kills;
             KillCurrentAmount = 0;
         }

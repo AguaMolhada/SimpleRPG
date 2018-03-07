@@ -24,6 +24,10 @@ namespace QuestSystem
         /// List with all objectives to do.
         /// </summary>
         public List<QuestObjective> Objectives;
+
+        public List<CollectionObjective> CollectObjectives;
+
+        public List<KillTargetObjective> EliminationObjectives;
         /// <summary>
         /// Quest Constructor.
         /// </summary>
@@ -33,6 +37,33 @@ namespace QuestSystem
             Text = info;
             Objectives = objectives;
         }
+
+        public void ConstructObjectives()
+        {
+            CollectObjectives = new List<CollectionObjective>();
+            EliminationObjectives = new List<KillTargetObjective>();
+
+            foreach (var questObjective in Objectives)
+            {
+                if (questObjective is CollectionObjective)
+                {
+                    CollectObjectives.Add((CollectionObjective) questObjective);
+                }
+                else if (questObjective is KillTargetObjective)
+                {
+                    EliminationObjectives.Add((KillTargetObjective) questObjective);
+                }
+            }
+        }
+
+        public void GetObjectives()
+        {
+            var temp = new List<QuestObjective>();
+            temp.AddRange(EliminationObjectives);
+            temp.AddRange(CollectObjectives);
+            Objectives = temp;
+        }
+
         /// <summary>
         /// Check the overall progress.
         /// </summary>

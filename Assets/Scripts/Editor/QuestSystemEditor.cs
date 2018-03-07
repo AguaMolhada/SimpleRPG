@@ -5,8 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using QuestSystem;
 using UnityEditor;
 using UnityEngine;
@@ -20,7 +20,7 @@ public class QuestSystemEditor : Editor
     private bool Quests;
     private int SelectedQuestID;
     private bool SelectedQuest;
-    private bool ShowAllQuest;
+    private bool ShowAllQuest { get; set; }
     private bool editQuestIdentifier;
     private bool ShowAllObjective;
 
@@ -70,10 +70,13 @@ public class QuestSystemEditor : Editor
         }
     }
 
-    public override void OnInspectorGUI()
+    private void ShowMyLogo()
     {
-    
-        GUILayout.Label(Resources.Load("QuestSystem/Logo") as Texture);      
+        GUILayout.Label(Resources.Load("QuestSystem/Logo") as Texture);
+    }
+
+    private void HeaderButtons()
+    {
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Show Help"))
         {
@@ -85,64 +88,45 @@ public class QuestSystemEditor : Editor
             ShowAllQuest = true;
         }
         EditorGUILayout.EndHorizontal();
-        if (Help)
-        {
-            GUILayout.Label("Information");
-            if (GUILayout.Button("Close Help"))
-            {
-                Help = false;
-            }
-        }
-        if (Quests)
-        {
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            if (_target.Quests.Count == 0)
-            {
-                GUILayout.Label("First quest to add",SubTiyleStyle);
-                AddNewQuest();
-            }
-            if (ShowAllQuest && _target.Quests.Count > 0)
-            {
-                GUILayout.Label("Quest Table");
-                ShowAllQuests();
-                if (GUILayout.Button("+"))
-                {
-                    SelectedQuest = false;
-                    ShowNewQuestEditor = true;
-                }
-            }
-            if (ShowNewQuestEditor)
-            {
-                GUILayout.Label("Configure the new quest", SubTiyleStyle);
-                AddNewQuest();
-            }
-            if (SelectedQuest && !ShowNewQuestEditor)
-            {
-               var tempSelectedQuest = _target.Quests[SelectedQuestID];
-               ShowSelectedQuest(tempSelectedQuest);               
-            }
-        }
-        EditorUtility.SetDirty(target);
-        serializedObject.Update();
-        Undo.RecordObject(_target, "Changing quests");
-        serializedObject.ApplyModifiedProperties();
-
     }
 
-    private void OnValidate()
+    private void ShowHelpArea()
     {
+        GUILayout.Label("Information");
+        if (GUILayout.Button("Close Help"))
+        {
+            Help = false;
+        }
+    }
 
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+    private void ShowQuestArea()
+    {
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        if (_target.Quests.Count == 0)
+        {
+            GUILayout.Label("First quest to add", SubTiyleStyle);
+            AddNewQuest();
+        }
+
+        if (ShowAllQuest && _target.Quests.Count > 0)
+        {
+            ShowQuestTable();
+            if (GUILayout.Button("+"))
+            {
+                SelectedQuest = false;
+                ShowNewQuestEditor = true;
+            }
+        }
     }
 
     /// <summary>
     /// Show all quests avaliable in the inspector.
     /// </summary>
-    private void ShowAllQuests()
+    private void ShowQuestTable()
     {
+        GUILayout.Label("Quest Table",SubTiyleStyle);
         EditorGUILayout.BeginVertical();
         for (var i = 0; i < _target.Quests.Count; i++)
         {
@@ -167,17 +151,62 @@ public class QuestSystemEditor : Editor
         EditorGUILayout.EndVertical();
     }
 
+    public override void OnInspectorGUI()
+    {
+        ShowMyLogo();
+        HeaderButtons();
+
+        if (Help)
+        {
+            ShowHelpArea();
+        }
+
+        if (Quests)
+        {
+            ShowQuestArea();
+            if (ShowNewQuestEditor)
+            {
+                AddNewQuest();
+            }
+            if (SelectedQuest && !ShowNewQuestEditor)
+            {
+               var tempSelectedQuest = _target.Quests[SelectedQuestID];
+               ShowSelectedQuest(tempSelectedQuest);               
+            }
+        }
+        EditorUtility.SetDirty(target);
+        serializedObject.Update();
+        Undo.RecordObject(_target, "Changing quests");
+        serializedObject.ApplyModifiedProperties();
+
+    }
+
+    private void OnValidate()
+    {
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
+
+
     private void ShowALlObjectivesFromSelectedQuest(List<QuestObjective> obj)
     {
         List<QuestType> qTypes = new List<QuestType>();
         foreach (var questObjective in obj)
         {
-            qTypes.Add(questObjective is CollectionObjective ? QuestType.Gather : QuestType.Kill);
+            if(questObjective is CollectionObjective)
+            {
+                qTypes.Add(QuestType.Gather);
+            }
+            else if (questObjective is KillTargetObjective)
+            {
+                qTypes.Add(QuestType.Kill);
+            }
         }
         EditorGUILayout.Space();
         for (var index = 0; index < obj.Count; index++)
         {
             var questObjective = obj[index];
+            Debug.Log(questObjective.GetType());
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             GUILayout.Label("Objective nº" + (index+1),SubTiyleStyle);
@@ -187,7 +216,7 @@ public class QuestSystemEditor : Editor
             switch (qTypes[index])
             {
                 case QuestType.Gather:
-                    CollectionObjective tempCollect = (CollectionObjective)questObjective;
+                    var tempCollect = questObjective as CollectionObjective;
                     tempCollect.Verb = EditorGUILayout.TextField("Action", tempCollect.Verb, GUILayout.ExpandWidth(false));
                     EditorGUILayout.EndHorizontal();
                     tempCollect.CollectionAmount = EditorGUILayout.IntField("Total to " + tempCollect.Verb, tempCollect.CollectionAmount);
@@ -195,22 +224,30 @@ public class QuestSystemEditor : Editor
                     tempCollect.IsBonus = EditorGUILayout.Toggle("Bonus Objective:", tempCollect.IsBonus);
                     break;
                 case QuestType.Kill:
-                    EditorGUILayout.LabelField("NEED TO IMPLEMENT SORRY");
+                    var tempKill = questObjective as KillTargetObjective;
+                    tempKill.Target = EditorGUILayout.TextField("Thing to kill", tempKill.Target, GUILayout.ExpandWidth(false));
                     EditorGUILayout.EndHorizontal();
+                    tempKill.KillTotalAmount = EditorGUILayout.IntField("Total of " + tempKill.Target, tempKill.KillTotalAmount);
+                    tempKill.Description = EditorGUILayout.TextField("Where do you find " + tempKill.Target, tempKill.Description);
+                    tempKill.IsBonus = EditorGUILayout.Toggle("Bonus Objective:", tempKill.IsBonus);
                     break;
             }
             if (obj.Count > 1)
             {
                 if (GUILayout.Button("Remove this Objective"))
                 {
-                    qObjectives.Remove(questObjective);
+                    obj.Remove(questObjective);
                 }
             }
         }
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.Space();
-        AddNewObjective();
+        var tempObj = AddNewObjective();
+        if (tempObj != null)
+        {
+            obj.Add(tempObj);
+        }
     }
 
     private void ShowSelectedQuest(Quest q)
@@ -235,12 +272,15 @@ public class QuestSystemEditor : Editor
                     q.Identifier.PrQuest = EditorGUILayout.IntField("PRQuest ID", q.Identifier.PrQuest);
                 }
             EditorGUILayout.EndHorizontal();
+            q.GetObjectives();
             ShowALlObjectivesFromSelectedQuest(q.Objectives);
+            q.ConstructObjectives();
         EditorGUILayout.EndVertical();
     }
 
     private void AddNewQuest()
     {
+        GUILayout.Label("Configure the new quest", SubTiyleStyle);
         EditorGUILayout.BeginHorizontal();
         qName = EditorGUILayout.TextField("Quest Name:", qName);
         if (qObjectives.Count > 0)
@@ -250,6 +290,7 @@ public class QuestSystemEditor : Editor
                 var exampleQuestIdentifier = new QuestIdentifier(_target.Quests.Count,-1,0);
                 var exampleQuestText = new QuestText(qName, qDescript, qHint);
                 var exampleQuest = new Quest(exampleQuestIdentifier, exampleQuestText, qObjectives);
+                exampleQuest.ConstructObjectives();
                 _target.Quests.Add(exampleQuest);
                 qObjectives = new List<QuestObjective>();
                 ShowNewQuestEditor = false;
@@ -264,16 +305,20 @@ public class QuestSystemEditor : Editor
             if (ShowAllObjective)
             {
                 ShowALlObjectivesFromSelectedQuest(qObjectives);
-                
             }
         }
         else
         {
-            AddNewObjective();
+            var tempObj = AddNewObjective();
+            if (tempObj != null)
+            {
+                Debug.Log(tempObj.GetType());
+                qObjectives.Add(tempObj);
+            }
         }
     }
 
-    private void AddNewObjective()
+    private QuestObjective AddNewObjective()
     {
         GUILayout.Label("New Quest objective",SubTiyleStyle);
 
@@ -288,14 +333,24 @@ public class QuestSystemEditor : Editor
 
                 if (GUILayout.Button("Add New Objective"))
                 {
-                    qObjectives.Add(new CollectionObjective(qobjText,qobjTotal,qobjDescript,qobjBonus));
+                    var temp = new CollectionObjective(qobjText, qobjTotal, qobjDescript, qobjBonus);
+                    return temp;
                 }
 
                 break;
             case QuestType.Kill:
-                EditorGUILayout.LabelField("NEED TO IMPLEMENT SORRY");
+                qobjText = EditorGUILayout.TextField("Thing to kill", qobjText);
+                qobjTotal = EditorGUILayout.IntField("Total of " + qobjText, qobjTotal);              
+                qobjDescript = EditorGUILayout.TextField("Where do you find " + qobjText, qobjDescript);
+                qobjBonus = EditorGUILayout.Toggle("Bonus Objective:", qobjBonus);
+                if (GUILayout.Button("Add New Objective"))
+                {
+                    var temp = new KillTargetObjective(qobjText,qobjDescript, qobjBonus, qobjTotal);
+                    return temp;
+                }
                 break;
         }
 
+        return null;
     }
 }
