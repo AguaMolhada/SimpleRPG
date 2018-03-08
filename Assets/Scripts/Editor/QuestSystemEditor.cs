@@ -207,10 +207,9 @@ public class QuestSystemEditor : Editor
         for (var index = 0; index < obj.Count; index++)
         {
             var questObjective = obj[index];
-            Debug.Log(questObjective.GetType());
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Objective nº" + (index+1),SubTiyleStyle);
+            GUILayout.Label(questObjective.Title,SubTiyleStyle);
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
@@ -218,19 +217,23 @@ public class QuestSystemEditor : Editor
             {
                 case QuestType.Gather:
                     var tempCollect = questObjective as CollectionObjective;
-                    tempCollect.Verb = EditorGUILayout.TextField("Action", tempCollect.Verb, GUILayout.ExpandWidth(false));
+                    tempCollect.Verb = EditorGUILayout.TextField("Action", tempCollect.Verb);
                     EditorGUILayout.EndHorizontal();
                     tempCollect.CollectionAmount = EditorGUILayout.IntField("Total to " + tempCollect.Verb, tempCollect.CollectionAmount);
-                    tempCollect.ToCollect = EditorGUILayout.TextField("What do you need to " + tempCollect.Title + ":", tempCollect.ToCollect);
-                    tempCollect.Description = EditorGUILayout.TextField("How you will " + tempCollect.Title + ":", tempCollect.Description);
+                    tempCollect.ToCollect = EditorGUILayout.TextField("What do you need to " + tempCollect.Verb + ":", tempCollect.ToCollect);
+                    GUILayout.Label("How you will Obtain",GUILayout.ExpandWidth(false));
+                    EditorStyles.textField.wordWrap = true;
+                    tempCollect.Description = EditorGUILayout.TextArea(tempCollect.Description);
                     tempCollect.IsBonus = EditorGUILayout.Toggle("Bonus Objective:", tempCollect.IsBonus);
                     break;
                 case QuestType.Kill:
                     var tempKill = questObjective as KillTargetObjective;
-                    tempKill.Target = EditorGUILayout.TextField("Thing to kill", tempKill.Target, GUILayout.ExpandWidth(false));
+                    tempKill.Target = EditorGUILayout.TextField("Thing to kill", tempKill.Target);
                     EditorGUILayout.EndHorizontal();
                     tempKill.KillTotalAmount = EditorGUILayout.IntField("Total of " + tempKill.Target, tempKill.KillTotalAmount);
-                    tempKill.Description = EditorGUILayout.TextField("Where do you find " + tempKill.Target, tempKill.Description);
+                    GUILayout.Label("Where do you find:", GUILayout.ExpandWidth(false));
+                    EditorStyles.textField.wordWrap = true;
+                    tempKill.Description = EditorGUILayout.TextArea(tempKill.Description);
                     tempKill.IsBonus = EditorGUILayout.Toggle("Bonus Objective:", tempKill.IsBonus);
                     break;
             }
@@ -248,12 +251,18 @@ public class QuestSystemEditor : Editor
         var tempObj = AddNewObjective();
         if (tempObj != null)
         {
+            qobjText = " ";
+            qobjThing = " ";
+            qobjTotal = 0;
+            qobjDescript = " ";
+            qobjBonus = false;
             obj.Add(tempObj);
         }
     }
 
     private void ShowSelectedQuest(Quest q)
     {
+
         EditorGUILayout.BeginVertical();
             EditorGUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -261,19 +270,16 @@ public class QuestSystemEditor : Editor
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-                haveContinuation = EditorGUILayout.Toggle("Have Chain?", haveContinuation);
-                if (haveContinuation)
-                {
-                    q.Identifier.ChainQuestID = EditorGUILayout.IntField("Next Quest ID", q.Identifier.ChainQuestID);
-                    
-                }
+                q.Identifier.ChainQuestID = EditorGUILayout.IntField("Next Quest ID", q.Identifier.ChainQuestID);
+                q.Identifier.PrQuest = EditorGUILayout.IntField("PRQuest ID", q.Identifier.PrQuest);
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.BeginHorizontal();
-                havePreviusQuest = EditorGUILayout.Toggle("Have PRQeust?", havePreviusQuest); if (havePreviusQuest)
-                {
-                    q.Identifier.PrQuest = EditorGUILayout.IntField("PRQuest ID", q.Identifier.PrQuest);
-                }
-            EditorGUILayout.EndHorizontal();
+            q.Text.Title = EditorGUILayout.TextField("Title", q.Text.Title);
+            GUILayout.Label("Description",GUILayout.ExpandWidth(false));
+            EditorStyles.textField.wordWrap = true;
+            q.Text.DescriptionSummary = EditorGUILayout.TextArea(q.Text.DescriptionSummary);
+            GUILayout.Label("Hint",GUILayout.ExpandWidth(false));
+            EditorStyles.textField.wordWrap = true;
+            q.Text.Hint = EditorGUILayout.TextArea(q.Text.Hint);
             q.GetObjectives();
             ShowALlObjectivesFromSelectedQuest(q.Objectives);
             q.ConstructObjectives();
@@ -296,10 +302,15 @@ public class QuestSystemEditor : Editor
                 _target.Quests.Add(exampleQuest);
                 qObjectives = new List<QuestObjective>();
                 ShowNewQuestEditor = false;
+                qName = "";
+                qDescript = "";
+                qHint = "";
             }
         }
         EditorGUILayout.EndHorizontal();
-        qDescript = EditorGUILayout.TextField("Quest Description:", qDescript);
+        GUILayout.Label("Quest Description");
+        EditorStyles.textField.wordWrap = true;
+        qDescript = EditorGUILayout.TextArea(qDescript);
         qHint = EditorGUILayout.TextField("Quest Hint:", qHint);
         if (qObjectives.Count > 0)
         {
@@ -314,7 +325,11 @@ public class QuestSystemEditor : Editor
             var tempObj = AddNewObjective();
             if (tempObj != null)
             {
-                Debug.Log(tempObj.GetType());
+                qobjText = " ";
+                qobjThing = " ";
+                qobjTotal = 0;
+                qobjDescript = " ";
+                qobjBonus = false;
                 qObjectives.Add(tempObj);
             }
         }
@@ -331,7 +346,9 @@ public class QuestSystemEditor : Editor
                 qobjText = EditorGUILayout.TextField("Verb of action", qobjText);
                 qobjThing = EditorGUILayout.TextField("What do you need to " + qobjText, qobjThing);
                 qobjTotal = EditorGUILayout.IntField("Total to " + qobjText, qobjTotal);
-                qobjDescript = EditorGUILayout.TextField("How you will obtain:", qobjDescript);
+                GUILayout.Label("How you will obtain:",GUILayout.ExpandWidth(false));
+                EditorStyles.textField.wordWrap = true;
+                qobjDescript = EditorGUILayout.TextArea(qobjDescript);
                 qobjBonus = EditorGUILayout.Toggle("Bonus Objective:", qobjBonus);
 
                 if (GUILayout.Button("Add New Objective"))
@@ -343,8 +360,10 @@ public class QuestSystemEditor : Editor
                 break;
             case QuestType.Kill:
                 qobjText = EditorGUILayout.TextField("Thing to kill", qobjText);
-                qobjTotal = EditorGUILayout.IntField("Total of " + qobjText, qobjTotal);              
-                qobjDescript = EditorGUILayout.TextField("Where do you find " + qobjText, qobjDescript);
+                qobjTotal = EditorGUILayout.IntField("Total of " + qobjText, qobjTotal);
+                GUILayout.Label("Where do you find:", GUILayout.ExpandWidth(false));
+                EditorStyles.textField.wordWrap = true;
+                qobjDescript = EditorGUILayout.TextArea(qobjDescript);
                 qobjBonus = EditorGUILayout.Toggle("Bonus Objective:", qobjBonus);
                 if (GUILayout.Button("Add New Objective"))
                 {

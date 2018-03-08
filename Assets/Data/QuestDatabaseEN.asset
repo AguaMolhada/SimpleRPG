@@ -14,7 +14,7 @@ MonoBehaviour:
   Quests:
   - Identifier:
       ID: 0
-      PrQuest: -1
+      PrQuest: 1
       ChainQuestID: 0
     Text:
       Title: Begin the Jurney
@@ -23,7 +23,8 @@ MonoBehaviour:
       Hint: Go to the Adventure's Guildhall
     Objectives:
     - Title: Acquire 1 Adventure's License
-      Description: Adventure's License
+      Description: You will need to talk to the Guild Recepcionist and complete the
+        beggining quests.
       IsComplete: 0
       IsBonus: 0
       QuestObjectiveEvent:
@@ -33,7 +34,8 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     CollectObjectives:
     - Title: Acquire 1 Adventure's License
-      Description: Adventure's License
+      Description: You will need to talk to the Guild Recepcionist and complete the
+        beggining quests.
       IsComplete: 0
       IsBonus: 0
       QuestObjectiveEvent:
@@ -42,20 +44,23 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       Verb: Acquire
-      ToCollect: 
+      ToCollect: Adventure's License
       CollectionAmount: 1
     EliminationObjectives: []
   - Identifier:
       ID: 1
-      PrQuest: -1
+      PrQuest: 2
       ChainQuestID: 0
     Text:
-      Title: Invasion
-      DescriptionSummary: Help terrible monsters are invading the city
-      Hint: Go to the captal and find those creatures
+      Title: The Beggining
+      DescriptionSummary: 'Hello new adventurer, are you ready for the training sesstion?!
+        I''ll ask for you to pick some items and come back to me and i will give you
+        one Adventure''s Licence. '
+      Hint: Complete all Objectives in this Quest.
     Objectives:
-    - Title: Kill 23 Aliens
-      Description: Captal
+    - Title: Acquire 1 Enlistment Letter
+      Description: After completing the Training session the Instructor will give
+        you the letter.
       IsComplete: 0
       IsBonus: 0
       QuestObjectiveEvent:
@@ -63,10 +68,35 @@ MonoBehaviour:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-    - Title: Kill 50 Bugs
-      Description: Captal
+    CollectObjectives:
+    - Title: Acquire 1 Enlistment Letter
+      Description: After completing the Training session the Instructor will give
+        you the letter.
       IsComplete: 0
-      IsBonus: 1
+      IsBonus: 0
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Verb: Acquire
+      ToCollect: Enlistment Letter
+      CollectionAmount: 1
+    EliminationObjectives: []
+  - Identifier:
+      ID: 2
+      PrQuest: -1
+      ChainQuestID: 1
+    Text:
+      Title: Training Session
+      DescriptionSummary: Hello new adventurer, now that you have the basic Training
+        Armor you will need to kill some monsters to learn how to Fight.
+      Hint: Equip the training Armor to take less dmg.
+    Objectives:
+    - Title: Kill 5 Training Dummy
+      Description: You will find in the Training Camp.
+      IsComplete: 0
+      IsBonus: 0
       QuestObjectiveEvent:
         m_PersistentCalls:
           m_Calls: []
@@ -74,8 +104,8 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
     CollectObjectives: []
     EliminationObjectives:
-    - Title: Kill 23 Aliens
-      Description: Captal
+    - Title: Kill 5 Training Dummy
+      Description: You will find in the Training Camp.
       IsComplete: 0
       IsBonus: 0
       QuestObjectiveEvent:
@@ -83,16 +113,5 @@ MonoBehaviour:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      Target: Aliens
-      KillTotalAmount: 23
-    - Title: Kill 50 Bugs
-      Description: Captal
-      IsComplete: 0
-      IsBonus: 1
-      QuestObjectiveEvent:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Target: Bugs
-      KillTotalAmount: 50
+      Target: Training Dummy
+      KillTotalAmount: 5

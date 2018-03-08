@@ -14,17 +14,6 @@ namespace QuestSystem
     public class CollectionObjective : QuestObjective
     {
         /// <summary>
-        /// Access to the objective title.
-        /// </summary>
-        public new string Title
-        {
-            get
-            {
-                base.Title = Verb + " " + CollectionAmount + " " + Description;
-                return base.Title;
-            }
-        }
-        /// <summary>
         /// Verb action to do.
         /// </summary>
         public string Verb;
@@ -62,6 +51,7 @@ namespace QuestSystem
             CurrentAmount = 0;
             IsBonus = bonus;
             IsComplete = false;
+            Title = Verb + " " + CollectionAmount + " " + tocollect;
         }
 
         public void AssignInventry(PlayerInventory inv)
