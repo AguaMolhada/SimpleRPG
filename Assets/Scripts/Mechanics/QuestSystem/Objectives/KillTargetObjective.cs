@@ -10,8 +10,10 @@ namespace QuestSystem
     [System.Serializable]
     public class KillTargetObjective : QuestObjective
     {
+        /// <summary>
+        /// Name of the target that will be eliminated.
+        /// </summary>
         public string Target;
-
         /// <summary>
         /// Titak Amount of targets to be eliminated.
         /// </summary>
@@ -20,7 +22,6 @@ namespace QuestSystem
         /// Current amount of targets eliminated.
         /// </summary>
         public int KillCurrentAmount { get; protected set; }
-
         /// <summary>
         /// Constructor that builds a Kill target objective.        
         /// </summary>
@@ -39,12 +40,12 @@ namespace QuestSystem
             KillCurrentAmount = 0;
         }
         
-        public new void UpdateProgress()
+        public override void UpdateProgress()
         {
-            throw new System.NotImplementedException();
+            
         }
 
-        public new void CheckProgress()
+        public override void CheckProgress()
         {
             throw new System.NotImplementedException();
         }

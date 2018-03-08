@@ -37,6 +37,7 @@ public class QuestSystemEditor : Editor
     private enum QuestType { Gather, Kill}
     private QuestType qType;
     private string qobjText;
+    private string qobjThing;
     private int qobjTotal;
     private string qobjDescript;
     private bool qobjBonus;
@@ -220,7 +221,8 @@ public class QuestSystemEditor : Editor
                     tempCollect.Verb = EditorGUILayout.TextField("Action", tempCollect.Verb, GUILayout.ExpandWidth(false));
                     EditorGUILayout.EndHorizontal();
                     tempCollect.CollectionAmount = EditorGUILayout.IntField("Total to " + tempCollect.Verb, tempCollect.CollectionAmount);
-                    tempCollect.Description = EditorGUILayout.TextField("What do you need to " + tempCollect.Title,tempCollect.Description);
+                    tempCollect.ToCollect = EditorGUILayout.TextField("What do you need to " + tempCollect.Title + ":", tempCollect.ToCollect);
+                    tempCollect.Description = EditorGUILayout.TextField("How you will " + tempCollect.Title + ":", tempCollect.Description);
                     tempCollect.IsBonus = EditorGUILayout.Toggle("Bonus Objective:", tempCollect.IsBonus);
                     break;
                 case QuestType.Kill:
@@ -327,13 +329,14 @@ public class QuestSystemEditor : Editor
         {
             case QuestType.Gather:
                 qobjText = EditorGUILayout.TextField("Verb of action", qobjText);
+                qobjThing = EditorGUILayout.TextField("What do you need to " + qobjText, qobjThing);
                 qobjTotal = EditorGUILayout.IntField("Total to " + qobjText, qobjTotal);
-                qobjDescript = EditorGUILayout.TextField("What do you need to " + qobjText, qobjDescript);
+                qobjDescript = EditorGUILayout.TextField("How you will obtain:", qobjDescript);
                 qobjBonus = EditorGUILayout.Toggle("Bonus Objective:", qobjBonus);
 
                 if (GUILayout.Button("Add New Objective"))
                 {
-                    var temp = new CollectionObjective(qobjText, qobjTotal, qobjDescript, qobjBonus);
+                    var temp = new CollectionObjective(qobjText, qobjThing, qobjTotal, qobjDescript, qobjBonus);
                     return temp;
                 }
 

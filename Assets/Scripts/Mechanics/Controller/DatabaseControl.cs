@@ -17,7 +17,7 @@ public class DatabaseControl : MonoBehaviour
     public static DatabaseControl Instance;
     private readonly List<Item> _itemDb = new List<Item>();
     public RarityController RarityColor;
-    public readonly List<Quest> QuestDatabaseList = new List<Quest>();
+    public QuestData QuestDatabaseList;
 
     private void Awake()
     {
@@ -35,8 +35,6 @@ public class DatabaseControl : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         ConstructItemDatabase();
-        ConstructQuestDatabase();
-        print(QuestDatabaseList[0].Objectives[0].GetType());
     }
     /// <summary>
     /// Find a certain item instance.
@@ -49,7 +47,7 @@ public class DatabaseControl : MonoBehaviour
     /// </summary>
     /// <param name="iname">Desired item name</param>
     /// <returns>A certain item in the database</returns>
-    public Item FetchItem(String iname) => _itemDb.FirstOrDefault(t => t.Title == iname);
+    public Item FetchItem(string iname) => _itemDb.FirstOrDefault(t => t.Title == iname);
     /// <summary>
     /// Find all items with the specific param
     /// </summary>
@@ -101,24 +99,6 @@ public class DatabaseControl : MonoBehaviour
             }
         }
         return Color.white;
-    }
-
-    private void ConstructQuestDatabase()
-    {
-        QuestDatabaseList.Add(
-            new Quest(
-                new QuestIdentifier(QuestDatabaseList.Count, -1, 1),
-                new QuestText("Starting the Adventure",
-                    "You will need to join the Adventure's Guild to start your jurney to save Ecria",
-                    "Search the guild hall"),
-                    new List<QuestObjective>
-                    {
-                        new CollectionObjective("Collect", 1, "Adventure's License", false)
-                    }
-                )
-            );
-
-
     }
 
 }

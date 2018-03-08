@@ -64,6 +64,18 @@ public class PlayerInventory : MonoBehaviour
     {
         FindObjectOfType<StatsUiPolygon>().UpdateStatsGui();
     }
+
+    public int CheckAmount(string itemName)
+    {
+        foreach (var slot in Slots)
+        {
+            if (slot.SlotItem.Item.Title == itemName)
+            {
+                return slot.SlotItem.Amount;
+            }
+        }
+        return 0;
+    }
     /// <summary>
     /// to add item to the inventory
     /// </summary>

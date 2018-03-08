@@ -8,6 +8,7 @@
 using System;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace QuestSystem
 {
@@ -19,8 +20,14 @@ namespace QuestSystem
         public bool IsComplete;
         public bool IsBonus;
 
-        public void UpdateProgress() { }
-        public void CheckProgress() { }
+        public UnityEvent QuestObjectiveEvent;
+
+        public virtual void UpdateProgress() { }
+
+        public virtual void CheckProgress() { }
 
     }
+
 }
+
+

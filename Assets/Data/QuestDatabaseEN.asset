@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a438133054153e841baee6c40c76eee9, type: 3}
+  m_Name: QuestDatabaseEN
+  m_EditorClassIdentifier: 
+  Quests:
+  - Identifier:
+      ID: 0
+      PrQuest: -1
+      ChainQuestID: 0
+    Text:
+      Title: Begin the Jurney
+      DescriptionSummary: To begin your jorney you will need an Adnventure's Licence.
+        The licence is required to enter in all the dungeons across the world.
+      Hint: Go to the Adventure's Guildhall
+    Objectives:
+    - Title: Acquire 1 Adventure's License
+      Description: Adventure's License
+      IsComplete: 0
+      IsBonus: 0
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    CollectObjectives:
+    - Title: Acquire 1 Adventure's License
+      Description: Adventure's License
+      IsComplete: 0
+      IsBonus: 0
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Verb: Acquire
+      ToCollect: 
+      CollectionAmount: 1
+    EliminationObjectives: []
+  - Identifier:
+      ID: 1
+      PrQuest: -1
+      ChainQuestID: 0
+    Text:
+      Title: Invasion
+      DescriptionSummary: Help terrible monsters are invading the city
+      Hint: Go to the captal and find those creatures
+    Objectives:
+    - Title: Kill 23 Aliens
+      Description: Captal
+      IsComplete: 0
+      IsBonus: 0
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    - Title: Kill 50 Bugs
+      Description: Captal
+      IsComplete: 0
+      IsBonus: 1
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    CollectObjectives: []
+    EliminationObjectives:
+    - Title: Kill 23 Aliens
+      Description: Captal
+      IsComplete: 0
+      IsBonus: 0
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Target: Aliens
+      KillTotalAmount: 23
+    - Title: Kill 50 Bugs
+      Description: Captal
+      IsComplete: 0
+      IsBonus: 1
+      QuestObjectiveEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Target: Bugs
+      KillTotalAmount: 50
