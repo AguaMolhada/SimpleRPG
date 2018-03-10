@@ -31,87 +31,49 @@ MonoBehaviour:
     SellValue: 0
     ItemT: 10
     BonusAttributes:
-    - AttributeBonus: 2
-      BonusAmmout: 2
+    - AttributeBonus: 8
+      BonusAmmout: 0
     Stackable: 0
     Sprite: W_book07
     Usable: 0
   - Id: 2
-    Title: Lether Armor
+    Title: Enlistment Letter
     BuyValue: 15
     SellValue: 9
-    ItemT: 2
-    BonusAttributes:
-    - AttributeBonus: 2
-      BonusAmmout: 1
-    - AttributeBonus: 7
-      BonusAmmout: 2
-    - AttributeBonus: 3
-      BonusAmmout: 2
+    ItemT: 10
+    BonusAttributes: []
     Stackable: 0
-    Sprite: A_Armour01
+    Sprite: I_Scroll
     Usable: 0
   - Id: 3
-    Title: Iron Helmet
-    BuyValue: 20
-    SellValue: 12
-    ItemT: 1
-    BonusAttributes:
-    - AttributeBonus: 2
-      BonusAmmout: -1
-    - AttributeBonus: 7
-      BonusAmmout: 4
-    - AttributeBonus: 3
-      BonusAmmout: 1
-    Stackable: 0
-    Sprite: C_Elm03
-    Usable: 0
-  - Id: 4
-    Title: Iron Armor
-    BuyValue: 35
-    SellValue: 29
+    Title: Training Armor
+    BuyValue: 0
+    SellValue: 0
     ItemT: 2
     BonusAttributes:
-    - AttributeBonus: 7
-      BonusAmmout: 4
     - AttributeBonus: 3
       BonusAmmout: 1
+    - AttributeBonus: 2
+      BonusAmmout: 1
+    - AttributeBonus: 4
+      BonusAmmout: 1
+    - AttributeBonus: 5
+      BonusAmmout: 1
+    - AttributeBonus: 6
+      BonusAmmout: 1
+    - AttributeBonus: 7
+      BonusAmmout: 1
     Stackable: 0
-    Sprite: A_Armour02
+    Sprite: A_Clothing02
     Usable: 0
-  - Id: 7
-    Title: Health Potion
-    BuyValue: 25
+  - Id: 4
+    Title: sdadsad
+    BuyValue: 0
     SellValue: 0
-    ItemT: 9
-    BonusAttributes: []
-    Stackable: 1
-    Sprite: P_Red02
-    Usable: 1
-  - Id: 8
-    Title: Great Health Potion
-    BuyValue: 60
-    SellValue: 0
-    ItemT: 9
-    BonusAttributes: []
-    Stackable: 1
-    Sprite: P_Red03
-    Usable: 1
-  - Id: 9
-    Title: Ultra Health Potion
-    BuyValue: 100
-    SellValue: 0
-    ItemT: 9
-    BonusAttributes: []
-    Stackable: 1
-    Sprite: P_Red01
-    Usable: 1
-  - Id: 10
-    Title: Iron Sword
-    BuyValue: 250
-    SellValue: 95
-    ItemT: 6
-    BonusAttributes: []
+    ItemT: 0
+    BonusAttributes:
+    - AttributeBonus: 0
+      BonusAmmout: 0
     Stackable: 0
-    Sprite: W_Sword004
+    Sprite: 
     Usable: 0

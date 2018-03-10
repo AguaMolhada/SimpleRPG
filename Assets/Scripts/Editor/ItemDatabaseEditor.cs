@@ -36,14 +36,13 @@ public class ItemDatabaseEditor : Editor
         if (GUILayout.Button("Save Data to Json"))
         {
             _target.SaveItemDatabase();
+            EditorUtility.SetDirty(target);
+            serializedObject.Update();
+            Undo.RecordObject(_target, "Changing ItemDatabase");
+            serializedObject.ApplyModifiedProperties();
         }
         EditorGUILayout.EndHorizontal();
         ShowItemList();
-
-        EditorUtility.SetDirty(target);
-        serializedObject.Update();
-        Undo.RecordObject(_target, "Changing ItemDatabase");
-        serializedObject.ApplyModifiedProperties();
     }
 
     private void ShowItemList()
