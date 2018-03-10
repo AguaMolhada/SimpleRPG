@@ -39,6 +39,11 @@ public class ItemDatabaseEditor : Editor
         }
         EditorGUILayout.EndHorizontal();
         ShowItemList();
+
+        EditorUtility.SetDirty(target);
+        serializedObject.Update();
+        Undo.RecordObject(_target, "Changing ItemDatabase");
+        serializedObject.ApplyModifiedProperties();
     }
 
     private void ShowItemList()

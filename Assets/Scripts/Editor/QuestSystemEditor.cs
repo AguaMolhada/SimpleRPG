@@ -154,42 +154,35 @@ public class QuestSystemEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        if (GUILayout.Button("Change Inspector"))
-        {
-            useDafultEditor = !useDafultEditor;
-        }
-        if (useDafultEditor)
-        {
-            DrawDefaultInspector();
-        }
-        else
-        {
-            ShowMyLogo();
-            HeaderButtons();
 
-            if (Help)
+        ShowMyLogo();
+        HeaderButtons();
+
+        if (Help)
+        {
+            ShowHelpArea();
+        }
+
+        if (Quests)
+        {
+            ShowQuestArea();
+            if (ShowNewQuestEditor)
             {
-                ShowHelpArea();
+                AddNewQuest();
             }
 
-            if (Quests)
+            if (SelectedQuest && !ShowNewQuestEditor)
             {
-                ShowQuestArea();
-                if (ShowNewQuestEditor)
-                {
-                    AddNewQuest();
-                }
-                if (SelectedQuest && !ShowNewQuestEditor)
-                {
-                    var tempSelectedQuest = _target.Quests[SelectedQuestID];
-                    ShowSelectedQuest(tempSelectedQuest);
-                }
+                var tempSelectedQuest = _target.Quests[SelectedQuestID];
+                ShowSelectedQuest(tempSelectedQuest);
             }
-            EditorUtility.SetDirty(target);
-            serializedObject.Update();
-            Undo.RecordObject(_target, "Changing quests");
-            serializedObject.ApplyModifiedProperties();
         }
+
+        EditorUtility.SetDirty(target);
+        serializedObject.Update();
+        Undo.RecordObject(_target, "Changing quests");
+        serializedObject.ApplyModifiedProperties();
+
     }
 
     private void OnValidate()
