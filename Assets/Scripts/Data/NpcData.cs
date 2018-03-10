@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using QuestSystem;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,5 +15,5 @@ public class NpcData : ScriptableObject
 {
     public string NPCName;
     public GameObject NpcGameobject;
-    public List<int> QuestsToGive;
+    public List<Quest> QuestsToGive;
 }

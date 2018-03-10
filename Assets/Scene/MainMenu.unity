@@ -10508,9 +10508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef9850ff97f8e44993a5b6ef22b9a2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemDatabaseList: {fileID: 0}
+  ItemDatabaseList: {fileID: 11400000, guid: 40d2d080ecf5f4e4694c9354a6b78407, type: 2}
   RarityColor: {fileID: 11400000, guid: b412f6d10001bb049a98ae83c24403dc, type: 2}
-  QuestDatabaseList: {fileID: 0}
+  QuestDatabaseList: {fileID: 11400000, guid: 60688a5bb5f48654b86835ad9bb71876, type: 2}
 --- !u!4 &1381860085
 Transform:
   m_ObjectHideFlags: 0

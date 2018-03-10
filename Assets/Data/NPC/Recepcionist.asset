@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07395a8f382dbd241a3265689ef292b7, type: 3}
+  m_Name: Recepcionist
+  m_EditorClassIdentifier: 
+  NPCName: Sam, The Recepcionist
+  NpcGameobject: {fileID: 0}
+  QuestsToGive:
+  - Identifier:
+      ID: 0
+      PrQuest: 1
+      ChainQuestID: -1
+    Text:
+      Title: Begin the Jurney
+      DescriptionSummary: To begin your jorney you will need an Adnventure's Licence.
+        The licence is required to enter in all the dungeons across the world.
+      Hint: Go to the Adventure's Guildhall
+    Objectives:
+    - Title: Acquire 1 Adventure's License
+      Description: You will need to talk to the Guild Recepcionist and complete the
+        beggining quests.
+      IsComplete: 0
+      IsBonus: 0
+      QuestEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    CollectObjectives:
+    - Title: Acquire 1 Adventure's License
+      Description: You will need to talk to the Guild Recepcionist and complete the
+        beggining quests.
+      IsComplete: 0
+      IsBonus: 0
+      QuestEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Verb: Acquire
+      ToCollect: Adventure's License
+      CollectionAmount: 1
+    EliminationObjectives: []
+    QuestReward:
+      ExperienceReward: 100
+      GoldReward: 250
+      ItemsRewards: []
+    _onQuestComplete:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventPlayer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
