@@ -23,23 +23,15 @@
 		},
 		{
 			"Id": 1,
-			"Title": "Lether Helmet",
-			"BuyValue": 10,
-			"SellValue": 5,
-			"ItemT": 1,
+			"Title": "Adventure's License",
+			"BuyValue": 0,
+			"SellValue": 0,
+			"ItemT": 10,
 			"BonusAttributes":
 			[
 				{
 					"AttributeBonus": 2,
 					"BonusAmmout": 2
-				},
-				{
-					"AttributeBonus": 7,
-					"BonusAmmout": 2
-				},
-				{
-					"AttributeBonus": 3,
-					"BonusAmmout": 1
 				}
 			],
 			"Stackable": false,

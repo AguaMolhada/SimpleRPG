@@ -57,8 +57,8 @@ namespace QuestSystem
         public void AssignInventry(PlayerInventory inv)
         {
             _inventory = inv;
-            QuestObjectiveEvent.AddListener(UpdateProgress);
-            QuestObjectiveEvent.AddListener(CheckProgress);
+            QuestEvent.AddListener(UpdateProgress);
+            QuestEvent.AddListener(CheckProgress);
         }
 
         public override void UpdateProgress()

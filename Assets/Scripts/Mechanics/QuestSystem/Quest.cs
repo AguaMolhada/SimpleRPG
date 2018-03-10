@@ -6,6 +6,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace QuestSystem
 {
@@ -28,15 +30,45 @@ namespace QuestSystem
         public List<CollectionObjective> CollectObjectives;
 
         public List<KillTargetObjective> EliminationObjectives;
+
+        public Reward QuestReward;
+
+        [SerializeField]
+        private UnityEventPlayer _onQuestComplete;
+
+        private float _progressComplete;
         /// <summary>
         /// Quest Constructor.
         /// </summary>
-        public Quest(QuestIdentifier id, QuestText info, List<QuestObjective> objectives)
+        public Quest(QuestIdentifier id, QuestText info, List<QuestObjective> objectives,Reward reward)
         {
             Identifier = id;
             Text = info;
             Objectives = objectives;
+            QuestReward = reward;
         }
+
+        private void UpdateAndCheckProgress(PlayerController player)
+        {
+            float temp = 0;
+            foreach (var questObjective in Objectives)
+            {
+                if (questObjective.IsComplete)
+                {
+                    temp++;
+                }
+            }
+            _progressComplete = Ultility.GetPercentValue(Objectives.Count, temp);
+            if (_progressComplete == 100)
+            {
+                if (_onQuestComplete != null)
+                {
+                    _onQuestComplete.Invoke(player);
+                }        
+            }
+        }
+
+
 
         public void ConstructObjectives()
         {
@@ -63,23 +95,7 @@ namespace QuestSystem
             temp.AddRange(CollectObjectives);
             Objectives = temp;
         }
-
-        /// <summary>
-        /// Check the overall progress.
-        /// </summary>
-        /// <returns>Value btween 0 and 100</returns>
-        private float CheckOverallProgress()
-        {
-            var temp = 0;
-            for (int i = 0; i < Objectives.Count; i++)
-            {
-                if (Objectives[i].IsComplete && Objectives[i].IsBonus == false)
-                {
-                    temp++;
-                }
-            }
-            return Ultility.GetPercentValue(Objectives.Count,temp);
-        }
+        
 
         public override string ToString()
         {

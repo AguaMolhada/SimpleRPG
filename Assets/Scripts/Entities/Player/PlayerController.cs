@@ -5,6 +5,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using QuestSystem;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +27,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [HideInInspector]public GameObject MySelf;
     /// <summary>
+    /// All Quests completed by the user.
+    /// </summary>
+    public List<Quest> CompletedQuests;
+    /// <summary>
+    /// All quests that need to be done.
+    /// </summary>
+    public List<Quest> CurrentQuests;
+    /// <summary>
     /// Movment Speed Amount.
     /// </summary>
     public float Speed;
@@ -44,8 +54,7 @@ public class PlayerController : MonoBehaviour
     /// The character rigidybody.
     /// </summary>
     protected Rigidbody MyRigidyBody;
-
-
+    
     private void Start()
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
@@ -58,6 +67,19 @@ public class PlayerController : MonoBehaviour
         MyRigidyBody.constraints = RigidbodyConstraints.FreezeRotation;
         MyRigidyBody.isKinematic = false;
         PlayerStats.AddHealth(int.MaxValue);
+    }
+
+    public void AddQuest(bool completed, Quest quest)
+    {
+        if (completed)
+        {
+            CompletedQuests.Add(quest);
+            CurrentQuests.Remove(quest);
+        }
+        else
+        {
+            CurrentQuests.Add(quest);
+        }
     }
 
     /// <summary>

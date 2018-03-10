@@ -15,7 +15,7 @@ MonoBehaviour:
   - Identifier:
       ID: 0
       PrQuest: 1
-      ChainQuestID: 0
+      ChainQuestID: -1
     Text:
       Title: Begin the Jurney
       DescriptionSummary: To begin your jorney you will need an Adnventure's Licence.
@@ -27,7 +27,7 @@ MonoBehaviour:
         beggining quests.
       IsComplete: 0
       IsBonus: 0
-      QuestObjectiveEvent:
+      QuestEvent:
         m_PersistentCalls:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -38,7 +38,7 @@ MonoBehaviour:
         beggining quests.
       IsComplete: 0
       IsBonus: 0
-      QuestObjectiveEvent:
+      QuestEvent:
         m_PersistentCalls:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -47,6 +47,15 @@ MonoBehaviour:
       ToCollect: Adventure's License
       CollectionAmount: 1
     EliminationObjectives: []
+    QuestReward:
+      ExperienceReward: 100
+      GoldReward: 250
+      ItemsRewards: []
+    _onQuestComplete:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventPlayer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
   - Identifier:
       ID: 1
       PrQuest: 2
@@ -63,7 +72,7 @@ MonoBehaviour:
         you the letter.
       IsComplete: 0
       IsBonus: 0
-      QuestObjectiveEvent:
+      QuestEvent:
         m_PersistentCalls:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -74,7 +83,7 @@ MonoBehaviour:
         you the letter.
       IsComplete: 0
       IsBonus: 0
-      QuestObjectiveEvent:
+      QuestEvent:
         m_PersistentCalls:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -83,6 +92,24 @@ MonoBehaviour:
       ToCollect: Enlistment Letter
       CollectionAmount: 1
     EliminationObjectives: []
+    QuestReward:
+      ExperienceReward: 0
+      GoldReward: 0
+      ItemsRewards:
+      - Id: 0
+        Title: Adventure's Licence
+        BuyValue: 0
+        SellValue: 0
+        ItemT: 0
+        BonusAttributes: []
+        Stackable: 0
+        Sprite: 
+        Usable: 0
+    _onQuestComplete:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventPlayer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
   - Identifier:
       ID: 2
       PrQuest: -1
@@ -97,7 +124,7 @@ MonoBehaviour:
       Description: You will find in the Training Camp.
       IsComplete: 0
       IsBonus: 0
-      QuestObjectiveEvent:
+      QuestEvent:
         m_PersistentCalls:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -108,10 +135,19 @@ MonoBehaviour:
       Description: You will find in the Training Camp.
       IsComplete: 0
       IsBonus: 0
-      QuestObjectiveEvent:
+      QuestEvent:
         m_PersistentCalls:
           m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       Target: Training Dummy
       KillTotalAmount: 5
+    QuestReward:
+      ExperienceReward: 0
+      GoldReward: 0
+      ItemsRewards: []
+    _onQuestComplete:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEventPlayer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null

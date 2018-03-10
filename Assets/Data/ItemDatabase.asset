@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de62b49b1404c7a4cac5fe1e66726576, type: 3}
+  m_Name: ItemDatabase
+  m_EditorClassIdentifier: 
+  ItemsDatabase:
+  - Id: 0
+    Title: 'test item '
+    BuyValue: 999
+    SellValue: 999
+    ItemT: 0
+    BonusAttributes:
+    - AttributeBonus: 2
+      BonusAmmout: 100
+    - AttributeBonus: 7
+      BonusAmmout: 100
+    Stackable: 0
+    Sprite: A_Armor05
+    Usable: 0
+  - Id: 1
+    Title: Adventure's License
+    BuyValue: 0
+    SellValue: 0
+    ItemT: 10
+    BonusAttributes:
+    - AttributeBonus: 2
+      BonusAmmout: 2
+    Stackable: 0
+    Sprite: W_book07
+    Usable: 0
+  - Id: 2
+    Title: Lether Armor
+    BuyValue: 15
+    SellValue: 9
+    ItemT: 2
+    BonusAttributes:
+    - AttributeBonus: 2
+      BonusAmmout: 1
+    - AttributeBonus: 7
+      BonusAmmout: 2
+    - AttributeBonus: 3
+      BonusAmmout: 2
+    Stackable: 0
+    Sprite: A_Armour01
+    Usable: 0
+  - Id: 3
+    Title: Iron Helmet
+    BuyValue: 20
+    SellValue: 12
+    ItemT: 1
+    BonusAttributes:
+    - AttributeBonus: 2
+      BonusAmmout: -1
+    - AttributeBonus: 7
+      BonusAmmout: 4
+    - AttributeBonus: 3
+      BonusAmmout: 1
+    Stackable: 0
+    Sprite: C_Elm03
+    Usable: 0
+  - Id: 4
+    Title: Iron Armor
+    BuyValue: 35
+    SellValue: 29
+    ItemT: 2
+    BonusAttributes:
+    - AttributeBonus: 7
+      BonusAmmout: 4
+    - AttributeBonus: 3
+      BonusAmmout: 1
+    Stackable: 0
+    Sprite: A_Armour02
+    Usable: 0
+  - Id: 7
+    Title: Health Potion
+    BuyValue: 25
+    SellValue: 0
+    ItemT: 9
+    BonusAttributes: []
+    Stackable: 1
+    Sprite: P_Red02
+    Usable: 1
+  - Id: 8
+    Title: Great Health Potion
+    BuyValue: 60
+    SellValue: 0
+    ItemT: 9
+    BonusAttributes: []
+    Stackable: 1
+    Sprite: P_Red03
+    Usable: 1
+  - Id: 9
+    Title: Ultra Health Potion
+    BuyValue: 100
+    SellValue: 0
+    ItemT: 9
+    BonusAttributes: []
+    Stackable: 1
+    Sprite: P_Red01
+    Usable: 1
+  - Id: 10
+    Title: Iron Sword
+    BuyValue: 250
+    SellValue: 95
+    ItemT: 6
+    BonusAttributes: []
+    Stackable: 0
+    Sprite: W_Sword004
+    Usable: 0

@@ -20,7 +20,7 @@ namespace QuestSystem
         public bool IsComplete;
         public bool IsBonus;
 
-        public UnityEvent QuestObjectiveEvent;
+        public UnityEvent QuestEvent;
 
         public virtual void UpdateProgress() { }
 

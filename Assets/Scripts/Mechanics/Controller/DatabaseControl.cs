@@ -11,11 +11,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using QuestSystem;
+using Object = UnityEngine.Object;
 
 public class DatabaseControl : MonoBehaviour
 {
     public static DatabaseControl Instance;
-    private readonly List<Item> _itemDb = new List<Item>();
+    public ItemDatabase ItemDatabaseList;
     public RarityController RarityColor;
     public QuestData QuestDatabaseList;
 
@@ -34,20 +35,19 @@ public class DatabaseControl : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        ConstructItemDatabase();
     }
     /// <summary>
     /// Find a certain item instance.
     /// </summary>
     /// <param name="id">Desired item ID</param>
     /// <returns>A certain item in the database</returns>
-    public Item FetchItem(int id) => _itemDb.FirstOrDefault(t => t.Id == id);
+    public Item FetchItem(int id) => ItemDatabaseList.ItemsDatabase.FirstOrDefault(t => t.Id == id);
     /// <summary>
     /// Find a certain item instance.
     /// </summary>
     /// <param name="iname">Desired item name</param>
     /// <returns>A certain item in the database</returns>
-    public Item FetchItem(string iname) => _itemDb.FirstOrDefault(t => t.Title == iname);
+    public Item FetchItem(string iname) => ItemDatabaseList.ItemsDatabase.FirstOrDefault(t => t.Title == iname);
     /// <summary>
     /// Find all items with the specific param
     /// </summary>
@@ -56,7 +56,7 @@ public class DatabaseControl : MonoBehaviour
     public List<Item> FetchItems(ItemType type)
     {
         var temp = new List<Item>();
-        foreach (var item in _itemDb)
+        foreach (var item in ItemDatabaseList.ItemsDatabase)
         {
             if (item.ItemT == type && item.BuyValue != 0)
             {
@@ -72,21 +72,9 @@ public class DatabaseControl : MonoBehaviour
     /// <returns></returns>
     public int ItemsCount()
     {
-        return _itemDb.Count;
+        return ItemDatabaseList.ItemsDatabase.Count;
     }
-    /// <summary>
-    /// Construct Item database thought items.json file.
-    /// </summary>
-    private void ConstructItemDatabase()
-    {
-        var temp = File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json");
-        Item[] tempDatabase = JsonHelper.FromJsonWrapped<Item>(temp);
-        Debug.Log(tempDatabase[0].Title);
-        for (int i = 0; i < tempDatabase.Length; i++)
-        {
-            _itemDb.Add(tempDatabase[i]);
-        }
-    }
+
     public Color SelectOneColor(double roll)
     {
         var cumulative = 0.0;

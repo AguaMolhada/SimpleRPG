@@ -476,6 +476,10 @@ public class BonusAttribute
     public ItemBonusAttribute AttributeBonus;
     public int BonusAmmout;
 
+    public BonusAttribute()
+    {
+    }
+
     public BonusAttribute(ItemBonusAttribute a, int b)
     {
         AttributeBonus = a;
@@ -515,7 +519,8 @@ public enum ItemType
     Weapon = 6,
     Shield = 7,
     Backpack = 8,
-    Consumable = 9
+    Consumable = 9,
+    Quest = 10
 }
 /// <summary>
 /// Bonus attribute types.
@@ -529,7 +534,9 @@ public enum ItemBonusAttribute
     Int = 4,
     Luk = 5,
     Vit = 6,
-    Con = 7
+    Con = 7,
+    Level = 8,
+    Health = 9
 }
 
 /// <summary>
