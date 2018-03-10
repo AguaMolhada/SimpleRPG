@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(menuName = "New Enemy Rarity Contoller")]
+[CreateAssetMenu(menuName = "Data / New Enemy Rarity Contoller")]
 public class RarityController : ScriptableObject
 {
     /// <summary>

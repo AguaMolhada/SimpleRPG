@@ -9,7 +9,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(menuName = "New Enemy Stats")]
+[CreateAssetMenu(menuName = "Data / New Enemy Stats")]
 public class EnemyStats : ScriptableObject
 {
     /// <summary>

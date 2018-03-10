@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameController : MonoBehaviour
 {
@@ -39,7 +40,11 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Hello Player.
     /// </summary>
-    public PlayerController Player;
+    public PlayerController Player { get; set; }
+    /// <summary>
+    /// Information about the character.
+    /// </summary>
+    private CharacterSelection _3DCharacterHolder;
     /// <summary>
     /// Is the Game Paused?
     /// </summary>
@@ -56,7 +61,7 @@ public class GameController : MonoBehaviour
     /// Player experience curve
     /// </summary>
     /// <param name="level">Level to set the required experience</param>
-    /// <returns></returns>
+    /// <returns>Experience to next level.</returns>
     public int ExperienceCurve(int level)
     {
         var b = Math.Log((double) MaxExperience / ExperienceBase) / (MaxLevel - 1);
@@ -81,8 +86,28 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        _3DCharacterHolder = FindObjectOfType<CharacterSelection>();
+        InstantiatePlayer();
     }
-    
+
+    private void InstantiatePlayer()
+    {
+        var playerobj = Instantiate(_3DCharacterHolder.SelectCharacterSkin.CharacterObj, transform.position, Quaternion.identity);
+        playerobj.name = "Jogador";
+        playerobj.AddComponent<PlayerController>();
+        playerobj.GetComponent<PlayerController>().PlayerStats = _3DCharacterHolder.ApplyStats();
+        playerobj.GetComponent<PlayerController>().NickName = _3DCharacterHolder.NickName == "" ? Ultility.NameGenerator() : _3DCharacterHolder.NickName;
+        playerobj.GetComponent<PlayerController>().Speed = 5f;
+        playerobj.layer = 8;
+        playerobj.tag = "Player";
+        foreach (Transform child in playerobj.transform)
+        {
+            child.gameObject.layer = 8;
+        }
+
+        playerobj.GetComponent<NavMeshAgent>().Warp(transform.position);
+    }
+
     /// <summary>
     /// Construc Aggro Table.
     /// </summary>

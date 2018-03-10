@@ -13,13 +13,28 @@ using UnityEngine.UI.Extensions;
 
 public class StatsUiPolygon : MonoBehaviour
 {
+    
     public TMP_Text[] StatsValues;
     public UIPolygon StatsUiBorder;
     public UIPolygon StatsUi;
     public Button[] Buttons;
 
+    private static StatsUiPolygon _mySelft;
+    private PlayerStats _player;
+
     private void LateUpdate()
     {
+        _mySelft = this;
+        if (GameController.Instance == null)
+        {
+            _player = FindObjectOfType<CharacterSelection>().SelectStats;
+            UpdateStatsGui();
+        }
+        else
+        {
+            _player = GameController.Instance.Player.PlayerStats;
+            UpdateStatsGui();
+        }
         RedrawPolygonUi();
     }
 
@@ -27,7 +42,7 @@ public class StatsUiPolygon : MonoBehaviour
     {
         foreach (var button in Buttons)
         {
-            button.gameObject.SetActive(GameController.Instance.Player.PlayerStats.AvaliablePointsToDistribute > 0);
+            button.gameObject.SetActive(_player.AvaliablePointsToDistribute > 0);
         }
 
         StatsUiBorder.Redraw();
@@ -49,22 +64,22 @@ public class StatsUiPolygon : MonoBehaviour
         switch (splitstring[0])
         {
             case "int":
-                GameController.Instance.Player.PlayerStats.AddStatsInt(x);
+                _player.AddStatsInt(x);
                 break;
             case "luk":
-                GameController.Instance.Player.PlayerStats.AddStatsLuk(x);
+                _player.AddStatsLuk(x);
                 break;
             case "vit":
-                GameController.Instance.Player.PlayerStats.AddStatsVit(x);
+                _player.AddStatsVit(x);
                 break;
             case "con":
-                GameController.Instance.Player.PlayerStats.AddStatsCon(x);
+                _player.AddStatsCon(x);
                 break;
             case "agi":
-                GameController.Instance.Player.PlayerStats.AddStatsAgi(x);
+                _player.AddStatsAgi(x);
                 break;
             case "dex":
-                GameController.Instance.Player.PlayerStats.AddStatsDex(x);
+                _player.AddStatsDex(x);
                 break;
             default:
                 break;
@@ -73,24 +88,24 @@ public class StatsUiPolygon : MonoBehaviour
 
     public void UpdateStatsGui()
     {
-        StatsUi.VerticesDistances[0] = GetPercentValue(GameController.Instance.Player.PlayerStats.PlayerAgi);
-        StatsUi.VerticesDistances[1] = GetPercentValue(GameController.Instance.Player.PlayerStats.PlayerDex);
-        StatsUi.VerticesDistances[2] = GetPercentValue(GameController.Instance.Player.PlayerStats.PlayerInt);
-        StatsUi.VerticesDistances[3] = GetPercentValue(GameController.Instance.Player.PlayerStats.PlayerLuk);
-        StatsUi.VerticesDistances[4] = GetPercentValue(GameController.Instance.Player.PlayerStats.PlayerVit);
-        StatsUi.VerticesDistances[5] = GetPercentValue(GameController.Instance.Player.PlayerStats.PlayerCon);
-        StatsValues[0].text = GameController.Instance.Player.PlayerStats.PlayerAgi.ToString();
-        StatsValues[1].text = GameController.Instance.Player.PlayerStats.PlayerDex.ToString();
-        StatsValues[2].text = GameController.Instance.Player.PlayerStats.PlayerInt.ToString();
-        StatsValues[3].text = GameController.Instance.Player.PlayerStats.PlayerLuk.ToString();
-        StatsValues[4].text = GameController.Instance.Player.PlayerStats.PlayerVit.ToString();
-        StatsValues[5].text = GameController.Instance.Player.PlayerStats.PlayerCon.ToString();
+        StatsUi.VerticesDistances[0] = GetPercentValue(_player.PlayerAgi);
+        StatsUi.VerticesDistances[1] = GetPercentValue(_player.PlayerDex);
+        StatsUi.VerticesDistances[2] = GetPercentValue(_player.PlayerInt);
+        StatsUi.VerticesDistances[3] = GetPercentValue(_player.PlayerLuk);
+        StatsUi.VerticesDistances[4] = GetPercentValue(_player.PlayerVit);
+        StatsUi.VerticesDistances[5] = GetPercentValue(_player.PlayerCon);
+        StatsValues[0].text = _player.PlayerAgi.ToString();
+        StatsValues[1].text = _player.PlayerDex.ToString();
+        StatsValues[2].text = _player.PlayerInt.ToString();
+        StatsValues[3].text = _player.PlayerLuk.ToString();
+        StatsValues[4].text = _player.PlayerVit.ToString();
+        StatsValues[5].text = _player.PlayerCon.ToString();
         RedrawPolygonUi();
     }
 
     private static float GetPercentValue(int x)
     {
-        var tempPlayer = GameController.Instance.Player.PlayerStats;
+        var tempPlayer = _mySelft._player;
         var points = new int[] {tempPlayer.PlayerAgi,tempPlayer.PlayerDex ,tempPlayer.PlayerInt , tempPlayer.PlayerLuk ,
                           tempPlayer.PlayerVit , tempPlayer.PlayerCon};
         var maxPoints = points.Max();

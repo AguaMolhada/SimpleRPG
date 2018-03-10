@@ -75,6 +75,11 @@ public class DatabaseControl : MonoBehaviour
         return ItemDatabaseList.ItemsDatabase.Count;
     }
 
+    /// <summary>
+    /// Select on color based on the probability.
+    /// </summary>
+    /// <param name="roll">random roll</param>
+    /// <returns>the color</returns>
     public Color SelectOneColor(double roll)
     {
         var cumulative = 0.0;
@@ -88,6 +93,18 @@ public class DatabaseControl : MonoBehaviour
         }
         return Color.white;
     }
+    /// <summary>
+    /// Find the respective quest in the database.
+    /// </summary>
+    /// <param name="qid">Quest id</param>
+    /// <returns>Quest with qid</returns>
+    public Quest FetchQuest(int qid) => QuestDatabaseList.Quests.FirstOrDefault(q => q.Identifier.ID == qid);
+    /// <summary>
+    /// Find the respective quest in the database.
+    /// </summary>
+    /// <param name="qname">Quest id</param>
+    /// <returns>Quest with qname</returns>
+    public Quest FetchQuest(string qname) => QuestDatabaseList.Quests.FirstOrDefault(q => q.Text.Title == qname);
 
 }
 /// <summary>

@@ -31,8 +31,8 @@ public class CharacterSelection : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SelectStats = CharacterStatsBase[0];
         OnCharacterSelect(_selectedCharacterIndex);
-        GameController.Instance.Player.PlayerStats.ResetStats();
-        GameController.Instance.Player.PlayerStats.ResetExp();
+        SelectStats.ResetStats();
+        SelectStats.ResetExp();
         StartCoroutine("Rotate");
         StatsUi.UpdateStatsGui();
     }
@@ -41,6 +41,7 @@ public class CharacterSelection : MonoBehaviour
     {
         StopCoroutine(Rotate());
         StartCoroutine("Rotate");
+        StatsUi.UpdateStatsGui();
     }
 
     /// <summary>
@@ -112,18 +113,22 @@ public class CharacterSelection : MonoBehaviour
     public void OnStatsSelect(int statsChoice)
     {
         SelectStats = CharacterStatsBase[statsChoice];
-        ApplyStats();
         UpdateStatsGui();
+        Debug.Log(SelectStats.PlayerClass);
     }
 
-    public void ApplyStats()
+    public PlayerStats ApplyStats()
     {
-        GameController.Instance.Player.PlayerStats.PlayerClass = SelectStats.PlayerClass;
-        GameController.Instance.Player.PlayerStats.PlayerAgi = SelectStats.PlayerAgi;
-        GameController.Instance.Player.PlayerStats.PlayerCon = SelectStats.PlayerCon;
-        GameController.Instance.Player.PlayerStats.PlayerDex = SelectStats.PlayerDex;
-        GameController.Instance.Player.PlayerStats.PlayerInt = SelectStats.PlayerInt;
-        GameController.Instance.Player.PlayerStats.PlayerLuk = SelectStats.PlayerLuk;
-        GameController.Instance.Player.PlayerStats.PlayerVit = SelectStats.PlayerVit;
+        var temp = ScriptableObject.CreateInstance<PlayerStats>();
+        temp.PlayerClass = SelectStats.PlayerClass;
+        temp.PlayerAgi = SelectStats.PlayerAgi;
+        temp.PlayerCon = SelectStats.PlayerCon;
+        temp.PlayerDex = SelectStats.PlayerDex;
+        temp.PlayerInt = SelectStats.PlayerInt;
+        temp.PlayerLuk = SelectStats.PlayerLuk;
+        temp.PlayerVit = SelectStats.PlayerVit;
+        temp.ResetExp();
+
+        return temp;
     }
 }

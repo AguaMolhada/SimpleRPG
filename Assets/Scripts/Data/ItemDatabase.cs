@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "New ItemData Base")]
+[CreateAssetMenu(menuName = "Data / New ItemData Base")]
 public class ItemDatabase : ScriptableObject
 {
     public List<Item> ItemsDatabase;

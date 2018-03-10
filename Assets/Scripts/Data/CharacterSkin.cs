@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "New Character Skin")]
+[CreateAssetMenu(menuName = "Data / New Character Skin")]
 public class CharacterSkin : ScriptableObject
 {
     /// <summary>

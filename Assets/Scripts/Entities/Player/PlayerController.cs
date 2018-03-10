@@ -113,11 +113,10 @@ public class PlayerController : MonoBehaviour
     private void LookToMouse()
     {
         Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        float rayLenght;
-        if (groundPlane.Raycast(cameraRay, out rayLenght))
+        RaycastHit hit;
+        if (Physics.Raycast(cameraRay, out hit))
         {
-            Vector3 pointToLook = cameraRay.GetPoint(rayLenght);
+            Vector3 pointToLook = hit.point;
             Debug.DrawLine(cameraRay.origin, pointToLook, Color.black);
 
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));

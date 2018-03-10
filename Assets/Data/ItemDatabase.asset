@@ -66,14 +66,3 @@ MonoBehaviour:
     Stackable: 0
     Sprite: A_Clothing02
     Usable: 0
-  - Id: 4
-    Title: sdadsad
-    BuyValue: 0
-    SellValue: 0
-    ItemT: 0
-    BonusAttributes:
-    - AttributeBonus: 0
-      BonusAmmout: 0
-    Stackable: 0
-    Sprite: 
-    Usable: 0
