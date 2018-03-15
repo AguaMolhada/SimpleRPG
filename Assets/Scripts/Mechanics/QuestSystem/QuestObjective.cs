@@ -26,6 +26,10 @@ namespace QuestSystem
 
         public virtual void CheckProgress() { }
 
+        public string ToStringFormat()
+        {
+            return Title + Environment.NewLine;
+        }
     }
 
 }

@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,5 +42,29 @@ public class Reward
         ExperienceReward = 0;
         GoldReward = 0;
         ItemsRewards = new List<Item>();
+    }
+
+    public string ToStringFormat()
+    {
+        var temp = " ";
+        if (ExperienceReward != 0)
+        {
+            temp += ExperienceReward + " exp ";
+        }
+
+        if (GoldReward != 0)
+        {
+            temp += GoldReward + " gold ";
+        }
+
+        if (ItemsRewards.Count != 0)
+        {
+            foreach (var itemsReward in ItemsRewards)
+            {
+                temp += itemsReward.Title + " ";
+            }
+        }
+
+        return "Reward:" + temp;
     }
 }

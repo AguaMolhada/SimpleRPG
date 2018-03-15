@@ -62,11 +62,14 @@ public class PlayerController : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().Player = this;
         }
-
+        else
+        {
+            PlayerStats.AddHealth(int.MaxValue);
+            
+        }
         MyRigidyBody = gameObject.GetComponent<Rigidbody>();
         MyRigidyBody.constraints = RigidbodyConstraints.FreezeRotation;
         MyRigidyBody.isKinematic = false;
-        PlayerStats.AddHealth(int.MaxValue);
     }
 
     public void AddQuest(bool completed, Quest quest)
@@ -78,6 +81,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            foreach (Quest currentQuest in CurrentQuests)
+            {
+                if (currentQuest.Identifier.ID == quest.Identifier.ID)
+                {
+                    return;
+                }
+            }
             CurrentQuests.Add(quest);
         }
     }

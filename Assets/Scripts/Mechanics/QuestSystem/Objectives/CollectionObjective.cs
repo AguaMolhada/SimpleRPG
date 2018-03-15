@@ -71,9 +71,9 @@ namespace QuestSystem
             IsComplete = CurrentAmount >= CollectionAmount;
         }
 
-        public override string ToString()
+        public new string ToStringFormat()
         {
-            return CurrentAmount + "/" + CollectionAmount + " " + Description + " " + Verb + "ed.";
+            return base.ToString() + CurrentAmount + "/" + CollectionAmount + " " + ToCollect + " " + Verb + "ed.";
         }
     }
 }

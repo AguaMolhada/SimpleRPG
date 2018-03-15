@@ -18,6 +18,7 @@ MonoBehaviour:
       ID: 0
       PrQuest: 1
       ChainQuestID: -1
+      IsQuestComplete: 0
     Text:
       Title: Begin the Jurney
       DescriptionSummary: To begin your jorney you will need an Adnventure's Licence.
@@ -53,8 +54,3 @@ MonoBehaviour:
       ExperienceReward: 100
       GoldReward: 250
       ItemsRewards: []
-    _onQuestComplete:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEventPlayer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null

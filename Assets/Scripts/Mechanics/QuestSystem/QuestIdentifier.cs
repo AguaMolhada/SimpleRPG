@@ -23,7 +23,11 @@ namespace QuestSystem
         /// Next quest ID in the chain.
         /// </summary>
         public int ChainQuestID;
-        
+        /// <summary>
+        /// Is the quest completed.
+        /// </summary>
+        public bool IsQuestComplete;
+
         public QuestIdentifier(int id,int prtQ,int nextQ)
         {
             ID = id;

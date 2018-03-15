@@ -5,6 +5,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,7 +13,7 @@ using UnityEngine.Events;
 namespace QuestSystem
 {
     [System.Serializable]
-    public class Quest
+    public class Quest : ICloneable
     {
         /// <summary>
         /// Quest identifier.
@@ -33,10 +34,6 @@ namespace QuestSystem
 
         public Reward QuestReward;
 
-        [SerializeField]
-        private UnityEventPlayer _onQuestComplete;
-
-        private float _progressComplete;
         /// <summary>
         /// Quest Constructor.
         /// </summary>
@@ -47,28 +44,6 @@ namespace QuestSystem
             Objectives = objectives;
             QuestReward = reward;
         }
-
-        private void UpdateAndCheckProgress(PlayerController player)
-        {
-            float temp = 0;
-            foreach (var questObjective in Objectives)
-            {
-                if (questObjective.IsComplete)
-                {
-                    temp++;
-                }
-            }
-            _progressComplete = Ultility.GetPercentValue(Objectives.Count, temp);
-            if (_progressComplete == 100)
-            {
-                if (_onQuestComplete != null)
-                {
-                    _onQuestComplete.Invoke(player);
-                }        
-            }
-        }
-
-
 
         public void ConstructObjectives()
         {
@@ -96,10 +71,20 @@ namespace QuestSystem
             Objectives = temp;
         }
         
-
-        public override string ToString()
+        public object Clone()
         {
-            return "";
+            return (Quest)this.MemberwiseClone();
+        }
+
+        public string ToStringFormat()
+        {
+            string objectives = "";
+            foreach (var objective in Objectives)
+            {
+                objectives += objective.ToStringFormat();
+            }
+            var temp = Text.Title + ";" + Text.DescriptionSummary + ";" + Text.Hint + ";"+ objectives +";"+QuestReward.ToStringFormat();
+            return temp;
         }
     }
 }

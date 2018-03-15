@@ -14,4 +14,4 @@ public class UnityEventQuest : UnityEvent<Quest> { }
 [Serializable]
 public class UnityEventBool : UnityEvent<bool> { }
 [Serializable]
-public class UnityEventPlayer : UnityEvent<PlayerController> { }
+public class UnityEventString : UnityEvent<string> { }

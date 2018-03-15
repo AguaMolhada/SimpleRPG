@@ -8,15 +8,15 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(NpcData))]
+[CustomEditor(typeof(NPCBasicInformationData))]
 public class NPCQuestEditor : Editor
 {
-    private NpcData _target;
+    private NPCBasicInformationData _target;
     private int _questID;
     
     private void OnEnable()
     {
-        _target = (NpcData) target;
+        _target = (NPCBasicInformationData) target;
     }
 
     public override void OnInspectorGUI()
