@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using QuestSystem;
+using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     public bool ToTestRemoveLater;
     /// <summary>
@@ -135,6 +136,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+		if (!isLocalPlayer)
+		{
+			return;
+		}
         if (ToTestRemoveLater)
         {
             LookToMouse();
