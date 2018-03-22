@@ -15,7 +15,7 @@ MonoBehaviour:
   - Identifier:
       ID: 0
       PrQuest: 1
-      ChainQuestID: -1
+      ChainQuestID: 3
       IsQuestComplete: 0
     Text:
       Title: Begin the Jurney
@@ -93,14 +93,16 @@ MonoBehaviour:
       ExperienceReward: 0
       GoldReward: 0
       ItemsRewards:
-      - Id: 0
-        Title: Adventure's Licence
+      - Id: 1
+        Title: Adventure's License
         BuyValue: 0
         SellValue: 0
-        ItemT: 0
-        BonusAttributes: []
+        ItemT: 10
+        BonusAttributes:
+        - AttributeBonus: 8
+          BonusAmmout: 0
         Stackable: 0
-        Sprite: 
+        Sprite: W_book07
         Usable: 0
   - Identifier:
       ID: 2
@@ -138,4 +140,52 @@ MonoBehaviour:
     QuestReward:
       ExperienceReward: 0
       GoldReward: 0
+      ItemsRewards:
+      - Id: 2
+        Title: Enlistment Letter
+        BuyValue: 15
+        SellValue: 9
+        ItemT: 10
+        BonusAttributes: []
+        Stackable: 0
+        Sprite: I_Scroll
+        Usable: 0
+  - Identifier:
+      ID: 3
+      PrQuest: 0
+      ChainQuestID: -1
+      IsQuestComplete: 0
+    Text:
+      Title: Wow this is a Dungeon!!!
+      DescriptionSummary: "After few days wandering in the forest you find your first
+        Dungeon. Lets go inside and see all the things inside. Be carefull, remember
+        your training and Defeat the boss. Good Lucky and don't die.\t(if you die
+        in the dungeon you lost 10-20% exp and 13%gold)"
+      Hint: Clear the dungeon and talk to guild recepcionist.
+    Objectives:
+    - Title: Kill 1 Dungeon Boss
+      Description: Last room inside the dungeon.
+      IsComplete: 0
+      IsBonus: 0
+      QuestEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    CollectObjectives: []
+    EliminationObjectives:
+    - Title: Kill 1 Dungeon Boss
+      Description: Last room inside the dungeon.
+      IsComplete: 0
+      IsBonus: 0
+      QuestEvent:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Target: Dungeon Boss
+      KillTotalAmount: 1
+    QuestReward:
+      ExperienceReward: 100
+      GoldReward: 250
       ItemsRewards: []

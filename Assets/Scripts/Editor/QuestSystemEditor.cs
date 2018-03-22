@@ -35,8 +35,8 @@ public class QuestSystemEditor : Editor
     private string qName;
     private string qDescript;
     private string qHint;
-    private List<QuestObjective> qObjectives;
     private Reward qReward;
+    private List<QuestObjective> qObjectives;
     private enum QuestType { Gather, Kill}
     private QuestType qType;
     private string qobjText;
@@ -286,6 +286,52 @@ public class QuestSystemEditor : Editor
             q.GetObjectives();
             ShowALlObjectivesFromSelectedQuest(q.Objectives);
             q.ConstructObjectives();
+            ShowSelectedQuestReward(q.QuestReward);
+        EditorGUILayout.EndVertical();
+    }
+
+    private void ShowSelectedQuestReward(Reward selectedReward)
+    {
+        EditorGUILayout.BeginVertical();
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Rewards");
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+            selectedReward.ExperienceReward = EditorGUILayout.IntField("Experience:", selectedReward.ExperienceReward);
+            selectedReward.GoldReward = EditorGUILayout.IntField("Gold:", selectedReward.GoldReward);
+            foreach (var item in selectedReward.ItemsRewards)
+            {
+                    GUILayout.Label(item.Title);
+            }
+            itemID = EditorGUILayout.IntField("ID to add:", itemID);
+        if (GUILayout.Button("AddItens"))
+        {
+            var tempItem = DatabaseControl.Instance.FetchItem(itemID);
+
+            if (selectedReward.ItemsRewards == null)
+            {
+                selectedReward.ItemsRewards = new List<Item>();
+            }
+
+            if (tempItem != null)
+            {
+                selectedReward.ItemsRewards.Add(tempItem);
+            }
+        }
+
+        if (GUILayout.Button("Remove ID"))
+        {
+            foreach (var item in selectedReward.ItemsRewards)
+            {
+                if (item.Id == itemID)
+                {
+                    selectedReward.ItemsRewards.Remove(item);
+                    break;
+                }
+            }
+        }
+
         EditorGUILayout.EndVertical();
     }
 

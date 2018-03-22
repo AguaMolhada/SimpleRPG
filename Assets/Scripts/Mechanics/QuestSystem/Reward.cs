@@ -23,7 +23,11 @@ public class Reward
         GoldReward = gold;
         foreach (var id in itemById)
         {
-            ItemsRewards.Add(DatabaseControl.Instance.FetchItem(id));
+            var itemToAdd = DatabaseControl.Instance.FetchItem(id);
+            if (itemToAdd != null)
+            {
+                ItemsRewards.Add(itemToAdd);
+            }
         }
     }
 
@@ -33,7 +37,11 @@ public class Reward
         GoldReward = gold;
         foreach (var name in itemBtName)
         {
-            ItemsRewards.Add(DatabaseControl.Instance.FetchItem(name));
+            var itemToAdd = DatabaseControl.Instance.FetchItem(name);
+            if (itemToAdd != null)
+            {
+                ItemsRewards.Add(itemToAdd);
+            }
         }
     }
 

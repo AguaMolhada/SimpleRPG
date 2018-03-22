@@ -15,6 +15,7 @@ using UnityEngine.AI;
 public class PlayerController : NetworkBehaviour
 {
     public bool ToTestRemoveLater;
+    public bool localTest;
     /// <summary>
     /// Player Nickname
     /// </summary>
@@ -136,8 +137,9 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-		if (!isLocalPlayer)
+		if (!localTest)
 		{
+            print("Not LocalPlayer"+ gameObject.name);
 			return;
 		}
         if (ToTestRemoveLater)
