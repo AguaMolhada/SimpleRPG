@@ -37,6 +37,7 @@ public class QuestSystemEditor : Editor
     private string qHint;
     private Reward qReward;
     private List<QuestObjective> qObjectives;
+    private int itemID;
     private enum QuestType { Gather, Kill}
     private QuestType qType;
     private string qobjText;
